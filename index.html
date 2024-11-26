@@ -170,6 +170,137 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eejhongxin.github.io/2024/11/22/ESP32%E4%BD%BF%E7%94%A8I2S%E3%80%81ADC%E9%87%87%E6%A0%B7%E9%BA%A6%E5%85%8B%E9%A3%8E%E8%BF%9B%E8%A1%8C%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86%E4%B8%8E%E6%92%AD%E6%94%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="eejhx">
+      <meta itemprop="description" content="见你潜入深海，伴我匿于人间">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="嵌入小屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/11/22/ESP32%E4%BD%BF%E7%94%A8I2S%E3%80%81ADC%E9%87%87%E6%A0%B7%E9%BA%A6%E5%85%8B%E9%A3%8E%E8%BF%9B%E8%A1%8C%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86%E4%B8%8E%E6%92%AD%E6%94%BE/" class="post-title-link" itemprop="url">ESP32使用I2S、ADC采样麦克风进行音频采集与播放</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-11-22 20:33:29" itemprop="dateCreated datePublished" datetime="2024-11-22T20:33:29+08:00">2024-11-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-26 20:06:36" itemprop="dateModified" datetime="2024-11-26T20:06:36+08:00">2024-11-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ESP32/" itemprop="url" rel="index"><span itemprop="name">ESP32</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <!-- toc -->
+
+<ul>
+<li><a href="#%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D"><strong>协议介绍</strong></a><ul>
+<li><a href="#i2s%E6%80%BB%E7%BA%BF%E8%A7%84%E8%8C%83">I2S总线规范</a><ul>
+<li><a href="#%E4%B8%89%E7%A7%8D%E4%BF%A1%E5%8F%B7%E7%BA%BF">三种信号线</a></li>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F">工作模式</a></li>
+</ul>
+</li>
+<li><a href="#adcanalog-to-digital-converter%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E8%A7%84%E8%8C%83">ADC（Analog-to-Digital Converter）通信协议规范</a><ul>
+<li><a href="#%E5%B8%B8%E8%A7%84adc%E4%BF%A1%E5%8F%B7%E9%87%87%E6%A0%B7%E5%9C%A8%E9%9F%B3%E9%A2%91%E9%A2%86%E5%9F%9F%E5%AD%98%E5%9C%A8%E7%9A%84%E7%91%95%E7%96%B5">常规ADC信号采样在音频领域存在的瑕疵</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h1><span id="协议介绍"><strong>协议介绍</strong></span></h1><h2><span id="i2s总线规范">I2S总线规范</span></h2><h3><span id="三种信号线">三种信号线</span></h3><ol>
+<li><p>SCK串行时钟：</p>
+<p>对应的数字音频的每一位音频数据，SCK都有1个脉冲，SCK的频率&#x3D;2×采样频率×采样位数。</p>
+</li>
+<li><p>WS字段（声道选择）：</p>
+<p>用于切换左右声道的数据。WS的频率&#x3D;采样频率</p>
+<p>命令选择线表明了正在被传输的声道。</p>
+<p>WS为“1”表示正在传输的是左声道的数据。<br>WS为“0”表示正在传输的是右声道的数据。<br>WS可以在串行时钟的上升沿或者下降沿发生改变，并且WS信号不需要一定是对称的。在从属装置端，WS在时钟信号的上升沿发生改变。WS总是在最高位传输前的一个时钟周期发生改变，这样可以使从属装置得到与被传输的串行数据同步的时间，并且使接收端存储当前的命令以及为下次的命令清除空间。</p>
+</li>
+<li><p>SD串行数据：</p>
+<p>这个其实就是我们常说的数据端口了。</p>
+</li>
+</ol>
+<h3><span id="工作模式">工作模式</span></h3><p>I2S工作模式可以是主模式（Master Mode）或从模式（Slave Mode）。两者唯一的区别是：提供时钟信号（SCK）和帧同步信号（LRCK）的主题不同。如下图所示，一共存在三种工作模式，分别是：</p>
+<p> 1.发射器（transmitter）为Master，接收器（receiver）为Slave，此时由发射器提供SCK和LRCK</p>
+<p>2.接收器（receiver）为Master，发射器（transmitter）为Slave，此时由接收器提供SCK和LRCK</p>
+<p>3.发射器（transmitter）和接收器（receiver）均为Slave，由系统中其他模块提供SCK和LRCK</p>
+<p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241126192005435.png" alt="image-20241126192005435"></p>
+<h2><span id="adcanalog-to-digital-converter通信协议规范">ADC（Analog-to-Digital Converter）通信协议规范</span></h2><p>adc采样大家应该都不陌生，就是模拟信号转换成数字信号的转换器，这个用途在于采集单片机ADC引脚信号，因为本质上我们的音频信号就是由一个个电压信号组成的，如果采集到了相应的ADC引脚信号，那么我们也就可以相应的复现出音频信号。</p>
+<h3><span id="常规adc信号采样在音频领域存在的瑕疵">常规ADC信号采样在音频领域存在的瑕疵</span></h3><p>但是如果大家尝试直接用analogread（我这里以arduino里面读取电压的方式为例）或者更为底层的去读取引脚的电压值，如果直接使用DAC引脚输出读取到的电压值时会发现声音非常卡完全不像一个音频信号。以我下面这段代码为例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void setup() &#123;</span><br><span class="line">  Serial.begin(115200);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// the loop routine runs over and over again forever:</span><br><span class="line">void loop() &#123;</span><br><span class="line">  float startT=micros();</span><br><span class="line">  float sensorValue = analogRead(A0);</span><br><span class="line">  float voltage = sensorValue * (5.0 / 1023.0);</span><br><span class="line">  float endT=micros();</span><br><span class="line">  Serial.printf(&quot;voltage:%f,time:%f\n&quot;,sensorValue,endT-startT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就是很简单的一段读取引脚电压的程序，最后的输出结果如下，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">voltage:0.738025,time:128.000000</span><br><span class="line">voltage:0.943304,time:128.000000</span><br><span class="line">voltage:0.000000,time:144.000000</span><br><span class="line">voltage:0.000000,time:136.000000</span><br><span class="line">voltage:0.000000,time:120.000000</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>两个读取之间的间隔基本都在100us左右，那么它的更新频率就是$\frac{1}{100 \cdot 10^{-6}}$</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://eejhongxin.github.io/2024/11/10/%E7%94%B5%E6%BA%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -193,10 +324,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-11-10 18:37:50 / 修改时间：18:42:45" itemprop="dateCreated datePublished" datetime="2024-11-10T18:37:50+08:00">2024-11-10</time>
+              <time title="创建时间：2024-11-10 18:37:50" itemprop="dateCreated datePublished" datetime="2024-11-10T18:37:50+08:00">2024-11-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-14 01:11:00" itemprop="dateModified" datetime="2024-11-14T01:11:00+08:00">2024-11-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -204,87 +341,6 @@
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">硬件设计</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://eejhongxin.github.io/2024/07/03/adc%E9%AB%98%E9%80%9F%E9%87%87%E6%A0%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="eejhx">
-      <meta itemprop="description" content="见你潜入深海，伴我匿于人间">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="嵌入小屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/07/03/adc%E9%AB%98%E9%80%9F%E9%87%87%E6%A0%B7/" class="post-title-link" itemprop="url">adc高速采样</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-07-03 22:14:11 / 修改时间：22:15:09" itemprop="dateCreated datePublished" datetime="2024-07-03T22:14:11+08:00">2024-07-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">51单片机</span></a>
                 </span>
             </span>
 
@@ -400,7 +456,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="linux应用开发基础知识"><a href="#linux应用开发基础知识" class="headerlink" title="linux应用开发基础知识"></a>linux应用开发基础知识</h1>
+          <h1><span id="linux应用开发基础知识">linux应用开发基础知识</span></h1>
       
     </div>
 
@@ -491,17 +547,17 @@
 <p>[!NOTE]</p>
 <p>本篇内容仅仅是记录本人学习llinux基础命令的过程，文章的内容来自<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1w4411B7a4?p=1&vd_source=3cb0bf4d59cb1d9d4ad468ab211ce85f">韦东山b站linux学习</a>，如有侵权立即删除</p>
 </blockquote>
-<h1 id="Linux操作常用指令"><a href="#Linux操作常用指令" class="headerlink" title="Linux操作常用指令"></a>Linux操作常用指令</h1><p>快捷调取命令行：<code>ctrl+alt+T</code></p>
+<h1><span id="linux操作常用指令">Linux操作常用指令</span></h1><p>快捷调取命令行：<code>ctrl+alt+T</code></p>
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402185534400.png" alt="image-20240402185534400"></p>
-<h2 id="目录和文件操作命令"><a href="#目录和文件操作命令" class="headerlink" title="目录和文件操作命令"></a>目录和文件操作命令</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pwd	 	<span class="comment">#显示当前所在的目录</span></span><br><span class="line">ls   	<span class="comment">#显示当前目录下的文件 </span></span><br><span class="line">ls -a	<span class="comment">#显示隐藏文件</span></span><br><span class="line">cd .. 	<span class="comment">#返回到上一级的路径</span></span><br><span class="line">mkdir	<span class="comment">#新建目录</span></span><br><span class="line">rmdir 	<span class="comment">#删除目录 </span></span><br><span class="line">rm 目标路径 -r <span class="comment">#删除指定目标路径 </span></span><br><span class="line">touch 	<span class="comment">#新建文件</span></span><br><span class="line">cp 		<span class="comment">#复制文件</span></span><br><span class="line">rm 		<span class="comment">#删除文件</span></span><br><span class="line">cat 	<span class="comment">#将文件内容显示到终端中</span></span><br><span class="line">clear 	<span class="comment">#清除屏幕显示内容</span></span><br><span class="line"></span><br><span class="line">cat 	<span class="comment">#显示文件内容</span></span><br><span class="line">touch 	<span class="comment">#修改文件时间</span></span><br></pre></td></tr></table></figure>
+<h2><span id="目录和文件操作命令">目录和文件操作命令</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pwd	 	<span class="comment">#显示当前所在的目录</span></span><br><span class="line">ls   	<span class="comment">#显示当前目录下的文件 </span></span><br><span class="line">ls -a	<span class="comment">#显示隐藏文件</span></span><br><span class="line">cd .. 	<span class="comment">#返回到上一级的路径</span></span><br><span class="line">mkdir	<span class="comment">#新建目录</span></span><br><span class="line">rmdir 	<span class="comment">#删除目录 </span></span><br><span class="line">rm 目标路径 -r <span class="comment">#删除指定目标路径 </span></span><br><span class="line">touch 	<span class="comment">#新建文件</span></span><br><span class="line">cp 		<span class="comment">#复制文件</span></span><br><span class="line">rm 		<span class="comment">#删除文件</span></span><br><span class="line">cat 	<span class="comment">#将文件内容显示到终端中</span></span><br><span class="line">clear 	<span class="comment">#清除屏幕显示内容</span></span><br><span class="line"></span><br><span class="line">cat 	<span class="comment">#显示文件内容</span></span><br><span class="line">touch 	<span class="comment">#修改文件时间</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="文件的权限和属性修改"><a href="#文件的权限和属性修改" class="headerlink" title="文件的权限和属性修改"></a>文件的权限和属性修改</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">![image-20240402202513890](https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402202513890.png)</span><br><span class="line"></span><br><span class="line">### chmod 改变文件权限</span><br><span class="line"></span><br><span class="line">![image-20240402202545754](https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402202545754.png)</span><br><span class="line"></span><br><span class="line">### chown改变文件所有者</span><br><span class="line"></span><br><span class="line">![image-20240402202806266](https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402202806266.png)</span><br><span class="line"></span><br><span class="line">![image-20240402203249857](https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402203249857.png)	</span><br><span class="line"></span><br><span class="line">## 查找搜索文件</span><br><span class="line"></span><br><span class="line"> ```python</span><br><span class="line"> #find用法</span><br><span class="line"> find （指定文件路径） -name 查找的文件</span><br><span class="line"> </span><br><span class="line"> #grep用法</span><br><span class="line"> grep &quot;查找内容&quot; * 		#查找所有符合条件文件行数</span><br><span class="line"> grep &quot;查找内容&quot; * -n	#显示文件的行数</span><br><span class="line"> grep &quot;查找内容&quot; * -nw	#查找的内容是整词（即完全符合）</span><br><span class="line"> grep &quot;查找内容&quot; * -nwr	#递归查找（包含子文件夹）</span><br></pre></td></tr></table></figure>
+<h2><span id="文件的权限和属性修改">文件的权限和属性修改</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">![image-20240402202513890](https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402202513890.png)</span><br><span class="line"></span><br><span class="line">### chmod 改变文件权限</span><br><span class="line"></span><br><span class="line">![image-20240402202545754](https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402202545754.png)</span><br><span class="line"></span><br><span class="line">### chown改变文件所有者</span><br><span class="line"></span><br><span class="line">![image-20240402202806266](https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402202806266.png)</span><br><span class="line"></span><br><span class="line">![image-20240402203249857](https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402203249857.png)	</span><br><span class="line"></span><br><span class="line">## 查找搜索文件</span><br><span class="line"></span><br><span class="line"> ```python</span><br><span class="line"> #find用法</span><br><span class="line"> find （指定文件路径） -name 查找的文件</span><br><span class="line"> </span><br><span class="line"> #grep用法</span><br><span class="line"> grep &quot;查找内容&quot; * 		#查找所有符合条件文件行数</span><br><span class="line"> grep &quot;查找内容&quot; * -n	#显示文件的行数</span><br><span class="line"> grep &quot;查找内容&quot; * -nw	#查找的内容是整词（即完全符合）</span><br><span class="line"> grep &quot;查找内容&quot; * -nwr	#递归查找（包含子文件夹）</span><br></pre></td></tr></table></figure>
 
-<h2 id="压缩和解压缩命令"><a href="#压缩和解压缩命令" class="headerlink" title="压缩和解压缩命令"></a>压缩和解压缩命令</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#压缩文件</span></span><br><span class="line">tar czf <span class="string">&quot;打包后的压缩文件包名.tar.gz&quot;</span> <span class="string">&quot;打包的文件夹&quot;</span> </span><br><span class="line">tar cjf <span class="string">&quot;打包后的压缩文件包名.tar.bz2&quot;</span> <span class="string">&quot;打包的文件夹&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">#解压文件</span></span><br><span class="line">tar xzf <span class="string">&quot;打包后的压缩文件包名.tar.gz&quot;</span> <span class="string">&quot;打包的文件夹&quot;</span> </span><br><span class="line">tar xjf <span class="string">&quot;打包后的压缩文件包名.tar.bz2&quot;</span> <span class="string">&quot;打包的文件夹&quot;</span> </span><br></pre></td></tr></table></figure>
+<h2><span id="压缩和解压缩命令">压缩和解压缩命令</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#压缩文件</span></span><br><span class="line">tar czf <span class="string">&quot;打包后的压缩文件包名.tar.gz&quot;</span> <span class="string">&quot;打包的文件夹&quot;</span> </span><br><span class="line">tar cjf <span class="string">&quot;打包后的压缩文件包名.tar.bz2&quot;</span> <span class="string">&quot;打包的文件夹&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">#解压文件</span></span><br><span class="line">tar xzf <span class="string">&quot;打包后的压缩文件包名.tar.gz&quot;</span> <span class="string">&quot;打包的文件夹&quot;</span> </span><br><span class="line">tar xjf <span class="string">&quot;打包后的压缩文件包名.tar.bz2&quot;</span> <span class="string">&quot;打包的文件夹&quot;</span> </span><br></pre></td></tr></table></figure>
 
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240403153248471.png" alt="image-20240403153248471"></p>
-<h2 id="VI编辑器"><a href="#VI编辑器" class="headerlink" title="VI编辑器"></a>VI编辑器</h2><h3 id="新建、保存、取消保存"><a href="#新建、保存、取消保存" class="headerlink" title="新建、保存、取消保存"></a>新建、保存、取消保存</h3><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240403153734163.png" alt="image-20240403153734163"></p>
-<h3 id="移动"><a href="#移动" class="headerlink" title="移动"></a>移动</h3><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240403154414236.png" alt="image-20240403154414236"></p>
+<h2><span id="vi编辑器">VI编辑器</span></h2><h3><span id="新建-保存-取消保存">新建、保存、取消保存</span></h3><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240403153734163.png" alt="image-20240403153734163"></p>
+<h3><span id="移动">移动</span></h3><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240403154414236.png" alt="image-20240403154414236"></p>
 
       
     </div>
@@ -552,7 +608,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-09 16:06:01" itemprop="dateModified" datetime="2024-04-09T16:06:01+08:00">2024-04-09</time>
+                <time title="修改时间：2024-11-22 20:36:53" itemprop="dateModified" datetime="2024-11-22T20:36:53+08:00">2024-11-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -589,8 +645,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="基于TCP的流媒体视频音频加密传输"><a href="#基于TCP的流媒体视频音频加密传输" class="headerlink" title="基于TCP的流媒体视频音频加密传输"></a>基于TCP的流媒体视频音频加密传输</h1><h2 id="项目实现功能"><a href="#项目实现功能" class="headerlink" title="项目实现功能"></a>项目实现功能</h2><p>​	完成音频和视频（二者必须皆有）的采集、加密或加水印、传输、解密或提取水印、存储（必须基于数据库），要求基于文献复现一种音频和视频水印或加密技术（音频和视频各一种技术），并集成到软件中，设计报告中需要给出2种技术的细节。此外，要求可以实时视频语音聊天。</p>
-<h2 id="目的及意义"><a href="#目的及意义" class="headerlink" title="目的及意义"></a>目的及意义</h2>
+          <h1><span id="基于tcp的流媒体视频音频加密传输">基于TCP的流媒体视频音频加密传输</span></h1><h2><span id="项目实现功能">项目实现功能</span></h2><p>​	完成音频和视频（二者必须皆有）的采集、加密或加水印、传输、解密或提取水印、存储（必须基于数据库），要求基于文献复现一种音频和视频水印或加密技术（音频和视频各一种技术），并集成到软件中，设计报告中需要给出2种技术的细节。此外，要求可以实时视频语音聊天。</p>
+<h2><span id="目的及意义">目的及意义</span></h2>
       
     </div>
 
@@ -640,7 +696,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-02 15:31:01" itemprop="dateModified" datetime="2024-04-02T15:31:01+08:00">2024-04-02</time>
+                <time title="修改时间：2024-11-22 21:16:34" itemprop="dateModified" datetime="2024-11-22T21:16:34+08:00">2024-11-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -658,7 +714,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.6k</span>
+              <span>8.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -677,7 +733,41 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="系统功能"><a href="#系统功能" class="headerlink" title="系统功能"></a>系统功能</h1><p>通过温湿度传感器DHT11采集温、湿度，能够通过显示单元显示出温、湿度，并控制继电器。<br></p>
+          <!-- toc -->
+
+<ul>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD">系统功能</a></li>
+<li><a href="#%E5%8E%9F%E7%90%86%E6%A1%86%E5%9B%BE%E5%8F%8A%E8%AF%B4%E6%98%8E">原理框图及说明</a></li>
+<li><a href="#%E4%B8%BB%E8%A6%81%E7%94%B5%E8%B7%AF%E8%AF%B4%E6%98%8E-%E5%85%83%E4%BB%B6%E9%80%89%E6%8B%A9%E5%8F%8A%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97">主要电路说明、元件选择及参数计算</a><ul>
+<li><a href="#%E5%A4%8D%E4%BD%8D%E4%B8%8E%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF">复位与振荡电路</a></li>
+<li><a href="#%E6%98%BE%E7%A4%BA%E7%94%B5%E8%B7%AF">显示电路</a></li>
+<li><a href="#%E6%8C%89%E9%94%AE%E7%94%B5%E8%B7%AF">按键电路</a></li>
+<li><a href="#%E6%B8%A9%E5%BA%A6%E6%B9%BF%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%94%B5%E8%B7%AF">温度湿度检测电路</a></li>
+<li><a href="#esp8266wifi%E6%A8%A1%E5%9D%97">ESP8266WIFI模块</a></li>
+<li><a href="#eeprom%E7%94%B5%E8%B7%AF">EEPROM电路</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1">总电路设计</a></li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF%E5%8F%8A%E6%A1%86%E5%9B%BE">软件设计思路及框图</a><ul>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF%E5%8F%8A%E4%B8%BB%E6%B5%81%E7%A8%8B%E5%9B%BE">软件设计思路及主流程图</a></li>
+<li><a href="#%E5%BB%B6%E6%97%B6%E6%A8%A1%E5%9D%97">延时模块</a></li>
+<li><a href="#lcd12864%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%9D%97"><code>LCD12864</code>显示模块</a></li>
+<li><a href="#%E6%8C%89%E9%94%AE%E6%89%AB%E6%8F%8F%E6%A8%A1%E5%9D%97">按键扫描模块</a></li>
+<li><a href="#dht11%E4%BC%A0%E6%84%9F%E5%99%A8%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E6%A8%A1%E5%9D%97">DHT11传感器数据获取模块</a></li>
+<li><a href="#%E6%98%BE%E7%A4%BA%E6%B8%A9%E5%BA%A6%E7%95%8C%E9%9D%A2">显示温度界面</a></li>
+<li><a href="#esp8266wifi%E5%8F%91%E9%80%81%E6%A8%A1%E5%9D%97">ESP8266WIFI发送模块</a></li>
+<li><a href="#eeprom%E6%96%AD%E7%94%B5%E4%B8%8D%E4%B8%A2%E5%A4%B1%E6%A8%A1%E5%9D%97">EEPROM断电不丢失模块</a></li>
+</ul>
+</li>
+<li><a href="#%E7%BB%93%E6%9E%9C%E5%8F%8A%E6%B5%8B%E8%AF%95%E5%88%86%E6%9E%90">结果及测试分析</a><ul>
+<li><a href="#%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF">硬件电路</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E8%AE%B0%E5%BD%95%E5%8F%8A%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90">测试记录及结果分析</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h1><span id="系统功能">系统功能</span></h1><p>通过温湿度传感器DHT11采集温、湿度，能够通过显示单元显示出温、湿度，并控制继电器。<br></p>
 <ol>
 <li>开机液晶屏上显示姓名、学号3秒。<br></li>
 <li>显示当前温、湿度和设定的温度、湿度上下限。<br><br>&emsp; 温度测量范围：<code>0℃~50℃</code><br><br>&emsp; 温度测量误差：<code>±2℃</code><br><br>&emsp; 湿度测量范围：<code>20%~95%</code><br><br>&emsp; 湿度测量误差： <code>±5%</code><br><br>&emsp; 测量精度：<code>±1℃，±1%</code><br><br>&emsp; 测量数值均为整数<br></li>
@@ -689,11 +779,11 @@
 <li>通过微信小程序在后台对温度、湿度信息进行监测。<br></li>
 </ol>
 <hr>
-<h1 id="原理框图及说明"><a href="#原理框图及说明" class="headerlink" title="原理框图及说明"></a>原理框图及说明</h1><h2 id="测量原理"><a href="#测量原理" class="headerlink" title="测量原理"></a>测量原理</h2><p>根据设计任务，设计如下框图：<br></p>
+<h1><span id="原理框图及说明">原理框图及说明</span></h1><p><strong>测量原理</strong></p>
+<p>根据设计任务，设计如下框图：<br></p>
 <center>
     <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="https://s21.ax1x.com/2024/03/26/pF5Bs8x.png">
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="https://s21.ax1x.com/2024/03/26/pF5Bs8x.png">
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -711,7 +801,8 @@
 <li><strong>WIFI模块</strong>，用来接收DHT11温度传感器获取到的温湿度数据并通过AT指令发送给网址和指定的设备。<br></li>
 <li><strong>晶振电路以及时钟电路</strong>：晶振电路主要是用来提供一个固定频率的脉冲方便时钟电路计时；时钟电路主要是用来为第一个功能的3s钟进行计时，以及为后面的显示模块刷新率进行设置。<br></li>
 </ul>
-<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2><ol>
+<p><strong>使用说明</strong></p>
+<ol>
 <li>首先打开单片机电源，烧录编写好的程序<br></li>
 <li>单片机显示模块会显示开机页面即姓名、学号信息3s。<br></li>
 <li>3s之后会进入温度和湿度设置界面，通过独立键盘模块<code>K1~K4</code>次选择温度下限、温度上限、湿度下限、湿度上限并通过矩阵键盘K1~K9进行按键设置。如果出现设置错误的情况只需要再通过独立键盘选择错误的设置参数并通过矩阵键盘重新设置即可。</li>
@@ -722,7 +813,7 @@
 <li>当整个系统断电后，再次打开单片机系统会自动保存之前设置的温度和湿度上下限。<br></li>
 </ol>
 <hr>
-<h1 id="主要电路说明、元件选择及参数计算"><a href="#主要电路说明、元件选择及参数计算" class="headerlink" title="主要电路说明、元件选择及参数计算"></a>主要电路说明、元件选择及参数计算</h1><table>
+<h1><span id="主要电路说明-元件选择及参数计算">主要电路说明、元件选择及参数计算</span></h1><table>
 <thead>
 <tr>
 <th align="center">内部模块</th>
@@ -790,7 +881,7 @@
 <td align="center">1</td>
 </tr>
 </tbody></table>
-<h2 id="复位与振荡电路"><a href="#复位与振荡电路" class="headerlink" title="复位与振荡电路"></a>复位与振荡电路</h2><p>复位电路如下图所示，由C14和R9构成。由于51单片机为低电平复位，图示电路利用电容的特性，在刚刚外加5V电源时RST脚的电压为低。时间常数&#x3D;RC&#x3D;1000mS，满足芯片复位要求。由于电压为5V，可选择耐压6.3V的电解电容即可。<br></p>
+<h2><span id="复位与振荡电路">复位与振荡电路</span></h2><p>复位电路如下图所示，由C14和R9构成。由于51单片机为低电平复位，图示电路利用电容的特性，在刚刚外加5V电源时RST脚的电压为低。时间常数&#x3D;RC&#x3D;1000mS，满足芯片复位要求。由于电压为5V，可选择耐压6.3V的电解电容即可。<br></p>
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143812219.png" alt="image-20240327143812219"></p>
 <center style="color:#C0C0C0;text-decoration:underline">复位电路</center>
 
@@ -798,7 +889,7 @@
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143825064.png" alt="image-20240327143825064"></p>
 <center style="color:#C0C0C0;text-decoration:underline">振荡电路</center>
 
-<h2 id="显示电路"><a href="#显示电路" class="headerlink" title="显示电路"></a>显示电路</h2><p>经过大量的测试和调研，最终我的显示元件选择20引脚的12864液晶显示屏（128X64显示分辨率为128×64，内置8192个16<em>16点汉字，和128个16</em>8点ASCII字符集。利用该模块灵活的接口方式和简单、方便的操作指令。可以显示8×4行16×16点阵的汉字。也可完成图形显示），这里把各个引脚的功能以及连接方式做成了一个表格，以便直观地显示，通过51单片机上自带的可调电阻来调节12864的背光。 </p>
+<h2><span id="显示电路">显示电路</span></h2><p>经过大量的测试和调研，最终我的显示元件选择20引脚的12864液晶显示屏（128X64显示分辨率为128×64，内置8192个16<em>16点汉字，和128个16</em>8点ASCII字符集。利用该模块灵活的接口方式和简单、方便的操作指令。可以显示8×4行16×16点阵的汉字。也可完成图形显示），这里把各个引脚的功能以及连接方式做成了一个表格，以便直观地显示，通过51单片机上自带的可调电阻来调节12864的背光。 </p>
 <center style="color:#C0C0C0;text-decoration:underline">LCD12864引脚功能及接法</center>
 
 <table>
@@ -884,7 +975,7 @@
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedwps13.jpg"></p>
 <center style="color:#C0C0C0;text-decoration:underline">显示电路</center>
 
-<h2 id="按键电路"><a href="#按键电路" class="headerlink" title="按键电路"></a>按键电路</h2><p>由于89C52的P3口内部有上拉电阻，为简化电路，即当K1没有按下时，P3.1&#x3D;1，当K1按下时，P3.1&#x3D;0。<br></p>
+<h2><span id="按键电路">按键电路</span></h2><p>由于89C52的P3口内部有上拉电阻，为简化电路，即当K1没有按下时，P3.1&#x3D;1，当K1按下时，P3.1&#x3D;0。<br></p>
 <p>矩阵键盘本质是使用8个io口来进行16个按键的控制读取，可以减小io口的使用，用4条I&#x2F;O线作为行线，4条I&#x2F;O线作为列线组成的键盘。在行线和列线的每个交叉点上，设置一个按键。而这样的按键中按键的个数是4 X 4个。第一行接到p17，第二行接到p16，第三行接到p15，第4行接到p14，第一列接到p13，第二列接到p12，第三列接到p11，第四列接到p10。先从P1口的高四位（四个行）输出高电平，低四位（四个列）输出低电平，假设有按键按下，从P1口的高四位读取键盘状态。判断高四位的四行哪一行变成了低电平，就知道是第几行，再从P1口的低四位（四个列）输出高电平，高四位（四个行）输出低电平，从P1口的低四位读取键盘状态。判断低四位的四列哪一行变成了低电平，就知道是第几列，将两次读取结果组合起来就可以得到当前按键的特征编码。</p>
 <center style="color:#C0C0C0;text-decoration:underline">独立按键接口</center>
 
@@ -910,30 +1001,33 @@
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143902820.png" alt="image-20240327143902820"></p>
 <center style="color:#C0C0C0;text-decoration:underline">矩阵按键电路</center>
 
-<h2 id="温度湿度检测电路"><a href="#温度湿度检测电路" class="headerlink" title="温度湿度检测电路"></a>温度湿度检测电路</h2><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327144442514.png" alt="image-20240327144442514"></p>
+<h2><span id="温度湿度检测电路">温度湿度检测电路</span></h2><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327144442514.png" alt="image-20240327144442514"></p>
 <center style="color:#C0C0C0;text-decoration:underline">温湿度传感器电路</center>
 
 <p>经过大量的测试和我们所有的知识储备，最终我选择DHT11模块对温度，湿度进行检测并显示在12864显示器上。DHT的引脚图如下所示。 <br></p>
 <p>DHT11共有三个引脚，其中VCC，GND分别接入单片机电源模块上的VCC,GND。程序初始化后，单片机首先向DATA管脚发送一个低电平脉冲.</p>
-<h3 id="触发DHT11采集数据"><a href="#触发DHT11采集数据" class="headerlink" title="触发DHT11采集数据"></a>触发DHT11采集数据</h3><p>总线空闲状态为高电平,单片机把总线拉低等待DHT11响应,单片机把总线拉低必须大于18ms,保证DHT11能检测到起始信号。</p>
+<p><strong>触发DHT11采集数据</strong></p>
+<p>总线空闲状态为高电平,单片机把总线拉低等待DHT11响应,单片机把总线拉低必须大于18ms,保证DHT11能检测到起始信号。</p>
 <p>当DHT11接收到单片机的开始信号后,等待单片机开始信号结束,然后发送80us低电平响应信号。</p>
 <p>单片机发送开始信号结束后,延时等待20-40us后,切换为输入状态，等待DHT11的80us低电平信号结束，然后判断DHT11是否是否发出 80us 的高电平；如果是，即可开始采集数据。</p>
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327144815458.png" alt="image-20240327144815458"></p>
 <center style="color:#C0C0C0;text-decoration:underline">采集数据的时序图</center>
 
-<h3 id="数字0和1的信号时序"><a href="#数字0和1的信号时序" class="headerlink" title="数字0和1的信号时序"></a><strong>数字0和1的信号时序</strong></h3><p>当DHT11输出数字0时， 单片机读取到的信号为50 us的低电平，之后为26-28 us的高电平。当DHT11输出数字1时， 单片机读取到的信号为50 us的低电平，之后为70 us的高电平。</p>
+<p><strong>数字0和1的信号时序</strong></p>
+<p>当DHT11输出数字0时， 单片机读取到的信号为50 us的低电平，之后为26-28 us的高电平。当DHT11输出数字1时， 单片机读取到的信号为50 us的低电平，之后为70 us的高电平。</p>
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171431160.png" alt="image-20240329171427862"></p>
 <center style="color:#C0C0C0;text-decoration:underline">数字0的时序图</center>
 
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171440210.png" alt="image-20240329171440210"></p>
 <center style="color:#C0C0C0;text-decoration:underline">数字1的时序图</center>
 
-<h3 id="总时序图"><a href="#总时序图" class="headerlink" title="总时序图"></a>总时序图</h3><p>用户MCU发送一次开始信号后,DHT11从低功耗模式转换到高速模式,等待主机开始信号结束后,DHT11发送响应信号,送出40bit的数据,并触发一次信号采集,用户可选择读取部分数据。</p>
+<p><strong>总时序图</strong></p>
+<p>用户MCU发送一次开始信号后,DHT11从低功耗模式转换到高速模式,等待主机开始信号结束后,DHT11发送响应信号,送出40bit的数据,并触发一次信号采集,用户可选择读取部分数据。</p>
 <p>从模式下,DHT11接收到开始信号触发一次温湿度采集,如果没有接收到主机发送开始信号,DHT11不会主动进行温湿度采集。当一次完整的采集数据后，DHT11会转换到低速模式。</p>
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171538449.png" alt="image-20240329171538449"></p>
 <center style="color:#C0C0C0;text-decoration:underline">总时序图</center>
 
-<h2 id="ESP8266WIFI模块"><a href="#ESP8266WIFI模块" class="headerlink" title="ESP8266WIFI模块"></a>ESP8266WIFI模块</h2><p>ESP8266是一款高性能的WIFI串口模块，内部集成<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=MCU&spm=1001.2101.3001.7020">MCU</a>能实现单片机之间串口通信，是目前使用最广泛的一种WIFI模块之一。接线时只需要将RXD、TXD、GND、VCC这4个引脚，分别和USB转TTL模块的TXD、RXD、GND、VCC相连接。</p>
+<h2><span id="esp8266wifi模块">ESP8266WIFI模块</span></h2><p>ESP8266是一款高性能的WIFI串口模块，内部集成<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=MCU&spm=1001.2101.3001.7020">MCU</a>能实现单片机之间串口通信，是目前使用最广泛的一种WIFI模块之一。接线时只需要将RXD、TXD、GND、VCC这4个引脚，分别和USB转TTL模块的TXD、RXD、GND、VCC相连接。</p>
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171640275.png"></p>
 <center style="color:#C0C0C0;text-decoration:underline">ESP8266原理图</center>
 
@@ -954,7 +1048,7 @@
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329173732911.png" alt="image-20240329173732911"></p>
 <center style="color:#C0C0C0;text-decoration:underline">ESP8266常用指令集</center>
 
-<h2 id="EEPROM电路"><a href="#EEPROM电路" class="headerlink" title="EEPROM电路"></a>EEPROM电路</h2><p>EEPROM电路的主要部分为AT24C02，原理图如下所示。</p>
+<h2><span id="eeprom电路">EEPROM电路</span></h2><p>EEPROM电路的主要部分为AT24C02，原理图如下所示。</p>
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172256085.png" alt="image-20240329172256085"></p>
 <center style="color:#C0C0C0;text-decoration:underline">EEPROM电路</center>
 
@@ -963,16 +1057,17 @@
 <center style="color:#C0C0C0;text-decoration:underline">AT24C02的芯片格式</center>
 
 <hr>
-<h1 id="总电路设计"><a href="#总电路设计" class="headerlink" title="总电路设计"></a>总电路设计</h1><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172640045.png" alt="image-20240329172640045"></p>
+<h1><span id="总电路设计">总电路设计</span></h1><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172640045.png" alt="image-20240329172640045"></p>
 <center style="color:#C0C0C0;text-decoration:underline">总电路硬件连接图</center>
 
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172701440.png" alt="image-20240329172701440"></p>
 <center style="color:#C0C0C0;text-decoration:underline">总电路硬件实物图</center>
 
 <hr>
-<h1 id="软件设计思路及框图"><a href="#软件设计思路及框图" class="headerlink" title="软件设计思路及框图"></a>软件设计思路及框图</h1><h2 id="软件设计思路及主流程图"><a href="#软件设计思路及主流程图" class="headerlink" title="软件设计思路及主流程图"></a>软件设计思路及主流程图</h2><p>根据题目的设计要求以及我自己附加的功能，我采用定时器0和定时器1作为时钟数据源，定时器0每用来完成功能1姓名学号显示3s，定时器1用来对ESP8266和II2C进行初始化并实现发送数据、存储数据以及初始化数据线的功能。设置温湿度、显示温湿度信息和上下限、继电器以及直流电机的工作、矩阵键盘扫描、比较当前数据和设定阈值的差别、发送温湿度数据等全部放在主程序中实现。</p>
+<h1><span id="软件设计思路及框图">软件设计思路及框图</span></h1><h2><span id="软件设计思路及主流程图">软件设计思路及主流程图</span></h2><p>根据题目的设计要求以及我自己附加的功能，我采用定时器0和定时器1作为时钟数据源，定时器0每用来完成功能1姓名学号显示3s，定时器1用来对ESP8266和II2C进行初始化并实现发送数据、存储数据以及初始化数据线的功能。设置温湿度、显示温湿度信息和上下限、继电器以及直流电机的工作、矩阵键盘扫描、比较当前数据和设定阈值的差别、发送温湿度数据等全部放在主程序中实现。</p>
 <p>温湿度获取部分设置数据缓冲区，DHT11传感器获取的温湿度信息直接送入缓冲区，由程序完成动态扫描。</p>
-<h3 id="设计的全局变量"><a href="#设计的全局变量" class="headerlink" title="设计的全局变量"></a>设计的全局变量</h3><ol>
+<p><strong>设计的全局变量</strong></p>
+<ol>
 <li>温湿度数据缓冲区：<code>uchar wendu[4]、uchar shidu[4] </code></li>
 <li>设置的温湿度上下限：<code>uchar temtop[4]、uchar temlow[4]、uchar humtop[4]、uchar humlow[4]</code></li>
 <li>温湿度传感器接收数据：<code>uchar rec_dat[9] </code></li>
@@ -981,7 +1076,8 @@
 <li>ESP8266接收状态标记：<code>uint UART_RX_STA</code></li>
 <li>ESP8266接收缓冲：<code>uchar UART_RX_BUF[UART_REC_LEN]</code></li>
 </ol>
-<h3 id="设计的端口"><a href="#设计的端口" class="headerlink" title="设计的端口"></a>设计的端口</h3><ol>
+<p><strong>设计的端口</strong></p>
+<ol>
 <li>LCD端口</li>
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sbit LCD_RS  =  P2^<span class="number">6</span>;       <span class="comment">//寄存器选择输入</span></span><br><span class="line">sbit LCD_RW  =  P2^<span class="number">5</span>;       <span class="comment">//液晶读/写控制</span></span><br><span class="line">sbit LCD_EN  =  P2^<span class="number">7</span>;       <span class="comment">//液晶使能控制</span></span><br><span class="line">sbit LCD_PSB =  P3^<span class="number">2</span>;       <span class="comment">//串/并方式控制</span></span><br></pre></td></tr></table></figure>
@@ -1001,9 +1097,11 @@
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="定义的端口"><a href="#定义的端口" class="headerlink" title="定义的端口"></a>定义的端口</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LCD_data  P0   ——LCD数据口</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard  P1   ——定义矩阵键盘</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UART_REC_LEN  10  ——定义ESP8266最大接收字节数</span></span><br></pre></td></tr></table></figure>
+<p><strong>定义的端口</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LCD_data  P0   ——LCD数据口</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard  P1   ——定义矩阵键盘</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UART_REC_LEN  10  ——定义ESP8266最大接收字节数</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="函数设计"><a href="#函数设计" class="headerlink" title="函数设计"></a>函数设计</h3><ol>
+<p><strong>函数设计</strong></p>
+<ol>
 <li>主函数main()</li>
 </ol>
 <p>入口：无，出口：无。 一个大的循环，程序用不结束。</p>
@@ -1025,7 +1123,8 @@
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401172731304.png" alt="image-20240401172731304"></p>
 <center style="color:#C0C0C0;text-decoration:underline">主程序框图</center>
 
-<h2 id="延时模块"><a href="#延时模块" class="headerlink" title="延时模块"></a>延时模块</h2><h3 id="函数设计-1"><a href="#函数设计-1" class="headerlink" title="函数设计"></a>函数设计</h3><ol>
+<h2><span id="延时模块">延时模块</span></h2><p><strong>函数设计</strong></p>
+<ol>
 <li>void delay_ms(uint ms)</li>
 </ol>
 <p>   功能：设置延迟ms的函数</p>
@@ -1043,7 +1142,7 @@
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401173024832.png" alt="image-20240401173024832"></p>
 <center style="color:#C0C0C0;text-decoration:underline">延时实现</center>
 
-<h2 id="LCD12864显示模块"><a href="#LCD12864显示模块" class="headerlink" title="LCD12864显示模块"></a><code>LCD12864</code>显示模块</h2><ol>
+<h2><span id="lcd12864显示模块"><code>LCD12864</code>显示模块</span></h2><ol>
 <li>设计的端口值</li>
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit LCD_RS  =  P2^<span class="number">6</span>;       <span class="comment">//寄存器选择输入</span></span><br><span class="line">sbit LCD_RW  =  P2^<span class="number">5</span>;       <span class="comment">//液晶读/写控制</span></span><br><span class="line">sbit LCD_EN  =  P2^<span class="number">7</span>;       <span class="comment">//液晶使能控制</span></span><br><span class="line">sbit LCD_PSB =  P3^<span class="number">2</span>;       <span class="comment">//串/并方式控制</span></span><br></pre></td></tr></table></figure>
@@ -1084,16 +1183,21 @@
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401174447136.png" alt="image-20240401174447136"></p>
 <center style="color:#C0C0C0;text-decoration:underline">lcd12864模块流程图</center>
 
-<h2 id="按键扫描模块"><a href="#按键扫描模块" class="headerlink" title="按键扫描模块"></a>按键扫描模块</h2><h3 id="定义的端口值"><a href="#定义的端口值" class="headerlink" title="定义的端口值"></a>定义的端口值</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard P1</span></span><br></pre></td></tr></table></figure>
+<h2><span id="按键扫描模块">按键扫描模块</span></h2><p><strong>定义的端口值</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard P1</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="函数设计-2"><a href="#函数设计-2" class="headerlink" title="函数设计"></a>函数设计</h3><p>uchar Keypress()</p>
+<p><strong>函数设计</strong></p>
+<p>uchar Keypress()</p>
 <p>   功能：扫描哪个按键按下了</p>
 <p>   入口：无，出口：按下的按键</p>
-<h2 id="DHT11传感器数据获取模块"><a href="#DHT11传感器数据获取模块" class="headerlink" title="DHT11传感器数据获取模块"></a>DHT11传感器数据获取模块</h2><h3 id="设计的全局变量-1"><a href="#设计的全局变量-1" class="headerlink" title="设计的全局变量"></a>设计的全局变量</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uchar rec_dat[<span class="number">9</span>];</span><br></pre></td></tr></table></figure>
+<h2><span id="dht11传感器数据获取模块">DHT11传感器数据获取模块</span></h2><p><strong>设计的全局变量</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uchar rec_dat[<span class="number">9</span>];</span><br></pre></td></tr></table></figure>
 
-<h3 id="定义的端口-1"><a href="#定义的端口-1" class="headerlink" title="定义的端口"></a>定义的端口</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit Data=P3^<span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>定义的端口</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit Data=P3^<span class="number">6</span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="函数设计-3"><a href="#函数设计-3" class="headerlink" title="函数设计"></a>函数设计</h3><ol>
+<p><strong>函数设计</strong></p>
+<ol>
 <li>DHT11_start()</li>
 </ol>
 <p>   功能：初始化DHT11温湿度传感器模块</p>
@@ -1116,11 +1220,14 @@
 <p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401184513924.png" alt="image-20240401184513924"></p>
 <center style="color:#C0C0C0;text-decoration:underline">DHT11温湿度传感器获取温度湿度</center>
 
-<h2 id="显示温度界面"><a href="#显示温度界面" class="headerlink" title="显示温度界面"></a>显示温度界面</h2><h3 id="设计的全局变量-2"><a href="#设计的全局变量-2" class="headerlink" title="设计的全局变量"></a>设计的全局变量</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uchar number[]=<span class="string">&quot;123456789&quot;</span>;  ——矩阵键盘的按下值</span><br><span class="line">uchar temtop[<span class="number">4</span>];  ——设置的温度上限值</span><br><span class="line">uchar temlow[<span class="number">4</span>];  ——设置的温度下限值</span><br><span class="line">uchar humtop[<span class="number">4</span>];  ——设置的湿度上限值</span><br><span class="line">uchar humlow[<span class="number">4</span>];  ——设置的湿度下限值</span><br><span class="line">uchar wendu[<span class="number">4</span>];  ——温度数据缓存值</span><br><span class="line">uchar shidu[<span class="number">4</span>];   ——湿度数据缓存值</span><br><span class="line">uint ttop,tlow,htop,hlow,tnow,hnow; ——把温度湿度上下限数组缓存值转化为十进制数</span><br></pre></td></tr></table></figure>
+<h2><span id="显示温度界面">显示温度界面</span></h2><p><strong>设计的全局变量</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uchar number[]=<span class="string">&quot;123456789&quot;</span>;  ——矩阵键盘的按下值</span><br><span class="line">uchar temtop[<span class="number">4</span>];  ——设置的温度上限值</span><br><span class="line">uchar temlow[<span class="number">4</span>];  ——设置的温度下限值</span><br><span class="line">uchar humtop[<span class="number">4</span>];  ——设置的湿度上限值</span><br><span class="line">uchar humlow[<span class="number">4</span>];  ——设置的湿度下限值</span><br><span class="line">uchar wendu[<span class="number">4</span>];  ——温度数据缓存值</span><br><span class="line">uchar shidu[<span class="number">4</span>];   ——湿度数据缓存值</span><br><span class="line">uint ttop,tlow,htop,hlow,tnow,hnow; ——把温度湿度上下限数组缓存值转化为十进制数</span><br></pre></td></tr></table></figure>
 
-<h3 id="定义的端口-2"><a href="#定义的端口-2" class="headerlink" title="定义的端口"></a>定义的端口</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>; ——蜂鸣器引脚</span><br><span class="line">sbit wind=P2^<span class="number">2</span>; ——继电器引脚</span><br></pre></td></tr></table></figure>
+<p><strong>定义的端口</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>; ——蜂鸣器引脚</span><br><span class="line">sbit wind=P2^<span class="number">2</span>; ——继电器引脚</span><br></pre></td></tr></table></figure>
 
-<h3 id="函数设计-4"><a href="#函数设计-4" class="headerlink" title="函数设计"></a>函数设计</h3><ol>
+<p><strong>函数设计</strong></p>
+<ol>
 <li>showtem()</li>
 </ol>
 <p>   功能：显示当前温度和湿度</p>
@@ -1130,7 +1237,8 @@
 </ol>
 <p>功能：设置温湿度上下限</p>
 <p>入口：无  出口：无</p>
-<h2 id="ESP8266WIFI发送模块"><a href="#ESP8266WIFI发送模块" class="headerlink" title="ESP8266WIFI发送模块"></a>ESP8266WIFI发送模块</h2><h3 id="函数设计-5"><a href="#函数设计-5" class="headerlink" title="函数设计"></a>函数设计</h3><ol>
+<h2><span id="esp8266wifi发送模块">ESP8266WIFI发送模块</span></h2><p><strong>函数设计</strong></p>
+<ol>
 <li>UART_Init(void)</li>
 </ol>
 <p>功能：初始化UART协议和定时器1</p>
@@ -1170,9 +1278,11 @@
 </ol>
 <p>功能：WIFI控制的初始化</p>
 <p>入口：无  出口：无</p>
-<h2 id="EEPROM断电不丢失模块"><a href="#EEPROM断电不丢失模块" class="headerlink" title="EEPROM断电不丢失模块"></a>EEPROM断电不丢失模块</h2><h3 id="定义的端口-3"><a href="#定义的端口-3" class="headerlink" title="定义的端口"></a>定义的端口</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit sda = P2 ^ <span class="number">0</span>; <span class="comment">//I2C总线数据线</span></span><br><span class="line">sbit scl = P2 ^ <span class="number">1</span>; <span class="comment">//I2C总线时钟线</span></span><br></pre></td></tr></table></figure>
+<h2><span id="eeprom断电不丢失模块">EEPROM断电不丢失模块</span></h2><p><strong>定义的端口</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit sda = P2 ^ <span class="number">0</span>; <span class="comment">//I2C总线数据线</span></span><br><span class="line">sbit scl = P2 ^ <span class="number">1</span>; <span class="comment">//I2C总线时钟线</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="函数设计-6"><a href="#函数设计-6" class="headerlink" title="函数设计"></a>函数设计</h3><ol>
+<p><strong>函数设计</strong></p>
+<ol>
 <li><p>c02_init()</p>
 <p>功能：初始化24C02芯片</p>
 <p>入口：无，出口：无</p>
@@ -1218,14 +1328,15 @@
 <p>功能：读取保存的温度和湿度数据</p>
 <p>入口：无  出口：无</p>
 <hr>
-<h1 id="结果及测试分析"><a href="#结果及测试分析" class="headerlink" title="结果及测试分析"></a>结果及测试分析</h1><h2 id="硬件电路"><a href="#硬件电路" class="headerlink" title="硬件电路"></a>硬件电路</h2><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401190005994.png" alt="image-20240401190005994"></p>
+<h1><span id="结果及测试分析">结果及测试分析</span></h1><h2><span id="硬件电路">硬件电路</span></h2><p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401190005994.png" alt="image-20240401190005994"></p>
 <center style="color:#C0C0C0;text-decoration:underline">硬件实物图</center>
 
 <p><strong>说明</strong></p>
 <p>硬件部分的连接过程在原理图中都有具体列出。</p>
 <p>对于电源模块，由于51单片机自带的电源输出端口只有一个5V和3.3V不能够满足我们众多外加模块的供电需求，所以我这里采用面包板模拟拓展5V电源和3.3V电源。</p>
 <p>在连接实物图时由于51单片机自带的12864端口会遮挡住引脚的连接，所以在这里我采用杜邦线把51单片机端口与12864端口相连接。DHT11温湿度传感器直接连接我们配置好的引脚并连接电源即可。继电器模块由于我们采用的是电平触发模式，所以需要把继电器模块的IN端口连接至配置好的端口并接上电源即可，COM端口接地、NC端口接电源，NO端口悬空，直流电机分别于GND和NC端口相连从而达到继电器控制直流电机的效果。ESP8266WIFI模块的RX和TX分别于单片机的TX和RX相连并且连接上3.3V电源和GND就可以达到上传数据至上位机和云平台的效果。</p>
-<h2 id="测试记录及结果分析"><a href="#测试记录及结果分析" class="headerlink" title="测试记录及结果分析"></a>测试记录及结果分析</h2><h3 id="测试记录"><a href="#测试记录" class="headerlink" title="测试记录"></a>测试记录</h3><ol>
+<h2><span id="测试记录及结果分析">测试记录及结果分析</span></h2><p><strong>测试记录</strong></p>
+<ol>
 <li><p>首先通过usb线把单片机和电脑相连烧录程序，烧录完程序将自动进入初始界面，初始界面如下图所示。</p>
 </li>
 <li><p>当显示初始界面3s过后将会自动跳转至设置温度和湿度阈值的界面，然后通过独立键盘K1<del>K4分别设置温度上限、温度下限、湿度上限、湿度下限，通过矩阵键盘K1</del>K9设置温湿度阈值的具体数值</p>
@@ -1344,7 +1455,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Welcome-to-embedded-room"><a href="#Welcome-to-embedded-room" class="headerlink" title="Welcome to embedded room"></a>Welcome to embedded room</h1><p><strong>嵌入小屋</strong> 是一个嵌入式技术分享平台，主要记录我在学习嵌入式过程中遇到的技术问题和解决方案（可能也不只是嵌入式技术）在观看过程中有任何问题欢迎用邮箱私我。</p>
+          <h1><span id="welcome-to-embedded-room">Welcome to embedded room</span></h1><p><strong>嵌入小屋</strong> 是一个嵌入式技术分享平台，主要记录我在学习嵌入式过程中遇到的技术问题和解决方案（可能也不只是嵌入式技术）在观看过程中有任何问题欢迎用邮箱私我。</p>
 
       
     </div>
@@ -1435,13 +1546,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1482,12 +1593,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">10k</span>
+    <span title="站点总字数">12k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9 分钟</span>
+    <span title="站点阅读时长">11 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
