@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"eejhongxin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="系统功能 原理框图及说明 主要电路说明、元件选择及参数计算  复位与振荡电路 显示电路 按键电路 温度湿度检测电路 ESP8266WIFI模块 EEPROM电路  总电路设计 软件设计思路及框图  软件设计思路及主流程图 延时模块 LCD12864显示模块 按键扫描模块 DHT11传感器数据获取模块 显示温度界面 ESP8266WIFI发送模块 E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单点采集温湿度显示及云端可视化数据同步">
+<meta property="og:url" content="https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/index.html">
+<meta property="og:site_name" content="嵌入小屋">
+<meta property="og:description" content="系统功能 原理框图及说明 主要电路说明、元件选择及参数计算  复位与振荡电路 显示电路 按键电路 温度湿度检测电路 ESP8266WIFI模块 EEPROM电路  总电路设计 软件设计思路及框图  软件设计思路及主流程图 延时模块 LCD12864显示模块 按键扫描模块 DHT11传感器数据获取模块 显示温度界面 ESP8266WIFI发送模块 E">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2024/03/26/pF5Bs8x.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143812219.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143825064.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedwps13.jpg">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedwps14.jpg">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143902820.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327144442514.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327144815458.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171431160.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171440210.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171538449.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171640275.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329173732911.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172256085.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172539074.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172640045.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172701440.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401172731304.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401173024832.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401174447136.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401184513924.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401190005994.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142651498.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142717976.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142820087.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142910194.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142943992.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402143022570.png">
+<meta property="article:published_time" content="2024-03-26T02:04:25.000Z">
+<meta property="article:modified_time" content="2026-01-17T13:26:33.577Z">
+<meta property="article:author" content="eejhx">
+<meta property="article:tag" content="esp8266">
+<meta property="article:tag" content="onenet云平台">
+<meta property="article:tag" content="wifi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s21.ax1x.com/2024/03/26/pF5Bs8x.png">
+
+<link rel="canonical" href="https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>单点采集温湿度显示及云端可视化数据同步 | 嵌入小屋</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">嵌入小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>resources</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="eejhx">
+      <meta itemprop="description" content="见你潜入深海，伴我匿于人间">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="嵌入小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          单点采集温湿度显示及云端可视化数据同步
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-26 10:04:25" itemprop="dateCreated datePublished" datetime="2024-03-26T10:04:25+08:00">2024-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-01-17 21:26:33" itemprop="dateModified" datetime="2026-01-17T21:26:33+08:00">2026-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">51单片机</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!-- toc -->
+<ul>
+<li><a href="#系统功能">系统功能</a></li>
+<li><a href="#原理框图及说明">原理框图及说明</a></li>
+<li><a href="#主要电路说明-元件选择及参数计算">主要电路说明、元件选择及参数计算</a>
+<ul>
+<li><a href="#复位与振荡电路">复位与振荡电路</a></li>
+<li><a href="#显示电路">显示电路</a></li>
+<li><a href="#按键电路">按键电路</a></li>
+<li><a href="#温度湿度检测电路">温度湿度检测电路</a></li>
+<li><a href="#esp8266wifi模块">ESP8266WIFI模块</a></li>
+<li><a href="#eeprom电路">EEPROM电路</a></li>
+</ul></li>
+<li><a href="#总电路设计">总电路设计</a></li>
+<li><a href="#软件设计思路及框图">软件设计思路及框图</a>
+<ul>
+<li><a href="#软件设计思路及主流程图">软件设计思路及主流程图</a></li>
+<li><a href="#延时模块">延时模块</a></li>
+<li><a href="#lcd12864显示模块"><code>LCD12864</code>显示模块</a></li>
+<li><a href="#按键扫描模块">按键扫描模块</a></li>
+<li><a href="#dht11传感器数据获取模块">DHT11传感器数据获取模块</a></li>
+<li><a href="#显示温度界面">显示温度界面</a></li>
+<li><a href="#esp8266wifi发送模块">ESP8266WIFI发送模块</a></li>
+<li><a href="#eeprom断电不丢失模块">EEPROM断电不丢失模块</a></li>
+</ul></li>
+<li><a href="#结果及测试分析">结果及测试分析</a>
+<ul>
+<li><a href="#硬件电路">硬件电路</a></li>
+<li><a href="#测试记录及结果分析">测试记录及结果分析</a></li>
+</ul></li>
+</ul>
+<!-- tocstop -->
+<h1><span id="系统功能">系统功能</span></h1>
+<p>通过温湿度传感器DHT11采集温、湿度，能够通过显示单元显示出温、湿度，并控制继电器。<br>
+1. 开机液晶屏上显示姓名、学号3秒。<br> 2.
+显示当前温、湿度和设定的温度、湿度上下限。<br>  
+温度测量范围：<code>0℃~50℃</code><br>  
+温度测量误差：<code>±2℃</code><br>  
+湿度测量范围：<code>20%~95%</code><br>  
+湿度测量误差： <code>±5%</code><br>  
+测量精度：<code>±1℃，±1%</code><br>   测量数值均为整数<br> 3.
+当温度或者湿度超过上下限时启动继电器带动风扇。<br> 4.
+可以通过矩阵键盘调节温度、湿度上下限。<br>  
+可调控温度范围：<code>1℃~99℃</code><br>  
+可调控湿度范围：<code>1%~99%</code><br> 5.
+温度、湿度上下限设置后断电不丢失。<br> 6.
+通过ESP8266模块连接WIFI上传数据至onenet物联网平台，并进行可视化展示。<br>
+7.
+单片机与上位机进行通信，通过单片机上位机实时显示获取到的温湿度数据。<br>
+8. 通过微信小程序在后台对温度、湿度信息进行监测。<br></p>
+<hr>
+<h1><span id="原理框图及说明">原理框图及说明</span></h1>
+<p><strong>测量原理</strong></p>
+根据设计任务，设计如下框图：<br>
+<center>
+<img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="https://s21.ax1x.com/2024/03/26/pF5Bs8x.png"> <br>
+<div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+原理框图
+</div>
+</center>
+<ul>
+<li><strong>主控单元</strong>，主要负责从DHT11传感器中获取温度、湿度信息，获取矩阵键盘的设置温湿度信息，并将设置的温湿度信息和温湿度上下限显示在液晶显示模块上，并通过RX、TX串口发送数据到上位机以及ESP8266WIFI模块中去，便于向云平台传输数据。当温度或者湿度超过设定的温湿度阈值时，主控单元通过控制设置的继电器引脚电平带动直流电机工作。<br></li>
+<li><strong>电源部分</strong>，为单片机提供5V稳压电源和3.3V稳压电源。<br></li>
+<li><strong>矩阵键盘部分</strong>，其中K1~K9键盘用来设置温度湿度阈值，K13和K14按键可以用来设置单片机的显示界面和发送数据界面。<br></li>
+<li><strong>独立按键部分</strong>，其中K1~K4分别代表温度上限、温度下限、湿度上限、湿度下限四个部分的设置。<br></li>
+<li><strong>液晶显示模块</strong>，用来显示初始界面（基本信息显示3s）、设置温度界面、显示温度界面、温度上下限、发送数据界面。<br></li>
+<li><strong>EEPROM电路</strong>，用来存储设置的温度湿度上下限信息，当突然断电时，保存信息，当下次通电时，读取上次设置的温湿度信息并且展示液晶显示模块上。<br></li>
+<li><strong>WIFI模块</strong>，用来接收DHT11温度传感器获取到的温湿度数据并通过AT指令发送给网址和指定的设备。<br></li>
+<li><strong>晶振电路以及时钟电路</strong>：晶振电路主要是用来提供一个固定频率的脉冲方便时钟电路计时；时钟电路主要是用来为第一个功能的3s钟进行计时，以及为后面的显示模块刷新率进行设置。<br></li>
+</ul>
+<p><strong>使用说明</strong></p>
+<ol type="1">
+<li>首先打开单片机电源，烧录编写好的程序<br></li>
+<li>单片机显示模块会显示开机页面即姓名、学号信息3s。<br></li>
+<li>3s之后会进入温度和湿度设置界面，通过独立键盘模块<code>K1~K4</code>次选择温度下限、温度上限、湿度下限、湿度上限并通过矩阵键盘K1~K9进行按键设置。如果出现设置错误的情况只需要再通过独立键盘选择错误的设置参数并通过矩阵键盘重新设置即可。</li>
+<li>当温湿度阈值设置完成后，按下矩阵键盘K13即可进入温湿度显示模块，该模块会显示当前的温湿度信息和设置的温湿度上下限。<br></li>
+<li>按下矩阵键盘的K14即可把温湿度信息发送到OneNet云平台进行数据存储和可视化展示并实时同步到微信小程序平台进行后台监测。<br></li>
+<li>连接上usb上位机即可实时显示获取的温湿度数据。<br></li>
+<li>当温度和湿度超过设定的上下限时，启动继电器带动直流电机工作。<br></li>
+<li>当整个系统断电后，再次打开单片机系统会自动保存之前设置的温度和湿度上下限。<br></li>
+</ol>
+<table style="width:15%;">
+<colgroup>
+<col style="width: 15%">
+</colgroup>
+<tbody>
+<tr>
+<td># 主要电路说明、元件选择及参数计算</td>
+</tr>
+<tr>
+<td>| 内部模块 | 数量 | | :--------------: | :----: | | 核心芯片STC89C52
+| 1 | | 电容 | 若干个 | | 杜邦线 | 若干个 | | USB转串口 | 1 | | 3.3V
+5V供电模块 | 6 | | 按键 | 4 | | 72M 晶振 | 1 | | 矩阵键盘模块 | 1 | |
+24CO2 芯片 | 1 |</td>
+</tr>
+<tr>
+<td>| 外部资料 | 数量 | | :--------------: | :--: | | DHT11 温湿度传感器
+| 1 | | ESP8266WIFI模块 | 1 | | 直流电机 | 1 | | 1路 5V继电器 | 1 |</td>
+</tr>
+<tr>
+<td>## 复位与振荡电路
+复位电路如下图所示，由C14和R9构成。由于51单片机为低电平复位，图示电路利用电容的特性，在刚刚外加5V电源时RST脚的电压为低。时间常数=RC=1000mS，满足芯片复位要求。由于电压为5V，可选择耐压6.3V的电解电容即可。<br></td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143812219.png" alt="image-20240327143812219"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>振荡电路按照说明书的推荐，选择12MHz晶体，C7、C8选择33pF瓷片电容。</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143825064.png" alt="image-20240327143825064"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>## 显示电路</td>
+</tr>
+<tr>
+<td>经过大量的测试和调研，最终我的显示元件选择20引脚的12864液晶显示屏（128X64显示分辨率为128×64，内置8192个16<em>16点汉字，和128个16</em>8点ASCII字符集。利用该模块灵活的接口方式和简单、方便的操作指令。可以显示8×4行16×16点阵的汉字。也可完成图形显示），这里把各个引脚的功能以及连接方式做成了一个表格，以便直观地显示，通过51单片机上自带的可调电阻来调节12864的背光。</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>| GND | +5V | V_com | RS | R/W | EN | D0 | D1 | D2 | D3 | |
+:----------: | :------------: | :---------------: |
+:---------------------: | :----------------: | :------------: | :---: |
+:---: | :---: | :---: | | 模块的电源地 | 模块的电源正端 |
+LCD驱动电压输入端 | 并行的指令/数据选择信号 | 并行的读写选择信号 |
+并行的使能信号 | 数据0 | 数据1 | 数据0 | 数据0 | | GND | VCC | 电位器 |
+P2^6 | P2^5 | P2^7 | P0^0 | P0^1 | P0^2 | P0^3 |</td>
+</tr>
+<tr>
+<td>| D4 | D5 | D6 | D7 | PSB | NC | RST | V_OUT | BLA+ | BLA- | | :---:
+| :---: | :---: | :---: | :-------------: | :--: | :-------------: |
+:---: | :--------: | :----------: | | 数据4 | 数据5 | 数据6 | 数据7 |
+并/串行接口选择 | 空脚 | 复位 低电平有效 | 空脚 | 背光源正极 |
+背光源和负极 | | P0^4 | P0^5 | P0^6 | P0^7 | P3^2 | | VCC | | VCC | GND
+|</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedwps13.jpg"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>## 按键电路</td>
+</tr>
+<tr>
+<td>由于89C52的P3口内部有上拉电阻，为简化电路，即当K1没有按下时，P3.1=1，当K1按下时，P3.1=0。<br></td>
+</tr>
+<tr>
+<td>矩阵键盘本质是使用8个io口来进行16个按键的控制读取，可以减小io口的使用，用4条I/O线作为行线，4条I/O线作为列线组成的键盘。在行线和列线的每个交叉点上，设置一个按键。而这样的按键中按键的个数是4
+X
+4个。第一行接到p17，第二行接到p16，第三行接到p15，第4行接到p14，第一列接到p13，第二列接到p12，第三列接到p11，第四列接到p10。先从P1口的高四位（四个行）输出高电平，低四位（四个列）输出低电平，假设有按键按下，从P1口的高四位读取键盘状态。判断高四位的四行哪一行变成了低电平，就知道是第几行，再从P1口的低四位（四个列）输出高电平，高四位（四个行）输出低电平，从P1口的低四位读取键盘状态。判断低四位的四列哪一行变成了低电平，就知道是第几列，将两次读取结果组合起来就可以得到当前按键的特征编码。</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>| K1 | K2 | K3 | K4 | | ---- | ---- | ---- | ---- | | P3.1 | P3.0 |
+P3.2 | P3.3 |</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedwps14.jpg"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327143902820.png" alt="image-20240327143902820"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>## 温度湿度检测电路</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327144442514.png" alt="image-20240327144442514"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>经过大量的测试和我们所有的知识储备，最终我选择DHT11模块对温度，湿度进行检测并显示在12864显示器上。DHT的引脚图如下所示。
+<br></td>
+</tr>
+<tr>
+<td>DHT11共有三个引脚，其中VCC，GND分别接入单片机电源模块上的VCC,GND。程序初始化后，单片机首先向DATA管脚发送一个低电平脉冲.</td>
+</tr>
+<tr>
+<td><strong>触发DHT11采集数据</strong></td>
+</tr>
+<tr>
+<td>总线空闲状态为高电平,单片机把总线拉低等待DHT11响应,单片机把总线拉低必须大于18ms,保证DHT11能检测到起始信号。</td>
+</tr>
+<tr>
+<td>当DHT11接收到单片机的开始信号后,等待单片机开始信号结束,然后发送80us低电平响应信号。</td>
+</tr>
+<tr>
+<td>单片机发送开始信号结束后,延时等待20-40us后,切换为输入状态，等待DHT11的80us低电平信号结束，然后判断DHT11是否是否发出
+80us 的高电平；如果是，即可开始采集数据。</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240327144815458.png" alt="image-20240327144815458"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><strong>数字0和1的信号时序</strong></td>
+</tr>
+<tr>
+<td>当DHT11输出数字0时， 单片机读取到的信号为50 us的低电平，之后为26-28
+us的高电平。当DHT11输出数字1时， 单片机读取到的信号为50
+us的低电平，之后为70 us的高电平。</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171431160.png" alt="image-20240329171427862"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171440210.png" alt="image-20240329171440210"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><strong>总时序图</strong></td>
+</tr>
+<tr>
+<td>用户MCU发送一次开始信号后,DHT11从低功耗模式转换到高速模式,等待主机开始信号结束后,DHT11发送响应信号,送出40bit的数据,并触发一次信号采集,用户可选择读取部分数据。</td>
+</tr>
+<tr>
+<td>从模式下,DHT11接收到开始信号触发一次温湿度采集,如果没有接收到主机发送开始信号,DHT11不会主动进行温湿度采集。当一次完整的采集数据后，DHT11会转换到低速模式。</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171538449.png" alt="image-20240329171538449"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>## ESP8266WIFI模块</td>
+</tr>
+<tr>
+<td>ESP8266是一款高性能的WIFI串口模块，内部集成<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=MCU&amp;spm=1001.2101.3001.7020">MCU</a>能实现单片机之间串口通信，是目前使用最广泛的一种WIFI模块之一。接线时只需要将RXD、TXD、GND、VCC这4个引脚，分别和USB转TTL模块的TXD、RXD、GND、VCC相连接。</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329171640275.png"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>然后再通过USB转TTL模块和AT指令集通过以下步骤在串口助手中或者直接在单片机程序中对ESP8266模块进行配置。</td>
+</tr>
+<tr>
+<td>1. AT——测试ESP8266是否工作完好 2.
+AT+CWMODE=1——设置ESP8266的工作模式为Station模式 3.
+AT+CWJAP=”WIFI名称,”WIFI密码”——进行WIFI连接（注意这里的手机热点或者外部热点只能是英文名称）
+4. AT+CIPSTART=”TCP”,”
+你电脑自己的IP地址”,”设置的端口”——建立TCP连接，设置IP地址和PORT端口。 5.
+AT+CIPMODE=1——开启ESP8266的透传模式。 6. AT+CIPSEND——准备发送数据 7.
+POST /devices/1051580320/datapoints?type=3 HTTP/1.1 ——onenet的设备</td>
+</tr>
+<tr>
+<td>api-key:1ZXQyfKnqL1bqEV0D0JJqbL7pmc= ——onenet的master key</td>
+</tr>
+<tr>
+<td>Host:api.heclouds.com ——onenet的主机ip地址</td>
+</tr>
+<tr>
+<td>Content-Length:21 ——传输的数据长度</td>
+</tr>
+<tr>
+<td>{"temp":temp,"humi":humi} ——传输的数据</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329173732911.png" alt="image-20240329173732911"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>## EEPROM电路</td>
+</tr>
+<tr>
+<td>EEPROM电路的主要部分为AT24C02，原理图如下所示。</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172256085.png" alt="image-20240329172256085"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>AT24C02 器件地址为 7 位，高 4 位固定为 1010，低 3 位由 A0/A1/A2
+信号线的电平决定。
+因为传输地址或数据是以字节为单位传送的，当传送地址时，器件地址占 7
+位，还有最后一位（最低位 R/W）用来选择读写方向。 A0/A1/A2 默认连接到
+GND，所以器件地址为1010000，即
+0x50（未计算最低位）。如果要对芯片进行写操作时，R/W 即为
+0，写器件地址即为 0XA0；如果要对芯片进行读操作时，R/W 即为
+1，此时读器件地址为 0XA1。开发板上我们也将 WP 引脚直接接在 GND
+上，此时芯片允许数据正常读写。</td>
+</tr>
+<tr>
+<td><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172539074.png" alt="image-20240329172539074"></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1><span id="总电路设计">总电路设计</span></h1>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172640045.png" alt="image-20240329172640045">
+<figcaption aria-hidden="true">image-20240329172640045</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+总电路硬件连接图
+</center>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240329172701440.png" alt="image-20240329172701440">
+<figcaption aria-hidden="true">image-20240329172701440</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+总电路硬件实物图
+</center>
+<hr>
+<h1><span id="软件设计思路及框图">软件设计思路及框图</span></h1>
+<h2><span id="软件设计思路及主流程图">软件设计思路及主流程图</span></h2>
+<p>根据题目的设计要求以及我自己附加的功能，我采用定时器0和定时器1作为时钟数据源，定时器0每用来完成功能1姓名学号显示3s，定时器1用来对ESP8266和II2C进行初始化并实现发送数据、存储数据以及初始化数据线的功能。设置温湿度、显示温湿度信息和上下限、继电器以及直流电机的工作、矩阵键盘扫描、比较当前数据和设定阈值的差别、发送温湿度数据等全部放在主程序中实现。</p>
+<p>温湿度获取部分设置数据缓冲区，DHT11传感器获取的温湿度信息直接送入缓冲区，由程序完成动态扫描。</p>
+<p><strong>设计的全局变量</strong></p>
+<ol type="1">
+<li>温湿度数据缓冲区：<code>uchar wendu[4]、uchar shidu[4]</code></li>
+<li>设置的温湿度上下限：<code>uchar temtop[4]、uchar temlow[4]、uchar humtop[4]、uchar humlow[4]</code></li>
+<li>温湿度传感器接收数据：<code>uchar rec_dat[9]</code></li>
+<li>矩阵键盘的扫描值<code>char key、uint flag</code></li>
+<li>独立键盘的扫描值：<code>uchar func</code></li>
+<li>ESP8266接收状态标记：<code>uint UART_RX_STA</code></li>
+<li>ESP8266接收缓冲：<code>uchar UART_RX_BUF[UART_REC_LEN]</code></li>
+</ol>
+<p><strong>设计的端口</strong></p>
+<ol type="1">
+<li>LCD端口</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sbit LCD_RS  =  P2^<span class="number">6</span>;       <span class="comment">//寄存器选择输入</span></span><br><span class="line">sbit LCD_RW  =  P2^<span class="number">5</span>;       <span class="comment">//液晶读/写控制</span></span><br><span class="line">sbit LCD_EN  =  P2^<span class="number">7</span>;       <span class="comment">//液晶使能控制</span></span><br><span class="line">sbit LCD_PSB =  P3^<span class="number">2</span>;       <span class="comment">//串/并方式控制</span></span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>DHT11端口</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit Data=P3^<span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>继电器端口</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit wind=P2^<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li>蜂鸣器端口</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>定义的端口</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LCD_data  P0   ——LCD数据口</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard  P1   ——定义矩阵键盘</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UART_REC_LEN  10  ——定义ESP8266最大接收字节数</span></span><br></pre></td></tr></table></figure>
+<p><strong>函数设计</strong></p>
+<ol type="1">
+<li>主函数main()</li>
+</ol>
+<p>入口：无，出口：无。 一个大的循环，程序用不结束。</p>
+<ol start="2" type="1">
+<li>ESP8266发送数据 void send_data()</li>
+</ol>
+<p>功能：对ESP8266进行云平台连接并通过ESP8266发送获取的DHT11温湿度传感器获取的数据。</p>
+<p>入口：无，出口：无0</p>
+<ol start="3" type="1">
+<li>初始化定时器0 void time1_init(void)</li>
+</ol>
+<p>功能：初始化定时器的工作模式，并对定时器0赋初值。</p>
+<p>​ 入口：无，出口：无。 改动当前显示位号。</p>
+<ol start="4" type="1">
+<li>定时器的中断函数 void time0() interrupt 1</li>
+</ol>
+<p>功能：通过设置count计数变量，每1mS中断一次，记录中断次数到3000次则初始化页面跳转至设置温度界面，并调整为合法的时间格式。</p>
+<p>入口：无，出口：无。</p>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401172731304.png" alt="image-20240401172731304">
+<figcaption aria-hidden="true">image-20240401172731304</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+主程序框图
+</center>
+<h2><span id="延时模块">延时模块</span></h2>
+<p><strong>函数设计</strong></p>
+<ol type="1">
+<li>void delay_ms(uint ms)</li>
+</ol>
+<p>功能：设置延迟ms的函数</p>
+<p>入口：延迟的时间，出口：无</p>
+<ol start="2" type="1">
+<li>void delay(int ms)</li>
+</ol>
+<p>功能：设置延迟ms的函数</p>
+<p>入口：延迟的ms时间 出口：无</p>
+<ol start="3" type="1">
+<li>void delay_us(uchar n)</li>
+</ol>
+<p>功能：设置延迟的us的函数</p>
+<p>入口：延迟us的函数 出口：无</p>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401173024832.png" alt="image-20240401173024832">
+<figcaption aria-hidden="true">image-20240401173024832</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+延时实现
+</center>
+<h2><span id="lcd12864显示模块"><code>LCD12864</code>显示模块</span></h2>
+<ol type="1">
+<li>设计的端口值</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit LCD_RS  =  P2^<span class="number">6</span>;       <span class="comment">//寄存器选择输入</span></span><br><span class="line">sbit LCD_RW  =  P2^<span class="number">5</span>;       <span class="comment">//液晶读/写控制</span></span><br><span class="line">sbit LCD_EN  =  P2^<span class="number">7</span>;       <span class="comment">//液晶使能控制</span></span><br><span class="line">sbit LCD_PSB =  P3^<span class="number">2</span>;       <span class="comment">//串/并方式控制</span></span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>定义的端口值</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LCD_data  P0       <span class="comment">//数据口</span></span></span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>设计的函数如下</li>
+</ol>
+<ul>
+<li>bit lcd_busy()</li>
+</ul>
+<p>功能：检查LCD忙状态</p>
+<p>入口：无，出口：，lcd_busy为1时，忙，等待。lcd-busy为0时,闲，可写指令与数据。</p>
+<ul>
+<li>void lcd_wcmd(uchar cmd)</li>
+</ul>
+<p>功能：写指令数据到LCD</p>
+<p>入口：LCD指令集 出口：无</p>
+<ul>
+<li>void lcd_wdat(uchar dat)</li>
+</ul>
+<p>功能：写显示数据到LCD</p>
+<p>入口：写入的数据 出口：无</p>
+<ul>
+<li>lcd_init()</li>
+</ul>
+<p>功能：LCD初始化设定</p>
+<p>入口：无 出口：无 调用函数：lcd_wcmd,lcd_busy()</p>
+<ul>
+<li>void lcd_showstring(uchar x,uchar y,uchar *str)</li>
+</ul>
+<p>功能：LCD根据设定的位置显示字符串</p>
+<p>入口：设置的x轴和y轴，显示的字符串 出口：无
+调用的函数：lcd_wdat(uchar dat)</p>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401174447136.png" alt="image-20240401174447136">
+<figcaption aria-hidden="true">image-20240401174447136</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+lcd12864模块流程图
+</center>
+<h2><span id="按键扫描模块">按键扫描模块</span></h2>
+<p><strong>定义的端口值</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard P1</span></span><br></pre></td></tr></table></figure>
+<p><strong>函数设计</strong></p>
+<p>uchar Keypress()</p>
+<p>功能：扫描哪个按键按下了</p>
+<p>入口：无，出口：按下的按键</p>
+<h2><span id="dht11传感器数据获取模块">DHT11传感器数据获取模块</span></h2>
+<p><strong>设计的全局变量</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uchar rec_dat[<span class="number">9</span>];</span><br></pre></td></tr></table></figure>
+<p><strong>定义的端口</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit Data=P3^<span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>函数设计</strong></p>
+<ol type="1">
+<li>DHT11_start()</li>
+</ol>
+<p>功能：初始化DHT11温湿度传感器模块</p>
+<p>入口：无，出口：无</p>
+<ol start="2" type="1">
+<li>DHT11_rec_byte()</li>
+</ol>
+<p>功能：DHT11接收获取到的字节数据</p>
+<p>入口：无 出口：接收到的字节数据</p>
+<ol start="3" type="1">
+<li>DHT11_receive()</li>
+</ol>
+<p>功能：接收所有的温度湿度电平数据并进行转换</p>
+<p>入口：无 出口：转换的温湿度数据</p>
+<ol start="4" type="1">
+<li>DHT11_temget()</li>
+</ol>
+<p>功能：把转换过的数据存进湿度和温度数组中去</p>
+<p>入口：无 出口：无 调用函数：lcd_wcmd,lcd_busy()</p>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401184513924.png" alt="image-20240401184513924">
+<figcaption aria-hidden="true">image-20240401184513924</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+DHT11温湿度传感器获取温度湿度
+</center>
+<h2><span id="显示温度界面">显示温度界面</span></h2>
+<p><strong>设计的全局变量</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uchar number[]=<span class="string">&quot;123456789&quot;</span>;  ——矩阵键盘的按下值</span><br><span class="line">uchar temtop[<span class="number">4</span>];  ——设置的温度上限值</span><br><span class="line">uchar temlow[<span class="number">4</span>];  ——设置的温度下限值</span><br><span class="line">uchar humtop[<span class="number">4</span>];  ——设置的湿度上限值</span><br><span class="line">uchar humlow[<span class="number">4</span>];  ——设置的湿度下限值</span><br><span class="line">uchar wendu[<span class="number">4</span>];  ——温度数据缓存值</span><br><span class="line">uchar shidu[<span class="number">4</span>];   ——湿度数据缓存值</span><br><span class="line">uint ttop,tlow,htop,hlow,tnow,hnow; ——把温度湿度上下限数组缓存值转化为十进制数</span><br></pre></td></tr></table></figure>
+<p><strong>定义的端口</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>; ——蜂鸣器引脚</span><br><span class="line">sbit wind=P2^<span class="number">2</span>; ——继电器引脚</span><br></pre></td></tr></table></figure>
+<p><strong>函数设计</strong></p>
+<ol type="1">
+<li>showtem()</li>
+</ol>
+<p>功能：显示当前温度和湿度</p>
+<p>入口：无，出口：无</p>
+<ol start="2" type="1">
+<li>settem()</li>
+</ol>
+<p>功能：设置温湿度上下限</p>
+<p>入口：无 出口：无</p>
+<h2><span id="esp8266wifi发送模块">ESP8266WIFI发送模块</span></h2>
+<p><strong>函数设计</strong></p>
+<ol type="1">
+<li>UART_Init(void)</li>
+</ol>
+<p>功能：初始化UART协议和定时器1</p>
+<p>入口：无 出口：无</p>
+<ol start="2" type="1">
+<li>UART_SendData(uchar dat)</li>
+</ol>
+<p>功能：发送一个字符数据</p>
+<p>入口：字符数据 出口：无</p>
+<ol start="3" type="1">
+<li>UART_SendString(uchar *pbuf)</li>
+</ol>
+<p>功能：发送一个字符串数据</p>
+<p>入口：字符串数据 出口：无</p>
+<ol start="4" type="1">
+<li><p>ESP8266_SendCmd(uchar *pbuf)</p>
+<p>功能：向ESP8266发送AT指令集</p>
+<p>入口：AT指令，字符串格式，出口：无</p></li>
+<li><p>ESP8266_SendData(uchar *pbuf)</p></li>
+</ol>
+<p>功能：ESP8266 WIFI发送数据到APP</p>
+<p>入口：数据 出口：无</p>
+<ol start="6" type="1">
+<li>ESP8266_ModeInit(void)</li>
+</ol>
+<p>功能：ESP8266 WIFI模块工作模式初始化</p>
+<p>入口：无 出口：无</p>
+<ol start="7" type="1">
+<li>ESP8266_SendData(uchar *pbuf)</li>
+</ol>
+<p>功能：ESP8266 WIFI发送数据到APP</p>
+<p>入口：数据 出口：无</p>
+<ol start="8" type="1">
+<li>wifi_control_init(void)</li>
+</ol>
+<p>功能：WIFI控制的初始化</p>
+<p>入口：无 出口：无</p>
+<h2><span id="eeprom断电不丢失模块">EEPROM断电不丢失模块</span></h2>
+<p><strong>定义的端口</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit sda = P2 ^ <span class="number">0</span>; <span class="comment">//I2C总线数据线</span></span><br><span class="line">sbit scl = P2 ^ <span class="number">1</span>; <span class="comment">//I2C总线时钟线</span></span><br></pre></td></tr></table></figure>
+<p><strong>函数设计</strong></p>
+<ol type="1">
+<li><p>c02_init()</p>
+<p>功能：初始化24C02芯片</p>
+<p>入口：无，出口：无</p></li>
+<li><p>start()</p></li>
+</ol>
+<p>功能：启动II2C总线</p>
+<p>入口：无 出口：无</p>
+<ol start="3" type="1">
+<li>stop()</li>
+</ol>
+<p>功能：停止II2C总线</p>
+<p>入口：无 出口：无</p>
+<ol start="4" type="1">
+<li>writebyte(unsigned char j)</li>
+</ol>
+<p>功能：向数据线中写入一个字节</p>
+<p>入口：一个字符数据 出口：无</p>
+<ol start="5" type="1">
+<li>readbyte()</li>
+</ol>
+<p>功能：读取数据线中的一个字节</p>
+<p>入口：无 出口：无</p>
+<ol start="6" type="1">
+<li>read24c02(unsigned char address)</li>
+</ol>
+<p>功能：从24c02的地址address中读取一个字节数据</p>
+<p>入口：24C02的地址 出口：无</p>
+<ol start="7" type="1">
+<li>write24c02(unsigned char address, unsigned char info)</li>
+</ol>
+<p>功能：向24c02的address地址中写入一字节数据info</p>
+<p>入口：地址，字符数据 出口：无</p>
+<ol start="8" type="1">
+<li>save_data()</li>
+</ol>
+<p>功能：保存温度和湿度数据</p>
+<p>入口：无 出口：无</p>
+<ol start="9" type="1">
+<li>read_data()</li>
+</ol>
+<p>功能：读取保存的温度和湿度数据</p>
+<p>入口：无 出口：无</p>
+<hr>
+<h1><span id="结果及测试分析">结果及测试分析</span></h1>
+<h2><span id="硬件电路">硬件电路</span></h2>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240401190005994.png" alt="image-20240401190005994">
+<figcaption aria-hidden="true">image-20240401190005994</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+硬件实物图
+</center>
+<p><strong>说明</strong></p>
+<p>硬件部分的连接过程在原理图中都有具体列出。</p>
+<p>对于电源模块，由于51单片机自带的电源输出端口只有一个5V和3.3V不能够满足我们众多外加模块的供电需求，所以我这里采用面包板模拟拓展5V电源和3.3V电源。</p>
+<p>在连接实物图时由于51单片机自带的12864端口会遮挡住引脚的连接，所以在这里我采用杜邦线把51单片机端口与12864端口相连接。DHT11温湿度传感器直接连接我们配置好的引脚并连接电源即可。继电器模块由于我们采用的是电平触发模式，所以需要把继电器模块的IN端口连接至配置好的端口并接上电源即可，COM端口接地、NC端口接电源，NO端口悬空，直流电机分别于GND和NC端口相连从而达到继电器控制直流电机的效果。ESP8266WIFI模块的RX和TX分别于单片机的TX和RX相连并且连接上3.3V电源和GND就可以达到上传数据至上位机和云平台的效果。</p>
+<h2><span id="测试记录及结果分析">测试记录及结果分析</span></h2>
+<p><strong>测试记录</strong></p>
+<ol type="1">
+<li><p>首先通过usb线把单片机和电脑相连烧录程序，烧录完程序将自动进入初始界面，初始界面如下图所示。</p></li>
+<li><p>当显示初始界面3s过后将会自动跳转至设置温度和湿度阈值的界面，然后通过独立键盘K1<sub>K4分别设置温度上限、温度下限、湿度上限、湿度下限，通过矩阵键盘K1</sub>K9设置温湿度阈值的具体数值</p></li>
+</ol>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142651498.png" alt="image-20240402142651498">
+<figcaption aria-hidden="true">image-20240402142651498</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+设置温湿度阈值
+</center>
+<ol start="3" type="1">
+<li>当设置好温湿度阈值时，点击矩阵键盘的K13即可进入温湿度显示页面，该页面可以显示温湿度的当前值和温湿度上下限值，显示界面如下图所示。</li>
+</ol>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142717976.png" alt="image-20240402142717976">
+<figcaption aria-hidden="true">image-20240402142717976</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+温湿度显示界面
+</center>
+<ol start="4" type="1">
+<li><p>当温度和湿度超过设定的阈值时，继电器会启动，继电器的指示灯变为绿灯。</p></li>
+<li><p>当按下矩阵键盘的K14键即可把单片机获取的温湿度数据发送至onenet云平台进行存储，我还绘制了一个可视化平台用来实时展示单片机获取的数据。数据存储以及可视化展示如下图所示。</p></li>
+</ol>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142820087.png" alt="image-20240402142820087">
+<figcaption aria-hidden="true">image-20240402142820087</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+云平台数据存储
+</center>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142910194.png" alt="image-20240402142910194">
+<figcaption aria-hidden="true">image-20240402142910194</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+可视化数据显示
+</center>
+<ol start="6" type="1">
+<li>我还制作了配套的微信小程序方便客户在手机端实时对温湿度的情况进行掌控和调配，小程序的页面如下图所示。</li>
+</ol>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402142943992.png" alt="image-20240402142943992">
+<figcaption aria-hidden="true">image-20240402142943992</figcaption>
+</figure>
+<center style="color:#C0C0C0;text-decoration:underline">
+微信小程序后台显示
+</center>
+<ol start="7" type="1">
+<li>单片机与上位机通信，能够通过单片机实时把数据发送给电脑，电脑显示的数据如下图所示。</li>
+</ol>
+<figure>
+<img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20240402143022570.png" alt="image-20240402143022570">
+<figcaption aria-hidden="true">image-20240402143022570</figcaption>
+</figure>
+<ol start="8" type="1">
+<li>当断开单片机电源再接通单片机电源时我们设置的单片机上下限值会被保。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/qqaz1234/Collect-temperature-and-humidity-display-and-cloud-data-storage">完整的项目地址</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>eejhx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/" title="单点采集温湿度显示及云端可视化数据同步">https://eejhongxin.github.io/2024/03/26/单点采集温湿度显示及云端可视化数据同步/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/esp8266/" rel="tag"># esp8266</a>
+              <a href="/tags/onenet%E4%BA%91%E5%B9%B3%E5%8F%B0/" rel="tag"># onenet云平台</a>
+              <a href="/tags/wifi/" rel="tag"># wifi</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/25/%E5%BC%80%E7%AF%87/" rel="prev" title="开篇">
+      <i class="fa fa-chevron-left"></i> 开篇
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/02/%E5%9F%BA%E4%BA%8ETCP%E7%9A%84%E6%B5%81%E5%AA%92%E4%BD%93%E8%A7%86%E9%A2%91%E9%9F%B3%E9%A2%91%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93/" rel="next" title="基于TCP的流媒体视频音频加密传输">
+      基于TCP的流媒体视频音频加密传输 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">系统功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">原理框图及说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">总电路设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">软件设计思路及框图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">软件设计思路及主流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">延时模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">LCD12864显示模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">按键扫描模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.5.</span> <span class="nav-text">DHT11传感器数据获取模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.6.</span> <span class="nav-text">显示温度界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.7.</span> <span class="nav-text">ESP8266WIFI发送模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.8.</span> <span class="nav-text">EEPROM断电不丢失模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">结果及测试分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">硬件电路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text">测试记录及结果分析</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="eejhx"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">eejhx</p>
+  <div class="site-description" itemprop="description">见你潜入深海，伴我匿于人间</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:eejhongxin@163.com" title="E-Mail → mailto:eejhongxin@163.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-03 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">eejhx</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">15k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">14 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
