@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"eejhongxin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="协议介绍 I2S总线规范 三种信号线 工作模式   ADC（Analog-to-Digital Converter）通信协议规范 常规ADC信号采样在音频领域存在的瑕疵   采用I2S传输协议优化ADC采样   系统搭建 硬件部分 软件部分 I2S协议配置 ADC模式下的I2S配置        协议介绍I2S总线规范三种信号线 SCK串行时钟： 对应的数字音频的每一位音频数据，SCK都有1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP32使用I2S、ADC采样麦克风进行音频采集与播放">
+<meta property="og:url" content="https://eejhongxin.github.io/2024/11/22/ESP32%E4%BD%BF%E7%94%A8I2S%E3%80%81ADC%E9%87%87%E6%A0%B7%E9%BA%A6%E5%85%8B%E9%A3%8E%E8%BF%9B%E8%A1%8C%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86%E4%B8%8E%E6%92%AD%E6%94%BE/index.html">
+<meta property="og:site_name" content="嵌入小屋">
+<meta property="og:description" content="协议介绍 I2S总线规范 三种信号线 工作模式   ADC（Analog-to-Digital Converter）通信协议规范 常规ADC信号采样在音频领域存在的瑕疵   采用I2S传输协议优化ADC采样   系统搭建 硬件部分 软件部分 I2S协议配置 ADC模式下的I2S配置        协议介绍I2S总线规范三种信号线 SCK串行时钟： 对应的数字音频的每一位音频数据，SCK都有1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241126192005435.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241126202646688.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241126203151787.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241206204650961.png">
+<meta property="og:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241206203219502.png">
+<meta property="article:published_time" content="2024-11-22T12:33:29.000Z">
+<meta property="article:modified_time" content="2025-07-19T08:02:56.100Z">
+<meta property="article:author" content="eejhx">
+<meta property="article:tag" content="ADC采样">
+<meta property="article:tag" content="I2S">
+<meta property="article:tag" content="音频流采集">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241126192005435.png">
+
+<link rel="canonical" href="https://eejhongxin.github.io/2024/11/22/ESP32%E4%BD%BF%E7%94%A8I2S%E3%80%81ADC%E9%87%87%E6%A0%B7%E9%BA%A6%E5%85%8B%E9%A3%8E%E8%BF%9B%E8%A1%8C%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86%E4%B8%8E%E6%92%AD%E6%94%BE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ESP32使用I2S、ADC采样麦克风进行音频采集与播放 | 嵌入小屋</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">嵌入小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>resources</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eejhongxin.github.io/2024/11/22/ESP32%E4%BD%BF%E7%94%A8I2S%E3%80%81ADC%E9%87%87%E6%A0%B7%E9%BA%A6%E5%85%8B%E9%A3%8E%E8%BF%9B%E8%A1%8C%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86%E4%B8%8E%E6%92%AD%E6%94%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="eejhx">
+      <meta itemprop="description" content="见你潜入深海，伴我匿于人间">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="嵌入小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ESP32使用I2S、ADC采样麦克风进行音频采集与播放
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-11-22 20:33:29" itemprop="dateCreated datePublished" datetime="2024-11-22T20:33:29+08:00">2024-11-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-07-19 16:02:56" itemprop="dateModified" datetime="2025-07-19T16:02:56+08:00">2025-07-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ESP32/" itemprop="url" rel="index"><span itemprop="name">ESP32</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!-- toc -->
+
+<ul>
+<li><a href="#%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D"><strong>协议介绍</strong></a><ul>
+<li><a href="#i2s%E6%80%BB%E7%BA%BF%E8%A7%84%E8%8C%83">I2S总线规范</a><ul>
+<li><a href="#%E4%B8%89%E7%A7%8D%E4%BF%A1%E5%8F%B7%E7%BA%BF">三种信号线</a></li>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F">工作模式</a></li>
+</ul>
+</li>
+<li><a href="#adcanalog-to-digital-converter%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E8%A7%84%E8%8C%83">ADC（Analog-to-Digital Converter）通信协议规范</a><ul>
+<li><a href="#%E5%B8%B8%E8%A7%84adc%E4%BF%A1%E5%8F%B7%E9%87%87%E6%A0%B7%E5%9C%A8%E9%9F%B3%E9%A2%91%E9%A2%86%E5%9F%9F%E5%AD%98%E5%9C%A8%E7%9A%84%E7%91%95%E7%96%B5">常规ADC信号采样在音频领域存在的瑕疵</a></li>
+</ul>
+</li>
+<li><a href="#%E9%87%87%E7%94%A8i2s%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%E4%BC%98%E5%8C%96adc%E9%87%87%E6%A0%B7">采用I2S传输协议优化ADC采样</a></li>
+</ul>
+</li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA">系统搭建</a><ul>
+<li><a href="#%E7%A1%AC%E4%BB%B6%E9%83%A8%E5%88%86">硬件部分</a></li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E9%83%A8%E5%88%86">软件部分</a><ul>
+<li><a href="#i2s%E5%8D%8F%E8%AE%AE%E9%85%8D%E7%BD%AE">I2S协议配置</a></li>
+<li><a href="#adc%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84i2s%E9%85%8D%E7%BD%AE">ADC模式下的I2S配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h1><span id="协议介绍"><strong>协议介绍</strong></span></h1><h2><span id="i2s总线规范">I2S总线规范</span></h2><h3><span id="三种信号线">三种信号线</span></h3><ol>
+<li><p>SCK串行时钟：</p>
+<p>对应的数字音频的每一位音频数据，SCK都有1个脉冲，SCK的频率&#x3D;2×采样频率×采样位数。</p>
+</li>
+<li><p>WS字段（声道选择）：</p>
+<p>用于切换左右声道的数据。WS的频率&#x3D;采样频率</p>
+<p>命令选择线表明了正在被传输的声道。</p>
+<p>WS为“1”表示正在传输的是左声道的数据。<br>WS为“0”表示正在传输的是右声道的数据。<br>WS可以在串行时钟的上升沿或者下降沿发生改变，并且WS信号不需要一定是对称的。在从属装置端，WS在时钟信号的上升沿发生改变。WS总是在最高位传输前的一个时钟周期发生改变，这样可以使从属装置得到与被传输的串行数据同步的时间，并且使接收端存储当前的命令以及为下次的命令清除空间。</p>
+</li>
+<li><p>SD串行数据：</p>
+<p>这个其实就是我们常说的数据端口了。</p>
+</li>
+</ol>
+<h3><span id="工作模式">工作模式</span></h3><p>I2S工作模式可以是主模式（Master Mode）或从模式（Slave Mode）。两者唯一的区别是：提供时钟信号（SCK）和帧同步信号（LRCK）的主题不同。如下图所示，一共存在三种工作模式，分别是：</p>
+<p> 1.发射器（transmitter）为Master，接收器（receiver）为Slave，此时由发射器提供SCK和LRCK</p>
+<p>2.接收器（receiver）为Master，发射器（transmitter）为Slave，此时由接收器提供SCK和LRCK</p>
+<p>3.发射器（transmitter）和接收器（receiver）均为Slave，由系统中其他模块提供SCK和LRCK</p>
+<p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241126192005435.png" alt="image-20241126192005435"></p>
+<h2><span id="adcanalog-to-digital-converter通信协议规范">ADC（Analog-to-Digital Converter）通信协议规范</span></h2><p>adc采样大家应该都不陌生，就是模拟信号转换成数字信号的转换器，这个用途在于采集单片机ADC引脚信号，因为本质上我们的音频信号就是由一个个电压信号组成的，如果采集到了相应的ADC引脚信号，那么我们也就可以相应的复现出音频信号。</p>
+<h3><span id="常规adc信号采样在音频领域存在的瑕疵">常规ADC信号采样在音频领域存在的瑕疵</span></h3><p>但是如果大家尝试直接用analogread（我这里以arduino里面读取电压的方式为例）或者更为底层的去读取引脚的电压值，如果直接使用DAC引脚输出读取到的电压值时会发现声音非常卡完全不像一个音频信号。以我下面这段代码为例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void setup() &#123;</span><br><span class="line">  Serial.begin(115200);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// the loop routine runs over and over again forever:</span><br><span class="line">void loop() &#123;</span><br><span class="line">  float startT=micros();</span><br><span class="line">  float sensorValue = analogRead(A0);</span><br><span class="line">  float voltage = sensorValue * (5.0 / 1023.0);</span><br><span class="line">  float endT=micros();</span><br><span class="line">  Serial.printf(&quot;voltage:%f,time:%f\n&quot;,sensorValue,endT-startT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就是很简单的一段读取引脚电压的程序，最后的输出结果如下，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">voltage:0.738025,time:128.000000</span><br><span class="line">voltage:0.943304,time:128.000000</span><br><span class="line">voltage:0.000000,time:144.000000</span><br><span class="line">voltage:0.000000,time:136.000000</span><br><span class="line">voltage:0.000000,time:120.000000</span><br></pre></td></tr></table></figure>
+
+<p>两个读取之间的间隔基本都在100us左右，那么它的更新频率就是1000HZ左右<br>$$<br>\frac{1}{100*10^{-6}}&#x3D; 1000HZ<br>$$<br>但是我们正常的音频信号频率最低也都在8000HZ朝上，常见的都是16000HZ和44100HZ明显是远远满足不了需求的这就是为什么音频会听起来不正常的原因。</p>
+<p>（当然也可以不适用Arduino自带的读取电压函数，调用更底层的ADC采样方法使用adc1_get_raw直接进行采样，这里我就不详细举例了，就信号的更新频率来说虽然快了一点，但是仍然满足不了音频信号的更新需求）</p>
+<h2><span id="采用i2s传输协议优化adc采样">采用I2S传输协议优化ADC采样</span></h2><p>解决方案就是采用I2S传输协议去优化ADC采样。</p>
+<p>之前的<strong>常规ADC</strong>采样的流程是：</p>
+<p>ADC先进行采样，然后将采样后的数据存储到<strong>RAM</strong>中，然后CPU从RAM中提取数据，最后对数据进行处理从而得到相应的电压数据，在这个过程中ADC采样和CPU从RAM中获取数据这两个部分是<strong>不能同时进行</strong>的，</p>
+<p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241126202646688.png" alt="image-20241126202646688"></p>
+<p>但是采用I2S传输协议优化ADC采样的流程是：</p>
+<p>首先通过I2S协议采集麦克风的数据，然后将这份数据存储到DMA存储器中，通过DMA临时存储器来和RAM进行数据传递，这样就避免了RAM堵塞时ADC采样无法进行的问题，从而大大提高了ADC采样的效率</p>
+<blockquote>
+<p>这个DMA存储器可以理解成为一个临时存储站用来存储麦克风采集的数据（如果想要具体介绍，esp-idf官网有较为详细的介绍<a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/stable/esp32/api-reference/system/mem_alloc.html">堆内存分配 - ESP32 - — ES	P-IDF 编程指南 v5.2.3 文档</a>）</p>
+</blockquote>
+<p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241126203151787.png" alt="image-20241126203151787"></p>
+<h1><span id="系统搭建">系统搭建</span></h1><h2><span id="硬件部分">硬件部分</span></h2><p>整个系统由esp32-wroom32作为主控芯片，麦克风用的是inmp441（i2s麦克风）和max9814（adc采样麦克风）两种，音频增益芯片用的是max98357（I2S输出）和8002A功放芯片（DAC输出），喇叭市面上随便挑一个就好了</p>
+<p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241206204650961.png" alt="image-20241206204650961"></p>
+<p>引脚接线如下：</p>
+<p>ADC采样的引脚比较简单我就不说了哈哈哈哈</p>
+<p><strong>INMP441引脚</strong></p>
+<p>VDD——3.3V</p>
+<p>GND，L&#x2F;R——GND</p>
+<p>SD——GPIO32</p>
+<p>WS——GPIO22</p>
+<p>SCK——GPIO21</p>
+<p><strong>MAX98357引脚</strong></p>
+<p>VIN——3.3V</p>
+<p>GND——GND</p>
+<p>DIN——GPIO14</p>
+<p>BCLK——GPIO12</p>
+<p>LRC——GPIO13</p>
+<hr>
+<h2><span id="软件部分">软件部分</span></h2><h3><span id="i2s协议配置">I2S协议配置</span></h3><p>i2s的参数配置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">i2s_config_t</span> i2s_config = &#123;</span><br><span class="line">    .mode = mode,<span class="comment">//设置I2S的模式，为主机或者从机模式，发送或者接收模式</span></span><br><span class="line">    .sample_rate = SAMPLE_RATE,<span class="comment">//采样率设置</span></span><br><span class="line">    .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,<span class="comment">//采样的比特数</span></span><br><span class="line">    .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,<span class="comment">//I2S的通道设置</span></span><br><span class="line">    .communication_format = (<span class="type">i2s_comm_format_t</span>)(I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB),</span><br><span class="line">    .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,</span><br><span class="line">    .dma_buf_count = <span class="number">8</span>,<span class="comment">//存储空间数量</span></span><br><span class="line">    .dma_buf_len = <span class="number">1024</span>,<span class="comment">//存储空间长度</span></span><br><span class="line">    .use_apll = <span class="number">0</span>,</span><br><span class="line">    .tx_desc_auto_clear = <span class="literal">true</span>,</span><br><span class="line">    .fixed_mclk = <span class="number">-1</span></span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>i2s的引脚配置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">i2s_pin_config_t</span> pin_config;</span><br><span class="line"><span class="built_in">memset</span>(&amp;pin_config,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="type">i2s_pin_config_t</span>));</span><br><span class="line">pin_config.bck_io_num = bckPin;<span class="comment">//时钟引脚</span></span><br><span class="line">pin_config.ws_io_num = wsPin;<span class="comment">//声道设置</span></span><br><span class="line">pin_config.data_in_num = dataInPin;<span class="comment">//数据输入引脚（麦克风设置引脚）</span></span><br><span class="line">pin_config.data_out_num = dataOutPin;<span class="comment">//数据输出引脚（扬声器设置引脚）</span></span><br></pre></td></tr></table></figure>
+
+<p>i2s的引脚和参数驱动配置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span>(ESP_OK!=i2s_driver_install(i2s_num_, &amp;i2s_config, <span class="number">0</span>, <span class="literal">NULL</span>))</span><br><span class="line">  &#123;</span><br><span class="line">    Serial.println(<span class="string">&quot;install i2s driver failed&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(ESP_OK!=i2s_set_pin(i2s_num_, &amp;pin_config))</span><br><span class="line">  &#123;</span><br><span class="line">    Serial.println(<span class="string">&quot;i2s set pin failed&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="adc模式下的i2s配置">ADC模式下的I2S配置</span></h3><p>i2s参数配置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">i2s_config_t</span> i2s_config = &#123;</span><br><span class="line">  .mode = (<span class="type">i2s_mode_t</span>)(I2S_MODE_MASTER | I2S_MODE_RX | I2S_MODE_ADC_BUILT_IN),<span class="comment">//跟之前代码主要不同的就是要设置ADC的模式</span></span><br><span class="line">  .sample_rate = SAMPLE_RATE,</span><br><span class="line">  .bits_per_sample = BPS,</span><br><span class="line">  .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,</span><br><span class="line">  .communication_format = (<span class="type">i2s_comm_format_t</span>)(I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB),</span><br><span class="line">  .intr_alloc_flags = <span class="number">0</span>,</span><br><span class="line">  .dma_buf_count = <span class="number">16</span>,</span><br><span class="line">  .dma_buf_len = <span class="number">128</span>,</span><br><span class="line">  .use_apll = <span class="literal">false</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>i2s驱动配置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(ESP_OK!=i2s_driver_install(I2S_NUM_0, &amp;i2s_config, <span class="number">0</span>, <span class="literal">NULL</span>))</span><br><span class="line">  &#123;</span><br><span class="line">    Serial.println(<span class="string">&quot;install i2s driver failed&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> i2s_set_pin(I2S_NUM_0, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+
+<p>ADC配置</p>
+<p>这里需要注意，如果你的项目中有WI-FIi功能的话建议不要使用ADC2的采样通道，因为ADC2采样通道和芯片中的WI-FI冲突了，</p>
+<p><img src="https://blog-images-1325348240.cos.ap-nanjing.myqcloud.com/undefinedimage-20241206203219502.png" alt="image-20241206203219502">具体可以参考esp32的官方文档<a target="_blank" rel="noopener" href="https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_cn.pdf">esp32_datasheet_cn.pdf</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">i2s_set_adc_mode(ADC_UNIT_1, adcChannel);<span class="comment">//设置ADC采样的通道为1，</span></span><br><span class="line">adc1_config_channel_atten(adcChannel, ADC_ATTEN_DB_11);</span><br><span class="line">i2s_adc_enable(I2S_NUM_0);</span><br></pre></td></tr></table></figure>
+
+<p>主程序这里太多了就不放出来了参考<a target="_blank" rel="noopener" href="https://github.com/eejhongxin/esp32_I2S_or_adc_audioplay">eejhongxin&#x2F;esp32_I2S_or_adc_audioplay</a></p>
+<blockquote>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xA411Q76y/?spm_id_from=333.337.search-card.all.click&vd_source=3cb0bf4d59cb1d9d4ad468ab211ce85f">32 ESP32之使用I2S实现录音功能 （INMP411,MAX4466介绍）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=pPh3_ciEmzs">https://www.youtube.com/watch?v=pPh3_ciEmzs</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>eejhx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://eejhongxin.github.io/2024/11/22/ESP32%E4%BD%BF%E7%94%A8I2S%E3%80%81ADC%E9%87%87%E6%A0%B7%E9%BA%A6%E5%85%8B%E9%A3%8E%E8%BF%9B%E8%A1%8C%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86%E4%B8%8E%E6%92%AD%E6%94%BE/" title="ESP32使用I2S、ADC采样麦克风进行音频采集与播放">https://eejhongxin.github.io/2024/11/22/ESP32使用I2S、ADC采样麦克风进行音频采集与播放/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ADC%E9%87%87%E6%A0%B7/" rel="tag"># ADC采样</a>
+              <a href="/tags/I2S/" rel="tag"># I2S</a>
+              <a href="/tags/%E9%9F%B3%E9%A2%91%E6%B5%81%E9%87%87%E9%9B%86/" rel="tag"># 音频流采集</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/11/10/%E7%94%B5%E6%BA%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1/" rel="prev" title="电源电路设计">
+      <i class="fa fa-chevron-left"></i> 电源电路设计
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/12/12/ESP32%E6%9D%BF%E5%AD%90%E9%97%AE%E9%A2%98%E5%B0%8F%E5%BD%95/" rel="next" title="ESP32板子设计问题记录">
+      ESP32板子设计问题记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">协议介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">I2S总线规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.1.</span> <span class="nav-text">三种信号线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.2.</span> <span class="nav-text">工作模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">ADC（Analog-to-Digital Converter）通信协议规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.1.</span> <span class="nav-text">常规ADC信号采样在音频领域存在的瑕疵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">采用I2S传输协议优化ADC采样</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">系统搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">硬件部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">软件部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.1.</span> <span class="nav-text">I2S协议配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.2.</span> <span class="nav-text">ADC模式下的I2S配置</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="eejhx"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">eejhx</p>
+  <div class="site-description" itemprop="description">见你潜入深海，伴我匿于人间</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:eejhongxin@163.com" title="E-Mail → mailto:eejhongxin@163.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-03 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">eejhx</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
