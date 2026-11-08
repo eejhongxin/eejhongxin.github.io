@@ -1,0 +1,102 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1a1440">
+  <meta name="description" content="Linux 应用开发基础知识的持续学习笔记，涵盖开发环境、系统接口和常用实践。">
+  <meta property="og:title" content="linux应用开发基础知识 · 嵌入小屋">
+  <meta property="og:description" content="Linux 应用开发基础知识的持续学习笔记，涵盖开发环境、系统接口和常用实践。">
+  <link rel="canonical" href="https://eejhongxin.github.io/2024/04/06/linux%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+  <title>linux应用开发基础知识 · 嵌入小屋</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <script defer src="/js/main.js"></script>
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+  <div class="aurora" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header shell">
+    <div class="glass header-inner">
+      <a class="brand" href="/" aria-label="嵌入小屋首页">嵌入小屋<span class="dot">.</span></a>
+      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false">菜单 <span aria-hidden="true">☰</span></button>
+      <nav class="nav" id="main-nav" aria-label="主导航">
+        
+          <a href="/">文章</a>
+        
+          <a href="/categories/">分类</a>
+        
+          <a href="/tags/">标签</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+  
+<div class="layout shell interior-layout reading-layout">
+  <main id="main">
+    <article class="glass article">
+      <header class="article-header"><a class="breadcrumb" href="/">← 返回文章</a><nav class="article-categories" aria-label="文章分类"><a href="/categories/linux/">linux</a></nav><h1 class="article-title">linux应用开发基础知识</h1><div class="article-meta"><time datetime="2024-04-06">2024 年 04 月 06 日</time><span class="meta-divider">·</span><span>eejhx</span></div></header>
+      <details class="mobile-toc"><summary>本篇目录 <span aria-hidden="true">＋</span></summary><nav class="article-toc" aria-label="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">linux应用开发基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E5%88%92%E8%AE%B0%E5%BD%95"><span class="toc-text">计划记录</span></a></li></ol></li></ol></nav></details>
+      <div class="article-body"><h1 id="linux应用开发基础知识"><span>linux应用开发基础知识</span></h1>
+<blockquote>
+<p>本篇正在整理中，用于记录从 Linux
+基础操作走向应用开发时需要掌握的核心知识。</p>
+</blockquote>
+<h2 id="计划记录"><span>计划记录</span></h2>
+<ul>
+<li>编译、链接与 Makefile</li>
+<li>文件与设备 I/O</li>
+<li>进程、线程和进程间通信</li>
+<li>网络编程与常见调试工具</li>
+</ul>
+</div>
+      <footer class="article-tags tag-list"><a href="/tags/linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">#linux基本操作</a></footer>
+      <p class="article-license">本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> 许可协议，转载时请注明出处。</p>
+    </article>
+    <nav class="post-navigation" aria-label="相邻文章"><a class="glass" href="/2024/11/10/%E7%94%B5%E6%BA%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1/"><span>← 上一篇</span><strong>电源电路设计</strong></a><a class="glass" href="/2024/04/02/linux%E6%93%8D%E4%BD%9C%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/"><span>下一篇 →</span><strong>linux操作常用指令</strong></a></nav>
+  </main>
+  <aside class="sidebar" aria-label="博客导航">
+  
+  <section class="glass widget toc-widget"><h2 class="widget-title">ON THIS PAGE <span>文章目录</span></h2><nav class="article-toc" aria-label="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">linux应用开发基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E5%88%92%E8%AE%B0%E5%BD%95"><span class="toc-text">计划记录</span></a></li></ol></li></ol></nav></section>
+  
+  <section class="glass widget author-widget">
+    <h2 class="widget-title">ABOUT THE AUTHOR</h2>
+    <div class="author-line"><span class="author-mark" aria-hidden="true">jx<span>.</span></span><div><h3>eejhx</h3><span>嵌入式开发 · 持续学习</span></div></div>
+    <p>在电路与代码之间探索，把遇到的问题、调试的过程和学到的东西慢慢写下来。</p>
+    <a class="widget-link" href="/about/">关于这个小屋 <span aria-hidden="true">↗</span></a>
+  </section>
+  <section class="glass widget learning-widget">
+    <h2 class="widget-title"><span class="status-dot" aria-hidden="true"></span> NEXT CHAPTER</h2>
+    <a class="learning-title" href="/categories/linux-kernel/">Linux 内核设计与实现<span aria-hidden="true">↗</span></a>
+    <p>从基础原理出发，结合不同芯片平台的源码与实验，理解 Linux 内核。</p>
+    <a class="widget-link" href="/categories/linux-kernel/">进入学习专栏 <span aria-hidden="true">→</span></a>
+  </section>
+  <section class="glass widget">
+    <h2 class="widget-title">CATEGORIES <span>内容分类</span></h2>
+    <ul class="cat-list"><li><a href="/categories/linux-kernel/"><span>Linux 内核设计与实现</span><span class="category-count">0</span></a><ul class="cat-list"><li><a href="/categories/linux-kernel/basics/"><span>基础知识</span><span class="category-count">0</span></a></li><li><a href="/categories/linux-kernel/platforms/"><span>平台实现</span><span class="category-count">0</span></a><ul class="cat-list"><li><a href="/categories/linux-kernel/platforms/imx6ul/"><span>i.MX6UL / i.MX6ULL</span><span class="category-count">0</span></a></li><li><a href="/categories/linux-kernel/platforms/rk3576/"><span>RK3576</span><span class="category-count">0</span></a></li></ul>
+</li></ul>
+</li><li><a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/"><span>51单片机</span><span class="category-count">1</span></a></li><li><a href="/categories/ESP32/"><span>ESP32</span><span class="category-count">2</span></a></li><li><a href="/categories/linux/"><span>linux</span><span class="category-count">2</span></a></li><li><a href="/categories/python%E9%A1%B9%E7%9B%AE/"><span>python项目</span><span class="category-count">1</span></a></li><li><a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/"><span>硬件设计</span><span class="category-count">1</span></a></li></ul>
+
+  </section>
+  
+  <section class="glass widget"><h2 class="widget-title">TAGS <span>关键词</span></h2><ul class="tag-list"><li><a href="/tags/linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">#linux基本操作</a></li><li><a href="/tags/ADC%E9%87%87%E6%A0%B7/">#ADC采样</a></li><li><a href="/tags/I2S/">#I2S</a></li><li><a href="/tags/%E9%9F%B3%E9%A2%91%E6%B5%81%E9%87%87%E9%9B%86/">#音频流采集</a></li><li><a href="/tags/DEBUG/">#DEBUG</a></li><li><a href="/tags/%E7%94%B5%E8%B7%AF%E5%9B%BE/">#电路图</a></li><li><a href="/tags/TCP-UDP%E5%8D%8F%E8%AE%AE/">#TCP/UDP协议</a></li><li><a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8A%A0%E5%AF%86/">#音视频加密</a></li><li><a href="/tags/esp8266/">#esp8266</a></li><li><a href="/tags/onenet%E4%BA%91%E5%B9%B3%E5%8F%B0/">#onenet云平台</a></li><li><a href="/tags/wifi/">#wifi</a></li><li><a href="/tags/DC-DC%E6%8B%93%E6%89%91/">#DC-DC拓扑</a></li></ul></section>
+  
+</aside>
+
+</div>
+
+  <footer class="site-footer shell">
+    <div class="glass footer-inner">
+      <a class="footer-brand" href="/">嵌入小屋<span class="dot">.</span></a>
+      <p>© 2024–2026 eejhx<span class="footer-divider"> / </span>记录 · 理解 · 实践</p>
+      <a class="footer-link" href="https://github.com/eejhongxin" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </footer>
+</body>
+</html>

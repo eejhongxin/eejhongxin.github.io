@@ -1,0 +1,86 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1a1440">
+  <meta name="description" content="分享 ESP32、Linux、单片机、硬件电路与物联网项目的学习记录和实践经验">
+  <meta property="og:title" content="RK3576 · 嵌入小屋">
+  <meta property="og:description" content="分享 ESP32、Linux、单片机、硬件电路与物联网项目的学习记录和实践经验">
+  <link rel="canonical" href="https://eejhongxin.github.io/categories/linux-kernel/platforms/rk3576/index.html">
+  <title>RK3576 · 嵌入小屋</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <script defer src="/js/main.js"></script>
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+  <div class="aurora" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header shell">
+    <div class="glass header-inner">
+      <a class="brand" href="/" aria-label="嵌入小屋首页">嵌入小屋<span class="dot">.</span></a>
+      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false">菜单 <span aria-hidden="true">☰</span></button>
+      <nav class="nav" id="main-nav" aria-label="主导航">
+        
+          <a href="/">文章</a>
+        
+          <a href="/categories/" aria-current="page">分类</a>
+        
+          <a href="/tags/">标签</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+  
+<div class="layout shell interior-layout">
+  <main id="main">
+    <nav class="category-breadcrumb" aria-label="分类层级"><a href="/categories/">分类</a><span aria-hidden="true">/</span><a href="/categories/linux-kernel/">Linux 内核设计与实现</a><span aria-hidden="true">/</span><a href="/categories/linux-kernel/platforms/">平台实现</a><span aria-hidden="true">/</span><span aria-current="page">RK3576</span></nav>
+    <header class="glass list-head"><p class="eyebrow">THE KERNEL JOURNAL</p><h1>RK3576<span class="heading-dot">.</span></h1><p class="list-description">围绕 Rockchip RK3576，记录 ARM64 平台的内核适配、设备树、多核调度与驱动实践。</p></header>
+    
+    
+      <section class="glass empty-state"><span class="empty-symbol" aria-hidden="true">{ }</span><p class="eyebrow">A NEW BEGINNING</p><h2>新一章，即将开始。</h2><p>这里将收录 RK3576 上的内核实现与实验，串起通用原理、平台源码和实际验证。</p><a class="text-link" href="/categories/linux-kernel/platforms/">返回上一级 <span aria-hidden="true">→</span></a></section>
+    
+  </main>
+  <aside class="sidebar" aria-label="博客导航">
+  
+  <section class="glass widget author-widget">
+    <h2 class="widget-title">ABOUT THE AUTHOR</h2>
+    <div class="author-line"><span class="author-mark" aria-hidden="true">jx<span>.</span></span><div><h3>eejhx</h3><span>嵌入式开发 · 持续学习</span></div></div>
+    <p>在电路与代码之间探索，把遇到的问题、调试的过程和学到的东西慢慢写下来。</p>
+    <a class="widget-link" href="/about/">关于这个小屋 <span aria-hidden="true">↗</span></a>
+  </section>
+  <section class="glass widget learning-widget">
+    <h2 class="widget-title"><span class="status-dot" aria-hidden="true"></span> NEXT CHAPTER</h2>
+    <a class="learning-title" href="/categories/linux-kernel/">Linux 内核设计与实现<span aria-hidden="true">↗</span></a>
+    <p>从基础原理出发，结合不同芯片平台的源码与实验，理解 Linux 内核。</p>
+    <a class="widget-link" href="/categories/linux-kernel/">进入学习专栏 <span aria-hidden="true">→</span></a>
+  </section>
+  <section class="glass widget">
+    <h2 class="widget-title">CATEGORIES <span>内容分类</span></h2>
+    <ul class="cat-list"><li><a href="/categories/linux-kernel/"><span>Linux 内核设计与实现</span><span class="category-count">0</span></a><ul class="cat-list"><li><a href="/categories/linux-kernel/basics/"><span>基础知识</span><span class="category-count">0</span></a></li><li><a href="/categories/linux-kernel/platforms/"><span>平台实现</span><span class="category-count">0</span></a><ul class="cat-list"><li><a href="/categories/linux-kernel/platforms/imx6ul/"><span>i.MX6UL / i.MX6ULL</span><span class="category-count">0</span></a></li><li><a href="/categories/linux-kernel/platforms/rk3576/"><span>RK3576</span><span class="category-count">0</span></a></li></ul>
+</li></ul>
+</li><li><a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/"><span>51单片机</span><span class="category-count">1</span></a></li><li><a href="/categories/ESP32/"><span>ESP32</span><span class="category-count">2</span></a></li><li><a href="/categories/linux/"><span>linux</span><span class="category-count">2</span></a></li><li><a href="/categories/python%E9%A1%B9%E7%9B%AE/"><span>python项目</span><span class="category-count">1</span></a></li><li><a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/"><span>硬件设计</span><span class="category-count">1</span></a></li></ul>
+
+  </section>
+  
+  <section class="glass widget"><h2 class="widget-title">TAGS <span>关键词</span></h2><ul class="tag-list"><li><a href="/tags/linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">#linux基本操作</a></li><li><a href="/tags/ADC%E9%87%87%E6%A0%B7/">#ADC采样</a></li><li><a href="/tags/I2S/">#I2S</a></li><li><a href="/tags/%E9%9F%B3%E9%A2%91%E6%B5%81%E9%87%87%E9%9B%86/">#音频流采集</a></li><li><a href="/tags/DEBUG/">#DEBUG</a></li><li><a href="/tags/%E7%94%B5%E8%B7%AF%E5%9B%BE/">#电路图</a></li><li><a href="/tags/TCP-UDP%E5%8D%8F%E8%AE%AE/">#TCP/UDP协议</a></li><li><a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8A%A0%E5%AF%86/">#音视频加密</a></li><li><a href="/tags/esp8266/">#esp8266</a></li><li><a href="/tags/onenet%E4%BA%91%E5%B9%B3%E5%8F%B0/">#onenet云平台</a></li><li><a href="/tags/wifi/">#wifi</a></li><li><a href="/tags/DC-DC%E6%8B%93%E6%89%91/">#DC-DC拓扑</a></li></ul></section>
+  
+</aside>
+
+</div>
+
+  <footer class="site-footer shell">
+    <div class="glass footer-inner">
+      <a class="footer-brand" href="/">嵌入小屋<span class="dot">.</span></a>
+      <p>© 2024–2026 eejhx<span class="footer-divider"> / </span>记录 · 理解 · 实践</p>
+      <a class="footer-link" href="https://github.com/eejhongxin" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </footer>
+</body>
+</html>
