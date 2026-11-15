@@ -1,0 +1,18 @@
+
+rintroot@imx6ul: ~# printf '\nCOUNT6_USB2_BEGIN\n'; if awk '$2=="/mnt" {ok=($1=="/de
+v/mmcblk1p7" && $3=="vfat" && $4 ~ /(^|,)rw(,|$)/)} END {exit !ok}' /proc/mounts
+ && cmp /mnt/ddr_work/ddr_autostart.sh /mnt/ddr_work/boot_setup/ddr_autostart.sh
+; then printf '6\n' > /mnt/ddr_work/ddr_autostart.count && sync && echo COUNT_WR
+ITE_OK; echo COUNT_READBACK; cat /mnt/ddr_work/ddr_autostart.count; echo SCRIPT_
+SHA256; /mnt/ddr_work/full/ddr_p5/bin/sha256sum /mnt/ddr_work/ddr_autostart.sh; 
+else echo COUNT_WRITE_FAILED; fi; printf '\nCOUNT6_USB2_END\n'
+
+COUNT6_USB2_BEGIN
+COUNT_WRITE_OK
+COUNT_READBACK
+6
+SCRIPT_SHA256
+8d35eebd8437f69e59935eb9c5d154776eefdeabffe1707390716643dfa31076  /mnt/ddr_work/ddr_autostart.sh
+
+COUNT6_USB2_END
+root@imx6ul: ~# 

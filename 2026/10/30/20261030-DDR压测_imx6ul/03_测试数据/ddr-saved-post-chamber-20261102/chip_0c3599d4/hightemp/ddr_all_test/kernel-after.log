@@ -1,0 +1,857 @@
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.1.15-1.2.0 (shangjunwei@hcqrsjcsvr01) (gcc version 4.9.2 (GCC) ) #2 SMP PREEMPT Thu May 21 16:45:11 CST 2026
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c53c7d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] Machine model: Freescale i.MX6 UltraLite 14x14 EVK Board
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] On node 0 totalpages: 65536
+[    0.000000] free_area_init_node: node 0, pgdat 80addbc0, node_mem_map 8fdf7000
+[    0.000000]   Normal zone: 512 pages used for memmap
+[    0.000000]   Normal zone: 0 pages reserved
+[    0.000000]   Normal zone: 65536 pages, LIFO batch:15
+[    0.000000] PERCPU: Embedded 12 pages/cpu @8fdd0000 s17472 r8192 d23488 u49152
+[    0.000000] pcpu-alloc: s17472 r8192 d23488 u49152 alloc=12*4096
+[    0.000000] pcpu-alloc: [0] 0 
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 65024
+[    0.000000] Kernel command line: console=ttymxc0,115200 cma=0 root=/dev/mtdblock3 rootfstype=jffs2 mtdparts=21e0000.qspi:1M(uboot),6M(kernel),1M(dtb),-(rootfs) rootwait rw
+[    0.000000] PID hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.000000] Dentry cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Inode-cache hash table entries: 16384 (order: 4, 65536 bytes)
+[    0.000000] Memory: 248112K/262144K available (7767K kernel code, 379K rwdata, 2532K rodata, 416K init, 442K bss, 14032K reserved, 0K cma-reserved, 0K highmem)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0x90800000 - 0xff000000   (1768 MB)
+[    0.000000]     lowmem  : 0x80000000 - 0x90000000   ( 256 MB)
+[    0.000000]     pkmap   : 0x7fe00000 - 0x80000000   (   2 MB)
+[    0.000000]     modules : 0x7f000000 - 0x7fe00000   (  14 MB)
+[    0.000000]       .text : 0x80008000 - 0x80a17014   (10301 kB)
+[    0.000000]       .init : 0x80a18000 - 0x80a80000   ( 416 kB)
+[    0.000000]       .data : 0x80a80000 - 0x80adeca0   ( 380 kB)
+[    0.000000]        .bss : 0x80adeca0 - 0x80b4d800   ( 443 kB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] 	Additional per-CPU info printed with stalls.
+[    0.000000] 	RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=1.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=1
+[    0.000000] NR_IRQS:16 nr_irqs:16 16
+[    0.000000] mxc_clocksource_init 24000000
+[    0.000000] Switching to timer-based delay loop, resolution 41ns
+[    0.000015] sched_clock: 32 bits at 24MHz, resolution 41ns, wraps every 89478484971ns
+[    0.000053] clocksource mxc_timer1: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 79635851949 ns
+[    0.002792] Console: colour dummy device 80x30
+[    0.002832] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=240000)
+[    0.002866] pid_max: default: 32768 minimum: 301
+[    0.003079] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.003104] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.004336] Initializing cgroup subsys net_cls
+[    0.004418] CPU: Testing write buffer coherency: ok
+[    0.004885] /cpus/cpu@0 missing clock-frequency property
+[    0.004923] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+[    0.005032] Setting up static identity map for 0x80008280 - 0x800082d8
+[    0.041118] Brought up 1 CPUs
+[    0.041155] SMP: Total of 1 processors activated (48.00 BogoMIPS).
+[    0.041171] CPU: All CPU(s) started in SVC mode.
+[    0.042199] devtmpfs: initialized
+[    0.063239] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 5
+[    0.064046] clocksource jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.064893] pinctrl core: initialized pinctrl subsystem
+[    0.067424] NET: Registered protocol family 16
+[    0.068216] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.090610] cpuidle: using governor ladder
+[    0.120665] cpuidle: using governor menu
+[    0.168572] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.168606] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.173515] imx6ul-pinctrl 20e0000.iomuxc: initialized IMX pinctrl driver
+[    0.237794] mxs-dma 1804000.dma-apbh: initialized
+[    0.244426] SCSI subsystem initialized
+[    0.245146] usbcore: registered new interface driver usbfs
+[    0.245300] usbcore: registered new interface driver hub
+[    0.245529] usbcore: registered new device driver usb
+[    0.249106] i2c i2c-0: IMX I2C adapter registered
+[    0.249151] i2c i2c-0: can't use DMA
+[    0.250570] i2c i2c-1: IMX I2C adapter registered
+[    0.250610] i2c i2c-1: can't use DMA
+[    0.251001] pps_core: LinuxPPS API ver. 1 registered
+[    0.251020] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.251100] PTP clock support registered
+[    0.254262] MIPI CSI2 driver module loaded
+[    0.254899] Advanced Linux Sound Architecture Driver Initialized.
+[    0.256991] Bluetooth: Core ver 2.20
+[    0.257113] NET: Registered protocol family 31
+[    0.257134] Bluetooth: HCI device and connection manager initialized
+[    0.257168] Bluetooth: HCI socket layer initialized
+[    0.257196] Bluetooth: L2CAP socket layer initialized
+[    0.257270] Bluetooth: SCO socket layer initialized
+[    0.257852] Switched to clocksource mxc_timer1
+[    0.281430] NET: Registered protocol family 2
+[    0.283100] TCP established hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.283188] TCP bind hash table entries: 2048 (order: 2, 16384 bytes)
+[    0.283278] TCP: Hash tables configured (established 2048 bind 2048)
+[    0.283405] UDP hash table entries: 256 (order: 1, 8192 bytes)
+[    0.283464] UDP-Lite hash table entries: 256 (order: 1, 8192 bytes)
+[    0.283873] NET: Registered protocol family 1
+[    0.284614] RPC: Registered named UNIX socket transport module.
+[    0.284645] RPC: Registered udp transport module.
+[    0.284661] RPC: Registered tcp transport module.
+[    0.284677] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.288190] imx rpmsg driver is registered.
+[    0.290281] Bus freq driver module loaded
+[    0.292316] futex hash table entries: 256 (order: 2, 16384 bytes)
+[    0.307305] VFS: Disk quotas dquot_6.6.0
+[    0.307775] VFS: Dquot-cache hash table entries: 1024 (order 0, 4096 bytes)
+[    0.312969] NFS: Registering the id_resolver key type
+[    0.313070] Key type id_resolver registered
+[    0.313090] Key type id_legacy registered
+[    0.313273] jffs2: version 2.2. (NAND) © 2001-2006 Red Hat, Inc.
+[    0.315052] fuse init (API version 7.23)
+[    0.325054] io scheduler noop registered
+[    0.325105] io scheduler deadline registered
+[    0.325508] io scheduler cfq registered (default)
+[    0.326757] imx-weim 21b8000.weim: Driver registered.
+[    0.332548] backlight supply power not found, using dummy regulator
+[    0.335033] MIPI DSI driver module loaded
+[    0.335526] MIPI DSI driver module loaded
+[    0.346587] imx-sdma 20ec000.sdma: no event needs to be remapped
+[    0.346796] imx-sdma 20ec000.sdma: loaded firmware 3.3
+[    0.354337] imx-sdma 20ec000.sdma: initialized
+[    0.356924] pfuze100-regulator 0-0008: Full layer: 1, Metal layer: 1
+[    0.357555] pfuze100-regulator 0-0008: FAB: 0, FIN: 0
+[    0.357587] pfuze100-regulator 0-0008: pfuze3000 found.
+[    0.376078] 2020000.serial: ttymxc0 at MMIO 0x2020000 (irq = 20, base_baud = 5000000) is a IMX
+[    1.034640] console [ttymxc0] enabled
+[    1.040276] 21e8000.serial: ttymxc1 at MMIO 0x21e8000 (irq = 231, base_baud = 5000000) is a IMX
+[    1.050524] 21ec000.serial: ttymxc2 at MMIO 0x21ec000 (irq = 232, base_baud = 5000000) is a IMX
+[    1.060586] 21f0000.serial: ttymxc3 at MMIO 0x21f0000 (irq = 233, base_baud = 5000000) is a IMX
+[    1.070618] 21f4000.serial: ttymxc4 at MMIO 0x21f4000 (irq = 234, base_baud = 5000000) is a IMX
+[    1.080721] 21fc000.serial: ttymxc5 at MMIO 0x21fc000 (irq = 235, base_baud = 5000000) is a IMX
+[    1.094876] imx sema4 driver is registered.
+[    1.099378] [drm] Initialized drm 1.1.0 20060810
+[    1.105144] [drm] Initialized vivante 1.0.0 20120216 on minor 0
+[    1.135745] brd: module loaded
+[    1.151238] loop: module loaded
+[    1.155418] (hci_tty): inside hci_tty_init
+[    1.160189] (hci_tty): allocated 248, 0
+[    1.164559] gpio_misc_probe
+[    1.165029] gpio 83 export 
+[    1.165380] gpio 92 export 
+[    1.168564] ### winbond_quad_enable
+[    1.172319] fsl-quadspi 21e0000.qspi: w25q256 (32768 Kbytes)
+[    1.178113] 4 cmdlinepart partitions found on MTD device 21e0000.qspi
+[    1.184590] Creating 4 MTD partitions on "21e0000.qspi":
+[    1.189976] 0x000000000000-0x000000100000 : "uboot"
+[    1.197324] 0x000000100000-0x000000700000 : "kernel"
+[    1.204690] 0x000000700000-0x000000800000 : "dtb"
+[    1.211862] 0x000000800000-0x000002000000 : "rootfs"
+[    1.225478] spi_master spi0: spi-tx-bus-width 8 not supported
+[    1.232282] spi_imx 2008000.ecspi: probed
+[    1.239328] tun: Universal TUN/TAP device driver, 1.6
+[    1.244424] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    1.251176] CAN device driver interface
+[    1.258190] flexcan 2090000.can: device registered (reg_base=90a40000, irq=26)
+[    1.268022] 20b4000.ethernet supply phy not found, using dummy regulator
+[    1.678944] pps pps0: new PPS source ptp0
+[    1.683288] fec 20b4000.ethernet (unnamed net_device) (uninitialized): Invalid MAC address: 00:00:00:00:00:00
+[    1.693375] fec 20b4000.ethernet (unnamed net_device) (uninitialized): Using random MAC address: 02:e6:02:e3:fb:d6
+[    1.704587] libphy: fec_enet_mii_bus: probed
+[    1.709143] ### get_phy_device phy id = 0xffffffff, addr = 0
+[    1.715080] ### get_phy_device phy id = 0xffffffff, addr = 1
+[    1.722379] fec 20b4000.ethernet eth0: registered PHC device 0
+[    1.730109] 2188000.ethernet supply phy not found, using dummy regulator
+[    2.038945] pps pps1: new PPS source ptp1
+[    2.045273] fec 2188000.ethernet eth1: registered PHC device 1
+[    2.053230] PPP generic driver version 2.4.2
+[    2.058195] PPP BSD Compression module registered
+[    2.062956] PPP Deflate Compression module registered
+[    2.068164] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    2.074744] ehci-platform: EHCI generic platform driver
+[    2.080857] ehci-mxc: Freescale On-Chip EHCI Host driver
+[    2.087203] usbcore: registered new interface driver cdc_acm
+[    2.092983] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    2.101322] usbcore: registered new interface driver usb-storage
+[    2.107681] usbcore: registered new interface driver usbserial
+[    2.113726] usbcore: registered new interface driver usbserial_generic
+[    2.120465] usbserial: USB Serial support registered for generic
+[    2.126635] usbcore: registered new interface driver option
+[    2.132395] usbserial: USB Serial support registered for GSM modem (1-port)
+[    2.139583] usbcore: registered new interface driver usb_ehset_test
+[    2.148890] 2184800.usbmisc supply vbus-wakeup not found, using dummy regulator
+[    2.165417] 2184200.usb supply vbus not found, using dummy regulator
+[    2.175763] ci_hdrc ci_hdrc.1: EHCI Host Controller
+[    2.180828] ci_hdrc ci_hdrc.1: new USB bus registered, assigned bus number 1
+[    2.207924] ci_hdrc ci_hdrc.1: USB 2.0 started, EHCI 1.00
+[    2.215358] hub 1-0:1.0: USB hub found
+[    2.219386] hub 1-0:1.0: 1 port detected
+[    2.227016] input: 20cc000.snvs:snvs-powerkey as /devices/platform/soc/2000000.aips-bus/20cc000.snvs/20cc000.snvs:snvs-powerkey/input/input0
+[    2.241892] rtc-ds1307: probe of 0-0068 failed with error -5
+[    2.249641] snvs_rtc 20cc000.snvs:snvs-rtc-lp: rtc core: registered 20cc000.snvs:snvs-r as rtc0
+[    2.259067] i2c /dev entries driver
+[    2.265299] usbcore: registered new interface driver i2c-diolan-u2c
+[    2.271829] i2c-parport-light: adapter type unspecified
+[    2.277274] usbcore: registered new interface driver RobotFuzz Open Source InterFace, OSIF
+[    2.286015] usbcore: registered new interface driver i2c-tiny-usb
+[    2.292222] Driver for 1-wire Dallas network protocol.
+[    2.298788] 1-Wire driver for the DS2760 battery monitor chip - (c) 2004-2005, Szabolcs Gyurko
+[    2.309261] thermal thermal_zone0: failed to read out thermal zone (-61)
+[    2.316069] sbs-battery 1-000b: bq20z75: battery gas gauge device registered
+[    2.327240] lm75: probe of 1-0048 failed with error -5
+[    2.337669] imx2-wdt 20bc000.wdog: timeout 60 sec (nowayout=0)
+[    2.344051] Bluetooth: HCI UART driver ver 2.3
+[    2.348603] Bluetooth: HCI UART protocol H4 registered
+[    2.353773] Bluetooth: HCI UART protocol BCSP registered
+[    2.359144] Bluetooth: HCI UART protocol LL registered
+[    2.364565] usbcore: registered new interface driver btusb
+[    2.371837] sdhci: Secure Digital Host Controller Interface driver
+[    2.378159] sdhci: Copyright(c) Pierre Ossman
+[    2.382569] sdhci-pltfm: SDHCI platform and OF driver helper
+[    2.390678] /soc/aips-bus@02100000/usdhc@02190000: voltage-ranges unspecified
+[    2.399436] sdhci-esdhc-imx 2190000.usdhc: No vqmmc regulator found
+[    2.448079] mmc0: SDHCI controller on 2190000.usdhc [2190000.usdhc] using ADMA
+[    2.464928] /soc/aips-bus@02100000/usdhc@02194000: voltage-ranges unspecified
+[    2.480273] sdhci-esdhc-imx 2194000.usdhc: No vqmmc regulator found
+[    2.537908] usb 1-1: new high-speed USB device number 2 using ci_hdrc
+[    2.544525] mmc1: SDHCI controller on 2194000.usdhc [2194000.usdhc] using ADMA
+[    2.556513] mmc0: Got command interrupt 0x000c0001 even though no command operation was in progress.
+[    2.586036] usbcore: registered new interface driver usbhid
+[    2.593838] usbhid: USB HID core driver
+[    2.628707] fsl-asrc 2034000.asrc: driver registered
+[    2.645755] NET: Registered protocol family 26
+[    2.650476] Netfilter messages via NETLINK v0.30.
+[    2.655299] nfnl_acct: registering with nfnetlink.
+[    2.661417] nf_conntrack version 0.5.0 (3876 buckets, 15504 max)
+[    2.676372] ctnetlink v0.93: registering with nfnetlink.
+[    2.687808] nf_tables: (c) 2007-2009 Patrick McHardy <kaber@trash.net>
+[    2.696591] nf_tables_compat: (c) 2012 Pablo Neira Ayuso <pablo@netfilter.org>
+[    2.716988] hub 1-1:1.0: USB hub found
+[    2.731705] hub 1-1:1.0: 4 ports detected
+[    2.735977] xt_time: kernel timezone is -0000
+[    2.741804] IPVS: Registered protocols ()
+[    2.746190] IPVS: Connection hash table configured (size=4096, memory=32Kbytes)
+[    2.754416] IPVS: Creating netns size=872 id=0
+[    2.761264] IPVS: ipvs loaded.
+[    2.765394] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    2.771205] ipt_CLUSTERIP: ClusterIP Version 0.8 loaded successfully
+[    2.777755] arp_tables: (C) 2002 David S. Miller
+[    2.787333] NET: Registered protocol family 10
+[    2.805155] sit: IPv6 over IPv4 tunneling driver
+[    2.815749] NET: Registered protocol family 17
+[    2.822671] bridge: automatic filtering via arp/ip/ip6tables has been deprecated. Update your scripts to load br_netfilter if you need this.
+[    2.837575] can: controller area network core (rev 20120528 abi 9)
+[    2.846166] NET: Registered protocol family 29
+[    2.852991] can: raw protocol (rev 20120528)
+[    2.859598] can: broadcast manager protocol (rev 20120528 t)
+[    2.868723] can: netlink gateway (rev 20130117) max_hops=1
+[    2.880278] Bluetooth: RFCOMM TTY layer initialized
+[    2.888498] Bluetooth: RFCOMM socket layer initialized
+[    2.895869] Bluetooth: RFCOMM ver 1.11
+[    2.905059] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    2.910580] Bluetooth: BNEP filters: protocol multicast
+[    2.919026] Bluetooth: BNEP socket layer initialized
+[    2.926130] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    2.934293] Bluetooth: HIDP socket layer initialized
+[    2.941560] 8021q: 802.1Q VLAN Support v1.8
+[    2.947995] lib80211: common routines for IEEE802.11 drivers
+[    2.955780] lib80211_crypt: registered algorithm 'NULL'
+[    2.955827] lib80211_crypt: registered algorithm 'WEP'
+[    2.955865] lib80211_crypt: registered algorithm 'CCMP'
+[    2.955901] lib80211_crypt: registered algorithm 'TKIP'
+[    2.956007] Key type dns_resolver registered
+[    2.996739] input: gpio-keys as /devices/platform/gpio-keys/input/input1
+[    3.004527] snvs_rtc 20cc000.snvs:snvs-rtc-lp: setting system clock to 1970-01-01 00:00:00 UTC (0)
+[    3.031318] usb_01_vbus: disabling
+[    3.034902] mmc1: MAN_BKOPS_EN bit is not set
+[    3.039421] can-3v3: disabling
+[    3.042498] wlan-en-regulator: disabling
+[    3.046742] ALSA device list:
+[    3.049906]   No soundcards found.
+[    3.088973] mmc1: new DDR MMC card at address 0001
+[    3.094346] mmcblk mmc1:0001: Card claimed for testing.
+[    3.117950] mmcblk1: mmc1:0001 DG4032 29.1 GiB 
+[    3.122795] mmcblk1boot0: mmc1:0001 DG4032 partition 1 4.00 MiB
+[    3.138228] mmcblk1boot1: mmc1:0001 DG4032 partition 2 4.00 MiB
+[    3.144403] mmcblk1rpmb: mmc1:0001 DG4032 partition 3 4.00 MiB
+[    3.172981]  mmcblk1: p1 p2 p3 p4 < p5 p6 p7 >
+[    3.742953] VFS: Mounted root (jffs2 filesystem) on device 31:3.
+[    3.749465] devtmpfs: mounted
+[    3.753268] Freeing unused kernel memory: 416K (80a18000 - 80a80000)
+[    4.716766] FAT-fs (mmcblk1p7): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+[    7.313246] EXT4-fs (mmcblk1p5): mounted filesystem without journal. Opts: noload
+[    7.627417] EXT4-fs (mmcblk1p6): mounted filesystem without journal. Opts: noload
+[    8.963725] Bits 55-60 of /proc/PID/pagemap entries are about to stop being page-shift some time soon. See the linux/Documentation/vm/pagemap.txt for details.
+[   68.707958] random: nonblocking pool is initialized
+[  613.008380] 
+[  613.008380] Bus freq set to 24000000 start...
+[  613.008848] Bus freq set to 24000000 done!
+[  619.070968] 
+[  619.070968] Bus freq set to 400000000 start...
+[  619.071750] Bus freq set to 400000000 done!
+[ 1212.168316] 
+[ 1212.168316] Bus freq set to 24000000 start...
+[ 1212.168813] Bus freq set to 24000000 done!
+[ 1215.513413] 
+[ 1215.513413] Bus freq set to 400000000 start...
+[ 1215.514192] Bus freq set to 400000000 done!
+[ 1218.598349] 
+[ 1218.598349] Bus freq set to 24000000 start...
+[ 1218.598872] Bus freq set to 24000000 done!
+[ 1219.127352] 
+[ 1219.127352] Bus freq set to 400000000 start...
+[ 1219.129664] Bus freq set to 400000000 done!
+[ 1815.138337] 
+[ 1815.138337] Bus freq set to 24000000 start...
+[ 1815.138798] Bus freq set to 24000000 done!
+[ 1819.177736] 
+[ 1819.177736] Bus freq set to 400000000 start...
+[ 1819.180020] Bus freq set to 400000000 done!
+[ 1822.248308] 
+[ 1822.248308] Bus freq set to 24000000 start...
+[ 1822.248765] Bus freq set to 24000000 done!
+[ 1824.275899] 
+[ 1824.275899] Bus freq set to 400000000 start...
+[ 1824.276767] Bus freq set to 400000000 done!
+[ 2415.138301] 
+[ 2415.138301] Bus freq set to 24000000 start...
+[ 2415.138806] Bus freq set to 24000000 done!
+[ 2419.332503] 
+[ 2419.332503] Bus freq set to 400000000 start...
+[ 2419.333254] Bus freq set to 400000000 done!
+[ 2422.398389] 
+[ 2422.398389] Bus freq set to 24000000 start...
+[ 2422.398834] Bus freq set to 24000000 done!
+[ 2423.525929] 
+[ 2423.525929] Bus freq set to 400000000 start...
+[ 2423.526738] Bus freq set to 400000000 done!
+[ 3012.428352] 
+[ 3012.428352] Bus freq set to 24000000 start...
+[ 3012.428829] Bus freq set to 24000000 done!
+[ 3017.841137] 
+[ 3017.841137] Bus freq set to 400000000 start...
+[ 3017.842003] Bus freq set to 400000000 done!
+[ 3022.428381] 
+[ 3022.428381] Bus freq set to 24000000 start...
+[ 3022.428878] Bus freq set to 24000000 done!
+[ 3024.553831] 
+[ 3024.553831] Bus freq set to 400000000 start...
+[ 3024.554668] Bus freq set to 400000000 done!
+[ 3613.988341] 
+[ 3613.988341] Bus freq set to 24000000 start...
+[ 3613.988806] Bus freq set to 24000000 done!
+[ 3622.127136] 
+[ 3622.127136] Bus freq set to 400000000 start...
+[ 3622.127812] Bus freq set to 400000000 done!
+[ 3625.188301] 
+[ 3625.188301] Bus freq set to 24000000 start...
+[ 3625.188757] Bus freq set to 24000000 done!
+[ 3632.326174] 
+[ 3632.326174] Bus freq set to 400000000 start...
+[ 3632.326980] Bus freq set to 400000000 done!
+[ 3635.408313] 
+[ 3635.408313] Bus freq set to 24000000 start...
+[ 3635.408786] Bus freq set to 24000000 done!
+[ 3640.596577] 
+[ 3640.596577] Bus freq set to 400000000 start...
+[ 3640.597388] Bus freq set to 400000000 done!
+[ 9934.248272] 
+[ 9934.248272] Bus freq set to 24000000 start...
+[ 9934.248700] Bus freq set to 24000000 done!
+[ 9939.835544] 
+[ 9939.835544] Bus freq set to 400000000 start...
+[ 9939.836353] Bus freq set to 400000000 done!
+[ 9944.248310] 
+[ 9944.248310] Bus freq set to 24000000 start...
+[ 9944.248764] Bus freq set to 24000000 done!
+[ 9945.267115] 
+[ 9945.267115] Bus freq set to 400000000 start...
+[ 9945.268089] Bus freq set to 400000000 done!
+[10534.278267] 
+[10534.278267] Bus freq set to 24000000 start...
+[10534.278703] Bus freq set to 24000000 done!
+[10541.237579] 
+[10541.237579] Bus freq set to 400000000 start...
+[10541.239889] Bus freq set to 400000000 done!
+[10544.308306] 
+[10544.308306] Bus freq set to 24000000 start...
+[10544.308814] Bus freq set to 24000000 done!
+[10545.286994] 
+[10545.286994] Bus freq set to 400000000 start...
+[10545.287769] Bus freq set to 400000000 done!
+[11134.328307] 
+[11134.328307] Bus freq set to 24000000 start...
+[11134.328756] Bus freq set to 24000000 done!
+[11135.306890] 
+[11135.306890] Bus freq set to 400000000 start...
+[11135.307642] Bus freq set to 400000000 done!
+[11138.378282] 
+[11138.378282] Bus freq set to 24000000 start...
+[11138.378754] Bus freq set to 24000000 done!
+[11141.283408] 
+[11141.283408] Bus freq set to 400000000 start...
+[11141.284214] Bus freq set to 400000000 done!
+[11144.348329] 
+[11144.348329] Bus freq set to 24000000 start...
+[11144.348791] Bus freq set to 24000000 done!
+[11146.474682] 
+[11146.474682] Bus freq set to 400000000 start...
+[11146.475519] Bus freq set to 400000000 done!
+[11734.488297] 
+[11734.488297] Bus freq set to 24000000 start...
+[11734.488758] Bus freq set to 24000000 done!
+[11740.385442] 
+[11740.385442] Bus freq set to 400000000 start...
+[11740.386257] Bus freq set to 400000000 done!
+[11744.488352] 
+[11744.488352] Bus freq set to 24000000 start...
+[11744.488811] Bus freq set to 24000000 done!
+[11746.443727] 
+[11746.443727] Bus freq set to 400000000 start...
+[11746.444507] Bus freq set to 400000000 done!
+[12333.618319] 
+[12333.618319] Bus freq set to 24000000 start...
+[12333.618794] Bus freq set to 24000000 done!
+[12334.066311] 
+[12334.066311] Bus freq set to 400000000 start...
+[12334.067179] Bus freq set to 400000000 done!
+[12337.148301] 
+[12337.148301] Bus freq set to 24000000 start...
+[12337.148730] Bus freq set to 24000000 done!
+[12340.571721] 
+[12340.571721] Bus freq set to 400000000 start...
+[12340.572442] Bus freq set to 400000000 done!
+[12343.638336] 
+[12343.638336] Bus freq set to 24000000 start...
+[12343.638787] Bus freq set to 24000000 done!
+[12344.285938] 
+[12344.285938] Bus freq set to 400000000 start...
+[12344.286753] Bus freq set to 400000000 done!
+[12935.008298] 
+[12935.008298] Bus freq set to 24000000 start...
+[12935.008803] Bus freq set to 24000000 done!
+[12938.276455] 
+[12938.276455] Bus freq set to 400000000 start...
+[12938.277293] Bus freq set to 400000000 done!
+[12943.408348] 
+[12943.408348] Bus freq set to 24000000 start...
+[12943.408830] Bus freq set to 24000000 done!
+[12948.476551] 
+[12948.476551] Bus freq set to 400000000 start...
+[12948.477363] Bus freq set to 400000000 done!
+[12951.558293] 
+[12951.558293] Bus freq set to 24000000 start...
+[12951.558775] Bus freq set to 24000000 done!
+[12958.666549] 
+[12958.666549] Bus freq set to 400000000 start...
+[12958.667331] Bus freq set to 400000000 done!
+[18765.438257] 
+[18765.438257] Bus freq set to 24000000 start...
+[18765.438758] Bus freq set to 24000000 done!
+[18766.455992] 
+[18766.455992] Bus freq set to 400000000 start...
+[18766.456713] Bus freq set to 400000000 done!
+[18769.518280] 
+[18769.518280] Bus freq set to 24000000 start...
+[18769.518725] Bus freq set to 24000000 done!
+[18769.835341] 
+[18769.835341] Bus freq set to 400000000 start...
+[18769.836048] Bus freq set to 400000000 done!
+[18775.428304] 
+[18775.428304] Bus freq set to 24000000 start...
+[18775.428761] Bus freq set to 24000000 done!
+[18777.465810] 
+[18777.465810] Bus freq set to 400000000 start...
+[18777.466654] Bus freq set to 400000000 done!
+[19365.568266] 
+[19365.568266] Bus freq set to 24000000 start...
+[19365.568739] Bus freq set to 24000000 done!
+[19366.465738] 
+[19366.465738] Bus freq set to 400000000 start...
+[19366.466451] Bus freq set to 400000000 done!
+[19369.528270] 
+[19369.528270] Bus freq set to 24000000 start...
+[19369.528715] Bus freq set to 24000000 done!
+[19372.524379] 
+[19372.524379] Bus freq set to 400000000 start...
+[19372.525184] Bus freq set to 400000000 done!
+[19375.598279] 
+[19375.598279] Bus freq set to 24000000 start...
+[19375.598730] Bus freq set to 24000000 done!
+[19376.547904] 
+[19376.547904] Bus freq set to 400000000 start...
+[19376.632047] Bus freq set to 400000000 done!
+[19964.728268] 
+[19964.728268] Bus freq set to 24000000 start...
+[19964.728726] Bus freq set to 24000000 done!
+[19966.476214] 
+[19966.476214] Bus freq set to 400000000 start...
+[19966.476961] Bus freq set to 400000000 done!
+[19969.538298] 
+[19969.538298] Bus freq set to 24000000 start...
+[19969.538795] Bus freq set to 24000000 done!
+[19971.683241] 
+[19971.683241] Bus freq set to 400000000 start...
+[19971.684046] Bus freq set to 400000000 done!
+[19974.748326] 
+[19974.748326] Bus freq set to 24000000 start...
+[19974.748803] Bus freq set to 24000000 done!
+[19976.703014] 
+[19976.703014] Bus freq set to 400000000 start...
+[19976.703792] Bus freq set to 400000000 done!
+[20564.878277] 
+[20564.878277] Bus freq set to 24000000 start...
+[20564.878732] Bus freq set to 24000000 done!
+[20566.487131] 
+[20566.487131] Bus freq set to 400000000 start...
+[20566.488064] Bus freq set to 400000000 done!
+[20569.548282] 
+[20569.548282] Bus freq set to 24000000 start...
+[20569.548709] Bus freq set to 24000000 done!
+[20571.822414] 
+[20571.822414] Bus freq set to 400000000 start...
+[20571.823161] Bus freq set to 400000000 done!
+[20574.888267] 
+[20574.888267] Bus freq set to 24000000 start...
+[20574.888740] Bus freq set to 24000000 done!
+[20576.506882] 
+[20576.506882] Bus freq set to 400000000 start...
+[20576.507602] Bus freq set to 400000000 done!
+[21164.928267] 
+[21164.928267] Bus freq set to 24000000 start...
+[21164.928771] Bus freq set to 24000000 done!
+[21166.286588] 
+[21166.286588] Bus freq set to 400000000 start...
+[21166.287430] Bus freq set to 400000000 done!
+[21169.568294] 
+[21169.568294] Bus freq set to 24000000 start...
+[21169.568792] Bus freq set to 24000000 done!
+[21171.874328] 
+[21171.874328] Bus freq set to 400000000 start...
+[21171.875103] Bus freq set to 400000000 done!
+[21174.948271] 
+[21174.948271] Bus freq set to 24000000 start...
+[21174.948713] Bus freq set to 24000000 done!
+[21176.576173] 
+[21176.576173] Bus freq set to 400000000 start...
+[21176.576987] Bus freq set to 400000000 done!
+[21766.008276] 
+[21766.008276] Bus freq set to 24000000 start...
+[21766.008773] Bus freq set to 24000000 done!
+[21766.534725] 
+[21766.534725] Bus freq set to 400000000 start...
+[21766.535530] Bus freq set to 400000000 done!
+[21769.608294] 
+[21769.608294] Bus freq set to 24000000 start...
+[21769.608720] Bus freq set to 24000000 done!
+[21770.566124] 
+[21770.566124] Bus freq set to 400000000 start...
+[21770.566932] Bus freq set to 400000000 done!
+[21773.648269] 
+[21773.648269] Bus freq set to 24000000 start...
+[21773.648723] Bus freq set to 24000000 done!
+[21780.756327] 
+[21780.756327] Bus freq set to 400000000 start...
+[21780.757167] Bus freq set to 400000000 done!
+[21783.838214] 
+[21783.838214] Bus freq set to 24000000 start...
+[21783.838672] Bus freq set to 24000000 done!
+[21790.946482] 
+[21790.946482] Bus freq set to 400000000 start...
+[21790.947323] Bus freq set to 400000000 done!
+[27572.128332] 
+[27572.128332] Bus freq set to 24000000 start...
+[27572.128815] Bus freq set to 24000000 done!
+[27572.316533] 
+[27572.316533] Bus freq set to 400000000 start...
+[27572.317264] Bus freq set to 400000000 done!
+[27576.008255] 
+[27576.008255] Bus freq set to 24000000 start...
+[27576.008751] Bus freq set to 24000000 done!
+[27579.062993] 
+[27579.062993] Bus freq set to 400000000 start...
+[27579.063768] Bus freq set to 400000000 done!
+[27582.128233] 
+[27582.128233] Bus freq set to 24000000 start...
+[27582.128734] Bus freq set to 24000000 done!
+[27582.435545] 
+[27582.435545] Bus freq set to 400000000 start...
+[27582.436380] Bus freq set to 400000000 done!
+[28172.168180] 
+[28172.168180] Bus freq set to 24000000 start...
+[28172.168660] Bus freq set to 24000000 done!
+[28173.095029] 
+[28173.095029] Bus freq set to 400000000 start...
+[28173.095808] Bus freq set to 400000000 done!
+[28176.158194] 
+[28176.158194] Bus freq set to 24000000 start...
+[28176.158620] Bus freq set to 24000000 done!
+[28176.346046] 
+[28176.346046] Bus freq set to 400000000 start...
+[28176.346831] Bus freq set to 400000000 done!
+[28182.158219] 
+[28182.158219] Bus freq set to 24000000 start...
+[28182.158690] Bus freq set to 24000000 done!
+[28184.283102] 
+[28184.283102] Bus freq set to 400000000 start...
+[28184.283939] Bus freq set to 400000000 done!
+[28772.288225] 
+[28772.288225] Bus freq set to 24000000 start...
+[28772.288695] Bus freq set to 24000000 done!
+[28779.245359] 
+[28779.245359] Bus freq set to 400000000 start...
+[28779.246106] Bus freq set to 400000000 done!
+[28782.318244] 
+[28782.318244] Bus freq set to 24000000 start...
+[28782.318699] Bus freq set to 24000000 done!
+[28784.347631] 
+[28784.347631] Bus freq set to 400000000 start...
+[28784.351207] Bus freq set to 400000000 done!
+[29372.458235] 
+[29372.458235] Bus freq set to 24000000 start...
+[29372.458696] Bus freq set to 24000000 done!
+[29373.106573] 
+[29373.106573] Bus freq set to 400000000 start...
+[29373.107292] Bus freq set to 400000000 done!
+[29376.168208] 
+[29376.168208] Bus freq set to 24000000 start...
+[29376.168697] Bus freq set to 24000000 done!
+[29379.402180] 
+[29379.402180] Bus freq set to 400000000 start...
+[29379.402956] Bus freq set to 400000000 done!
+[29382.468248] 
+[29382.468248] Bus freq set to 24000000 start...
+[29382.468719] Bus freq set to 24000000 done!
+[29384.593661] 
+[29384.593661] Bus freq set to 400000000 start...
+[29384.594503] Bus freq set to 400000000 done!
+[29971.608235] 
+[29971.608235] Bus freq set to 24000000 start...
+[29971.608730] Bus freq set to 24000000 done!
+[29973.116819] 
+[29973.116819] Bus freq set to 400000000 start...
+[29973.117565] Bus freq set to 400000000 done!
+[29976.188213] 
+[29976.188213] Bus freq set to 24000000 start...
+[29976.188617] Bus freq set to 24000000 done!
+[29978.425570] 
+[29978.425570] Bus freq set to 400000000 start...
+[29978.426381] Bus freq set to 400000000 done!
+[29981.598225] 
+[29981.598225] Bus freq set to 24000000 start...
+[29981.598703] Bus freq set to 24000000 done!
+[29983.552443] 
+[29983.552443] Bus freq set to 400000000 start...
+[29983.553251] Bus freq set to 400000000 done!
+[30573.008402] 
+[30573.008402] Bus freq set to 24000000 start...
+[30573.008877] Bus freq set to 24000000 done!
+[30573.137522] 
+[30573.137522] Bus freq set to 400000000 start...
+[30573.140075] Bus freq set to 400000000 done!
+[30576.208177] 
+[30576.208177] Bus freq set to 24000000 start...
+[30576.208611] Bus freq set to 24000000 done!
+[30582.386264] 
+[30582.386264] Bus freq set to 400000000 start...
+[30582.387102] Bus freq set to 400000000 done!
+[30585.468232] 
+[30585.468232] Bus freq set to 24000000 start...
+[30585.468755] Bus freq set to 24000000 done!
+[30592.586317] 
+[30592.586317] Bus freq set to 400000000 start...
+[30592.587129] Bus freq set to 400000000 done!
+[30596.208214] 
+[30596.208214] Bus freq set to 24000000 start...
+[30596.208649] Bus freq set to 24000000 done!
+[30599.405900] 
+[30599.405900] Bus freq set to 400000000 start...
+[30599.406677] Bus freq set to 400000000 done!
+[36390.238150] 
+[36390.238150] Bus freq set to 24000000 start...
+[36390.238654] Bus freq set to 24000000 done!
+[36394.755962] 
+[36394.755962] Bus freq set to 400000000 start...
+[36394.756768] Bus freq set to 400000000 done!
+[36400.248185] 
+[36400.248185] Bus freq set to 24000000 start...
+[36400.248657] Bus freq set to 24000000 done!
+[36401.255241] 
+[36401.255241] Bus freq set to 400000000 start...
+[36401.255984] Bus freq set to 400000000 done!
+[36990.278175] 
+[36990.278175] Bus freq set to 24000000 start...
+[36990.278652] Bus freq set to 24000000 done!
+[36991.266947] 
+[36991.266947] Bus freq set to 400000000 start...
+[36991.267664] Bus freq set to 400000000 done!
+[36994.338157] 
+[36994.338157] Bus freq set to 24000000 start...
+[36994.338586] Bus freq set to 24000000 done!
+[36997.231533] 
+[36997.231533] Bus freq set to 400000000 start...
+[36997.232310] Bus freq set to 400000000 done!
+[37000.298147] 
+[37000.298147] Bus freq set to 24000000 start...
+[37000.298619] Bus freq set to 24000000 done!
+[37002.325693] 
+[37002.325693] Bus freq set to 400000000 start...
+[37002.326590] Bus freq set to 400000000 done!
+[37590.428199] 
+[37590.428199] Bus freq set to 24000000 start...
+[37590.428676] Bus freq set to 24000000 done!
+[37591.286699] 
+[37591.286699] Bus freq set to 400000000 start...
+[37591.287449] Bus freq set to 400000000 done!
+[37594.348175] 
+[37594.348175] Bus freq set to 24000000 start...
+[37594.348643] Bus freq set to 24000000 done!
+[37597.376888] 
+[37597.376888] Bus freq set to 400000000 start...
+[37597.377647] Bus freq set to 400000000 done!
+[37600.448214] 
+[37600.448214] Bus freq set to 24000000 start...
+[37600.448709] Bus freq set to 24000000 done!
+[37602.480841] 
+[37602.480841] Bus freq set to 400000000 start...
+[37602.481488] Bus freq set to 400000000 done!
+[38190.578201] 
+[38190.578201] Bus freq set to 24000000 start...
+[38190.578673] Bus freq set to 24000000 done!
+[38196.345508] 
+[38196.345508] Bus freq set to 400000000 start...
+[38196.346318] Bus freq set to 400000000 done!
+[38199.578236] 
+[38199.578236] Bus freq set to 24000000 start...
+[38199.578695] Bus freq set to 24000000 done!
+[38201.306785] 
+[38201.306785] Bus freq set to 400000000 start...
+[38201.307505] Bus freq set to 400000000 done!
+[38789.608193] 
+[38789.608193] Bus freq set to 24000000 start...
+[38789.608665] Bus freq set to 24000000 done!
+[38789.895653] 
+[38789.895653] Bus freq set to 400000000 start...
+[38789.896464] Bus freq set to 400000000 done!
+[38792.978198] 
+[38792.978198] Bus freq set to 24000000 start...
+[38792.978676] Bus freq set to 24000000 done!
+[38796.563340] 
+[38796.563340] Bus freq set to 400000000 start...
+[38796.564146] Bus freq set to 400000000 done!
+[38799.628224] 
+[38799.628224] Bus freq set to 24000000 start...
+[38799.628720] Bus freq set to 24000000 done!
+[38800.125676] 
+[38800.125676] Bus freq set to 400000000 start...
+[38800.126491] Bus freq set to 400000000 done!
+[39391.008222] 
+[39391.008222] Bus freq set to 24000000 start...
+[39391.008699] Bus freq set to 24000000 done!
+[39393.885987] 
+[39393.885987] Bus freq set to 400000000 start...
+[39393.886772] Bus freq set to 400000000 done!
+[39396.968185] 
+[39396.968185] Bus freq set to 24000000 start...
+[39396.968674] Bus freq set to 24000000 done!
+[39401.327423] 
+[39401.327423] Bus freq set to 400000000 start...
+[39401.329989] Bus freq set to 400000000 done!
+[39404.398072] 
+[39404.398072] Bus freq set to 24000000 start...
+[39404.398510] Bus freq set to 24000000 done!
+[39414.206610] 
+[39414.206610] Bus freq set to 400000000 start...
+[39414.207388] Bus freq set to 400000000 done!
+[39417.298196] 
+[39417.298196] Bus freq set to 24000000 start...
+[39417.298680] Bus freq set to 24000000 done!
+[39417.595688] 
+[39417.595688] Bus freq set to 400000000 start...
+[39417.596471] Bus freq set to 400000000 done!
+[45206.058144] 
+[45206.058144] Bus freq set to 24000000 start...
+[45206.058621] Bus freq set to 24000000 done!
+[45212.971553] 
+[45212.971553] Bus freq set to 400000000 start...
+[45212.972302] Bus freq set to 400000000 done!
+[45216.038117] 
+[45216.038117] Bus freq set to 24000000 start...
+[45216.038637] Bus freq set to 24000000 done!
+[45217.046361] 
+[45217.046361] Bus freq set to 400000000 start...
+[45217.047077] Bus freq set to 400000000 done!
+[45806.058130] 
+[45806.058130] Bus freq set to 24000000 start...
+[45806.058622] Bus freq set to 24000000 done!
+[45807.055074] 
+[45807.055074] Bus freq set to 400000000 start...
+[45807.055766] Bus freq set to 400000000 done!
+[45810.118155] 
+[45810.118155] Bus freq set to 24000000 start...
+[45810.118601] Bus freq set to 24000000 done!
+[45813.013470] 
+[45813.013470] Bus freq set to 400000000 start...
+[45813.014277] Bus freq set to 400000000 done!
+[45816.078155] 
+[45816.078155] Bus freq set to 24000000 start...
+[45816.078601] Bus freq set to 24000000 done!
+[45818.032888] 
+[45818.032888] Bus freq set to 400000000 start...
+[45818.033636] Bus freq set to 400000000 done!
+[46406.208136] 
+[46406.208136] Bus freq set to 24000000 start...
+[46406.208585] Bus freq set to 24000000 done!
+[46413.173416] 
+[46413.173416] Bus freq set to 400000000 start...
+[46413.174121] Bus freq set to 400000000 done!
+[46416.278139] 
+[46416.278139] Bus freq set to 24000000 start...
+[46416.278616] Bus freq set to 24000000 done!
+[46418.193299] 
+[46418.193299] Bus freq set to 400000000 start...
+[46418.194053] Bus freq set to 400000000 done!
+[47006.368100] 
+[47006.368100] Bus freq set to 24000000 start...
+[47006.368556] Bus freq set to 24000000 done!
+[47006.936169] 
+[47006.936169] Bus freq set to 400000000 start...
+[47006.936902] Bus freq set to 400000000 done!
+[47010.018118] 
+[47010.018118] Bus freq set to 24000000 start...
+[47010.018611] Bus freq set to 24000000 done!
+[47013.321025] 
+[47013.321025] Bus freq set to 400000000 start...
+[47013.321834] Bus freq set to 400000000 done!
+[47016.388137] 
+[47016.388137] Bus freq set to 24000000 start...
+[47016.388602] Bus freq set to 24000000 done!
+[47017.093943] 
+[47017.093943] Bus freq set to 400000000 start...
+[47017.094728] Bus freq set to 400000000 done!
+[47606.408109] 
+[47606.408109] Bus freq set to 24000000 start...
+[47606.408585] Bus freq set to 24000000 done!
+[47611.075660] 
+[47611.075660] Bus freq set to 400000000 start...
+[47611.076331] Bus freq set to 400000000 done!
+[47616.408150] 
+[47616.408150] Bus freq set to 24000000 start...
+[47616.408598] Bus freq set to 24000000 done!
+[47618.463774] 
+[47618.463774] Bus freq set to 400000000 start...
+[47618.464613] Bus freq set to 400000000 done!
+[48207.748176] 
+[48207.748176] Bus freq set to 24000000 start...
+[48207.748670] Bus freq set to 24000000 done!
+[48212.141079] 
+[48212.141079] Bus freq set to 400000000 start...
+[48212.141890] Bus freq set to 400000000 done!
+[48215.238130] 
+[48215.238130] Bus freq set to 24000000 start...
+[48215.238560] Bus freq set to 24000000 done!
+[48225.105192] 
+[48225.105192] Bus freq set to 400000000 start...
+[48225.105975] Bus freq set to 400000000 done!
+[48228.188192] 
+[48228.188192] Bus freq set to 24000000 start...
+[48228.188664] Bus freq set to 24000000 done!
+[48234.346146] 
+[48234.346146] Bus freq set to 400000000 start...
+[48234.346930] Bus freq set to 400000000 done!

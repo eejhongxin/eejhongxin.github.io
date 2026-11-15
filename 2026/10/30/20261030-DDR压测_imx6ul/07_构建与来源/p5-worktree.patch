@@ -1,0 +1,523 @@
+diff --git a/minimum_system_test/ddr_test/p5/README.md b/minimum_system_test/ddr_test/p5/README.md
+index 1f34008..6e662df 100644
+--- a/minimum_system_test/ddr_test/p5/README.md
++++ b/minimum_system_test/ddr_test/p5/README.md
+@@ -1,303 +1,152 @@
+-# P5 i.MX6UL DDR Test
+-
+-This is a separate adaptation of ../ddr_test.sh. The original scripts and
+-encrypted ddr_result_analysis.py are not modified. No kernel, DTB, U-Boot,
+-rootfs image, startup script, partition table or firmware is changed.
+-
+-## Preparation
+-
+-Host build from /home/jihongxin/Documents/imx6ul:
++# P5 DDR Test: Minimal Path Adaptation
++
++p5/ddr_test.sh is the original ../ddr_test.sh with these path changes and
++a mount-preparation block before the original system_test_init actions:
++
++- Add the package bin directory and /data/sbin to PATH.
++- Logs: /userdata/ddr_all_test -> /mnt/ddr_work/ddr_all_test.
++- Fixtures: /userdata/ddr_test/check_update -> this package's check_update.
++- CPU temperature: thermal_zone0/temp -> thermal_zone1/temp (confirmed on P5).
++- Packaged BIN helper: checkupdate -> /data/sbin/checkupdate, using the compatible
++  x6_v2.1.2.4B560lcyT_b20201225.bin fixture and its matching MD5 manifest.
++
++The progress additions source ddr_progress.sh, duplicate native SAT and
++memtester output to the console, and observe BIN/TAR counters without changing
++the original helper scripts. TAR iterations and the matching success threshold
++are reduced from 500 to 100 at the user's request; the progress total is 100 too.
++
++The original script and original check_update sources are not edited.
++The BIN helper's command-path and input-filename substitutions are applied
++during packaging. Its fixture and MD5 manifest come from emmc_test/check_update/
++check_update_bin. The TAR helper and fixture are unchanged. Manifests retain
++the previous packaging normalization of CRLF to LF.
++
++Test sequence, free-memory-minus-10-MiB calculation, 8 copy threads, 3600
++seconds, one memtester loop, 1000 BIN iterations, delays, round numbering,
++summary format and pass/fail logic are all ORIGINAL, except the requested
++TAR loop count and matching success threshold of 100 instead of 500.
++This intentionally restores the original limitations in result checking:
++a zero shell exit status is NOT sufficient evidence that every test passed.
++No test-result fail-fast policy, unique run directory or test lock is added.
++Only preparation failure stops the run before the original tests start.
++No --check, --memory, --seconds or --no-unpack option is added.
++
++## Build And Packages
++
++From /home/jihongxin/Documents/imx6ul:
+ 
+ ```sh
+ bash tools/build-ddr-p5.sh
+ ```
+ 
+-The source/method follows docs/embedded DDR pressure test guide, image 06
+-(printed page 5). Upstream stressapptest v1.0.8 source archive is SHA256
+-pinned. The build uses /opt/imx6 SDK, ARMv7-A/Cortex-A7/NEON/hard-float.
+-It regenerates the release's stale configure script and passes
+---host=armv7a-poky-linux-gnueabi so that ARMv7 code paths are enabled.
+-No SDK files or system packages are modified. It also packages the existing
+-memtester 4.3.0 binary already validated by the user on this board.
+-
+-Outputs:
+-
+-- out/ddr-p5-tools.tar.gz: supplemental P5 tools, adapted test scripts, watchdog helper and this guide.
+-- out/ddr-p5-full.tar.gz: the above plus existing BIN/TAR unpack fixtures.
+-- out/ddr-p5-bundles.sha256: checksums of the two archives.
+-- out/ddr-build: downloaded source and host build/test logs, not board input.
+-
+-Both archives include stressapptest, memtester,
+-lrz/lsz (also rz/sz), a BusyBox executable with selected command launchers,
+-and private libstdc++.so.6/libgcc_s.so.1 copies. The commands include tar,
+-bzip2, bunzip2, md5sum, sha256sum, awk, free, df, usleep, setsid, nohup,
+-mktemp, grep, sed, tail, tee, ps, top, watch, dmesg and uptime. bc is not
+-required by the adapted scripts. They still require the board's base ARM
+-hard-float glibc runtime in /lib. These supplemental tools do not require
+-/data, but BIN testing uses the EXISTING /data/sbin/checkupdate and thus
+-requires /data to be mounted. checkupdate is neither bundled nor replaced.
+-Private libraries are not installed into or substituted for system files.
+-All command launchers/libraries are regular files, so extraction works on VFAT.
+-TOOLS.txt records input provenance. No files are imported from data.git,
+-and its worktree/branch is not changed by packaging.
+-
+-The default suite follows the original workload and REQUIRES the full
+-archive's fixtures. The small tools archive can also update an existing
+-full installation without retransferring its fixtures. Transfer using
+-Tera Term ZMODEM and board lrz.
+-The full archive includes about 51 MiB of already-compressed fixtures;
+-serial transfer can take over an hour at 115200 baud. Do not put it on NOR.
+-
+-## Board Commands
+-
+-Root shell; /mnt must be a confirmed writable eMMC block-device mount.
+-ddr_test.sh now creates a missing mount point and automatically mounts the
+-previously confirmed P5 /dev/mmcblk1p7 as vfat/rw if /mnt is not mounted.
+-This also applies to --check. An existing writable block-device mount is reused.
+-Read-only, RAM-backed or NOR mounts are rejected without remounting. A failed
+-mount or a device already mounted elsewhere stops the test before log creation.
+-It never formats, repairs, repartitions or automatically unmounts storage.
+-
+-The script calls /data/sbin/checkupdate by absolute path, so an old test-bundle
+-bin/checkupdate cannot shadow the existing board tool. It invokes only
+---unpack FILE, never --update or the potentially automatic no-argument mode.
+-No board tool is modified, deleted or overwritten. If the previous bundle
+-with its extra checkupdate was installed, its old files may remain after an
+-overlay update, but the current test script ignores them.
+-
+-For the initial package transfer, mount the partition before placing files
+-under /mnt (the script/package itself must already exist to start it):
++- out/ddr-p5-full.tar.gz: tools, scripts, BIN/TAR fixtures; use for a fresh install.
++- out/ddr-p5-tools.tar.gz: tools and scripts only, no large fixtures.
++- out/ddr-p5-bundles.sha256: archive checksums.
++
++Tools and the separate watchdog/memory-sampling helpers are unchanged from
++the previous package. No checkupdate binary or wrapper is included. Nothing
++is installed into the board's /bin, /lib or /data/sbin. No firmware is flashed.
++
++## Board Preparation
++
++Do not overwrite an active test or feeder. Confirm eMMC is mounted before
++transferring files under /mnt; an unmounted /mnt is on the NOR root filesystem.
++On sh ddr_test.sh -c N, the preparation block automatically creates missing
++mount points and mounts /dev/mmcblk1p7 as vfat/rw on /mnt and /dev/mmcblk1p5
++as ext4/ro,noload on /data. Existing correct mounts are reused unchanged,
++including an already read-write /data. Wrong or read-only /mnt mounts, wrong
++/data mounts, mount failures and a missing existing checkupdate stop before
++the original tests start. No formatting, repair, forced remount or tool
++replacement is performed.
++
++The existing P5 checkupdate also checks for six mounted eMMC partitions before
++processing --unpack. Preparation mounts missing p1/p2/p3 on /recovery, /firmware,
++/reserve as vfat/ro, and p6 on /data/app/log as ext4/ro,noload. Existing correct
++mounts are reused; incorrect mounts stop preparation. These runtime mounts do
++not change rcS, fstab or any boot configuration.
++
++For the INITIAL transfer/extraction, /mnt must still be mounted before
++putting the package there. If the script itself lives on an unmounted eMMC
++partition, it cannot be started until that partition is mounted. The commands
++below are only for this bootstrap case; the running test prepares its mounts:
+ 
+ ```sh
+-mkdir -p /mnt
+-mount -t vfat -o rw /dev/mmcblk1p7 /mnt
++if ! grep -q ' /mnt ' /proc/mounts; then
++    mkdir -p /mnt
++    mount -t vfat -o rw /dev/mmcblk1p7 /mnt
++fi
++if ! grep -q ' /data ' /proc/mounts; then
++    mkdir -p /data
++    mount -t ext4 -o ro,noload /dev/mmcblk1p5 /data
++fi
++cat /proc/mounts | grep -E ' /(mnt|data) '
++ls -l /data/sbin/checkupdate
+ mkdir -p /mnt/ddr_work
+ cd /mnt/ddr_work
+-lrz
+ ```
+ 
+-Mounting hides files previously placed under an unmounted /mnt; it does not
+-copy them into eMMC. Install/update the package only after confirming /mnt is
+-the real eMMC mount. ddr_work is created automatically when an actual test starts.
+-
+-Select ddr-p5-tools.tar.gz in the PC terminal's ZMODEM send dialog. Then:
++Use the full archive for a new installation, then:
+ 
+ ```sh
+-tar -xzf ddr-p5-tools.tar.gz
++tar -xzf ddr-p5-full.tar.gz
+ cd ddr_p5
+ sha256sum -c SHA256SUMS
+-sh wtd_feed.sh start
+-sh ddr_test.sh --check --no-unpack
+-sh ddr_test.sh -c 1 --memory 16 --seconds 60 --no-unpack
+-echo "ddr exit=$?"
+-```
+-
+-If an older full bundle is already installed, run the same extraction from
+-/mnt/ddr_work, not from inside ddr_p5. This overlays tools/scripts while
+-leaving assets and earlier run logs intact. Do not update an active test or
+-feeder: stop the test, update, then promptly restart feeding. Stopping feeding
+-does not disable the external watchdog. Nothing is copied to /bin or /lib.
+-For manual commands without changing the login shell's PATH, use e.g.:
+-
+-```sh
+-./bin/lrz
+-./bin/lsz /mnt/ddr_work/run.XXXXXX/ddr_log.log
+-```
+-
+-The smoke test still runs all memtester patterns once; its total runtime
+-is longer than 60 seconds. Only stressapptest is timed by --seconds.
+-After it passes, a reduced 128 MiB / 10-round memory-only run is:
+-
+-```sh
+-sh ddr_test.sh -c 10 --memory 128 --seconds 3600 --no-unpack
+-echo "ddr exit=$?"
+ ```
+ 
+-Keep the terminal connected. Ctrl-C interrupts the test; it is not a pass.
+-Each round runs stressapptest then memtester SEQUENTIALLY, not concurrently.
+-Eight memory copy threads are used, matching the original even though P5
+-has only one CPU core. The runner requires root and mlock success. By default
+-it recalculates free memory minus 10 MiB before EACH memory test, using the
+-same free/awk calculation as the original. --memory overrides this; it does
+-not increase the 10 MiB reserve. This is deliberately more aggressive than
+-the previous 128 MiB / 64 MiB reserve adaptation and can expose OOM behavior.
+-If /etc/init.d/S080_application exists and is executable, it is stopped using
+-the original killall and init-script stop sequence. P5 has no automatic
+-replacement app-stop policy if that script is absent. --check stops no apps.
+-No watchdog is automatically stopped or started by ddr_test.sh.
+-
+-Logs are under /mnt/ddr_work/run.XXXXXX. The console prints the exact path.
+-ddr_log.log uses the original numbered summaries, memtester lines 9-29,
+-completion separators, start/end timestamps and zero-based round numbers.
+-stressapptest_0.log is the first round's native -l log; its stdout/stderr is
+-also saved as stressapptest_0.console.log. memtester_0.log contains complete
+-output. CPU temperature/frequency are printed and included in ddr_log.log
+-after each round, and also saved in system.log with uname, bootargs and memory.
+-These are per-round snapshots, not continuous temperature sampling.
+-CPU temperature is not DDR temperature.
+-CPU temperature is selected by type=imx_thermal_zone, not by a fixed zone
+-number. SBS battery zones are excluded. Missing, unreadable or invalid CPU
+-temperature is recorded as unavailable; it does not fail the memory tests.
+-Log timestamps depend on the board clock, which may start in 1970.
+-To monitor from another shell without modifying logs:
++The tools archive contains no fixtures. Do not reuse the incompatible 2025
++BIN from an earlier full package. On the board with the separately verified
++X6 fixture, these commands supply the BIN and its matching MD5 (relative to
++ddr_p5). TAR fixtures must also be supplied from the full package:
+ 
+ ```sh
+-tail -f /mnt/ddr_work/run.XXXXXX/ddr_log.log
++cp /mnt/ddr_work/x6_fixture_20201225/x6_v2.1.2.4B560lcyT_b20201225.bin check_update/check_update_bin/
++cp /mnt/ddr_work/x6_fixture_20201225/md5_update_x6_v2.1.2_b20201127.txt check_update/check_update_bin/
+ ```
+ 
+-Test failures are logged and remaining tests/rounds continue, matching the
+-original sequencing. The final exit status is nonzero if ANY test failed,
+-and the final summary cannot report PASS in that case. Both stressapptest exit
+-status and its Status: PASS are required. memtester must exit zero, lock
+-memory, finish with Done., and contain no FAILURE. Infrastructure failures
+-(insufficient memory, missing tools, interrupted work) stop immediately.
+-Preflight failure is
+-reported before a run directory is created. After abnormal power loss,
+-inspect old logs before manually removing a stale .ddr-test.lock directory.
+-No automatic cleanup deletes old results.
++## Run And Results
+ 
+-## Temporary External Watchdog Feeding
++The X6 fixture was verified on this P5 with the existing 2022 checkupdate:
++one --unpack completed and all five payload MD5 checks passed. This is fixture
++compatibility evidence, not a full DDR test. Recheck on boards with other tools.
++Never use --update or invoke checkupdate without arguments for these tests.
+ 
+-The P5 TPL5010 external watchdog uses GPIO4_IO21 through the existing
+-LED_Wtd_Done sysfs interface. wtd_feed.sh sends a 50 ms high pulse roughly
+-every 10 seconds. This is a watchdog feeder, not a system wake-up script.
+-It does not change boot configuration, kernel policies or firmware, and
+-it does not run /bin/dog or modify its OOM/panic policies.
+-
+-If the earlier manual feeder (previously PID 196) still exists, verify its
+-current PID using the command below and stop that PID with kill -TERM first.
+-Do not blindly reuse an old PID. The helper refuses a detected manual feeder.
++Start temporary external watchdog feeding separately:
+ 
+ ```sh
+-ps | grep '[L]ED_Wtd_Done'
+-# Only after confirming the PID belongs to the old manual feeder:
+-# kill -TERM <confirmed-PID>
+ sh wtd_feed.sh start
+ sh wtd_feed.sh status
+-sh ddr_test.sh --check --no-unpack
+-sh ddr_test.sh -c 1 --memory 16 --seconds 60 --no-unpack
+-```
+-
+-The helper uses setsid and nohup with detached stdin/stdout/stderr. Closing and reopening
+-the serial terminal does not stop it. Keep the terminal open during DDR tests
+-to capture unexpected resets. Runtime state and errors are in
+-/mem/ddr-wtd-feed/ (RAM); they disappear after reboot. No PID is hardcoded.
+-Start is idempotent; it does not launch another managed worker when one exists.
+-Start/stop/status must use the same copy/path of the helper while it is running.
+-
+-```sh
+-cat /mem/ddr-wtd-feed/feed.log
+-sh wtd_feed.sh stop
+-```
+-
+-WARNING: stopping feeding does NOT disable the external watchdog. The board
+-may reset after its timeout. Restart promptly if continued operation is needed.
+-The DDR suite does not automatically stop this feeder on completion/failure;
+-feeding can mask a hung application, so this helper is only for controlled tests.
+-
+-## Original-Workload Full Suite
+-
+-Obtain the full archive and extract it in /mnt/ddr_work. Use the full archive
+-rather than only the small tools archive for a new installation. Mount /data
+-read-only if it is not already mounted, preserving the existing board tool:
+-
+-```sh
+-if ! grep -q ' /data ' /proc/mounts; then
+-    mkdir -p /data
+-    mount -t ext4 -o ro,noload /dev/mmcblk1p5 /data
+-fi
+-ls -l /data/sbin/checkupdate
+-```
+-
+-First validate
+-only one iteration of each fixture with explicit small smoke-test overrides:
+-
+-```sh
+-cd /mnt/ddr_work/ddr_p5
+-sh wtd_feed.sh start
+-sh ddr_test.sh --check
+-sh ddr_test.sh -c 1 --memory 16 --seconds 60 --bin-loops 1 --tar-loops 1
+-echo "ddr exit=$?"
+-```
+-
+-Then the original defaults are selected with just -c:
+-
+-```sh
+ sh ddr_test.sh -c 12
+-echo "ddr exit=$?"
+ ```
+ 
+-Each round is stressapptest -M <fresh free MiB minus 10> -m 8 -s 3600 -W
+--l <round log>, sleep 30, memtester <fresh free MiB minus 10> 1, BIN unpack
+-1000 times, TAR unpack 500 times, CPU status, sleep 2, sync. Thus -c 12 means
+-12 hours of stressapptest PLUS all other tests and delays, NOT a 12-hour
+-total deadline. --seconds changes only stressapptest duration. --unpack is
+-accepted for compatibility but is now already the default.
+-
+-Fixture copies and extraction use a private directory on RAM-backed /tmp,
+-matching the original storage type rather than the previous eMMC extraction.
+-The copied BIN/TAR inputs remain in RAM across rounds as in the original;
+-they are removed at normal exit/interruption, not left in shared /tmp paths.
+-Preflight requires a tmpfs/ramfs /tmp with at least 96 MiB available for the
+-supplied fixtures. Each iteration runs extract, sync, MD5, delete, sync and
+-usleep 100000. All requested iterations run even after a failed comparison;
+-any extraction or MD5 failure makes the phase and final suite fail. Logs and
+-one failed extraction sample per phase/round are kept on eMMC; unlike the
+-original, unlimited failure backups are not accumulated in RAM.
+-No install.sh, --update, recovery or flashing commands are invoked.
+-
+-BIN COMPATIBILITY IS NOT YET VERIFIED for the existing board tool. The supplied
+-fixture is named update_13emmc_v1.0.0_b20250703.bin upstream. A separate older
+-P5 binary tested on the host failed to unpack it, but that result does NOT
+-establish compatibility or incompatibility of the existing /data/sbin/checkupdate.
+-That separate binary is no longer included or selected. Validate one iteration
+-with the board tool before 12 full rounds; an unpack failure alone is not a
+-DDR fault. The suite also checks MD5 because vendor tools can exit zero after
+-reporting extraction failure. For memory-only tests use --no-unpack. No
+-fixture/checksum has been changed to hide failures. The TAR fixture and all
+-five expected file MD5s were checked on the host. Manifests are normalized
+-from CRLF to LF only; expected hashes are unchanged. Never replace --unpack
+-with --update.
+-
+-## Compatibility Boundaries
++-c 12 runs twelve COMPLETE rounds. Stressapptest alone totals 12 hours;
++memtester, unpack tests and delays make total duration longer than 12 hours.
++Keep the serial terminal connected. The test itself does not manage feeding.
++The feeder survives terminal disconnection but disappears after reboot.
++Stopping feeding does not disable the external watchdog and can cause a reset.
+ 
+-Default test order, memory calculation, thread count, durations, unpack loop
+-counts, per-iteration pauses, round numbering and numbered result format
+-follow ../ddr_test.sh. P5-specific mount checks, thermal type selection,
+-unique run directories, process cleanup and watchdog helper are retained.
+-Failures are checked more strictly than the original's PASS grep / clipped
+-memtester output: failure detection bugs are not compatibility requirements.
+-No clean command deletes prior results, and no report-parser compatibility
+-is claimed for the encrypted analysis tool. Tool versions and P5 hardware
+-also differ; matching script parameters is not proof of identical load or
+-DDR qualification. Host tests do not establish BIN/tool compatibility on P5.
+-
+-## Memory Usage Sampling
+-
+-This measures total minus MemFree, including caches. It is not a DDR
+-stress test and does not indicate DDR bandwidth or failure rate. It uses
+-awk rather than bc. For an idle baseline, run separately from stress tests:
++Logs are fixed files, appended/reused like the original, not run.XXXXXX:
+ 
+ ```sh
+-sh ddr_mem_usage.sh 7200 1
++cat /mnt/ddr_work/ddr_all_test/ddr_log.log
++tail -f /mnt/ddr_work/ddr_all_test/stressapptest_0.log
++cat /mnt/ddr_work/ddr_all_test/memtester_0.log
+ ```
+ 
+-Arguments are duration and interval in seconds; defaults are 7200 and 1.
+-CSV files are in unique /mnt/ddr_work/usage.XXXXXX directories.
+-
+-## Limits And Shutdown
+-
+-Host cross-compilation/emulation and shell regression tests are not board
+-DDR validation. A software pass does not cover all 256 MiB, reserved/CMA
+-memory, temperature/voltage corners, or every sample. No automated Python
+-report is supplied because the repository's script is encrypted.
+-
+-Stop tests before unmounting. A preexisting FAT dirty flag was observed;
+-do not format or automatically repair the data partition for these tests.
+-Back up important existing files and always finish with:
+-
+-```sh
+-cd /root
+-sync
+-umount /mnt
+-```
++Temperature and CPU frequency are recorded in ddr_log.log after each round.
++Console progress shows one-based round/stage banners and elapsed time. SAT's
++native "Seconds remaining" appears every 10 seconds; this covers only its
++3600-second workload, not the complete round. Memtester displays its native
++subtests; its remaining time is unknown. BIN/TAR counters are sampled every
++10 seconds with an estimated remaining time based on completed iterations.
++Estimates can vary and are not test results. No exact whole-round ETA is given.
++The counter observer is stopped and reaped when its stage finishes or the
++runner exits. Progress messages do not change the original summary log format.
++
++The original clean command deletes this test log directory. Back up logs
++before using it. Original S080_application stop commands are also retained;
++if that init script is absent on P5, they print errors and do not stop P5 apps.
++Only 10 MiB memory is reserved. OOM, missing tools, incompatible fixtures,
++watchdog resets and incomplete tests must not be reported as DDR failures.
++
++Host syntax/parity tests are not board DDR validation. After stopping tests,
++finish storage access with sync and unmount only when no process uses it.
+diff --git a/minimum_system_test/ddr_test/p5/ddr_test.sh b/minimum_system_test/ddr_test/p5/ddr_test.sh
+index 5b5b3db..895f03d 100644
+--- a/minimum_system_test/ddr_test/p5/ddr_test.sh
++++ b/minimum_system_test/ddr_test/p5/ddr_test.sh
+@@ -2,6 +2,8 @@
+ 
+ SCRIPT_DIR=$(CDPATH= cd "$(dirname "$0")" && pwd)
+ export PATH="$SCRIPT_DIR/bin:/data/sbin:$PATH"
++. "$SCRIPT_DIR/ddr_progress.sh"
++trap 'ddr_progress_stop' EXIT
+ 
+ TEST_DIR="/mnt/ddr_work/ddr_all_test"          # 测试目录
+ DDR_LOG="${TEST_DIR}/ddr_log.log"
+@@ -73,6 +75,7 @@ system_test_init()
+ ##通过 stressapptest 工具对 DDR 进行高并发、长时间、高压力的内存读写测试（默认 1 小时）
+ ddr_stressapptest_test()
+ {
++    ddr_stage_start stressapptest
+     mem=$(free | grep Mem | awk '{print $4}')
+ 	mem=`expr $mem / 1024`
+     mem=$(($mem-10))
+@@ -81,7 +84,7 @@ ddr_stressapptest_test()
+ 	chmod 777 "${TEST_DIR}/stressapptest_${count}.log"
+ 
+ 	### -m 4：启动4个内存读写线程（并发数，建议不超过CPU核心数）  -s 3600:3600秒  -w:启用写验证（写数据后立即读回校验，核心稳定性检测）
+-    stressapptest_result=`stressapptest -M $mem -m 8 -s 3600 -W -l "${TEST_DIR}/stressapptest_${count}.log" | grep "PASS" | wc -l`
++    stressapptest_result=`stressapptest -M $mem -m 8 -s 3600 -W -l "${TEST_DIR}/stressapptest_${count}.log" | tee /proc/self/fd/2 | grep "PASS" | wc -l`
+ 
+     if [ $stressapptest_result == 1 ]
+ 	then
+@@ -91,13 +94,16 @@ ddr_stressapptest_test()
+ 	fi
+ 	num=$(($num+1))
+ 
++    printf '[progress] stressapptest cooldown: 30 seconds\n' >&2
+ 	sleep 30
+ 	echo "===== DDR Stressapptest Completed =====" >> "${DDR_LOG}"
++    ddr_stage_end
+ }
+ 
+ ###通过 memtester 工具对 DDR 进行基础内存故障检测（覆盖地址线、数据线、读写验证、位翻转等），测试 1 轮后提取关键日志（9-29 行）写入总日志，侧重输出详细测试过程而非仅 PASS/FAIL。
+ ddr_memtester_test()
+ {
++    ddr_stage_start memtester
+     mem=$(free | grep Mem | awk '{print $4}')
+ 	mem=`expr $mem / 1024`
+     mem=$(($mem-10))
+@@ -105,19 +111,23 @@ ddr_memtester_test()
+ 	touch "${TEST_DIR}/memtester_${count}.log"
+ 	chmod 777 "${TEST_DIR}/memtester_${count}.log"
+ 	### $mem：测试内存大小（MB）  1：测试轮数（仅运行1轮）
+-	memtester $mem 1 >> "${TEST_DIR}/memtester_${count}.log" 2>&1
++	memtester $mem 1 2>&1 | tee -a "${TEST_DIR}/memtester_${count}.log"
+ 	memtester_result=`cat "${TEST_DIR}/memtester_${count}.log" | sed -n '9,29p'`
+ 	echo "$num.ddr memtester result: $memtester_result" >> "${DDR_LOG}"
+ 	num=$(($num+1))
+ 	echo "===== DDR Memtestertest Completed =====" >> "${DDR_LOG}"
++    ddr_stage_end
+ }
+ 
+ ddr_unpack_bin_test()
+ {
++    ddr_stage_start "BIN unpack (1000 iterations)"
+ 	cp "$SCRIPT_DIR/check_update/check_update_bin/" /tmp/ -rf
+ 	cd /tmp/check_update_bin/
+ 	chmod +x check_update.sh
++    ddr_counter_start /tmp/check_update_bin/check_result 1000
+ 	./check_update.sh 1000 >> /dev/null
++    ddr_stage_end
+ 	unpack_bin_result=`cat check_result`
+ 	if [ $unpack_bin_result -eq 1000 ]
+ 	then
+@@ -132,12 +142,15 @@ ddr_unpack_bin_test()
+ 
+ ddr_unpack_tar_test()
+ {
++    ddr_stage_start "TAR unpack (100 iterations)"
+ 	cp "$SCRIPT_DIR/check_update/check_update_tar/" /tmp/ -rf
+ 	cd /tmp/check_update_tar/
+ 	chmod +x check_update.sh
+-	./check_update.sh 500 >> /dev/null
++    ddr_counter_start /tmp/check_update_tar/check_result 100
++	./check_update.sh 100 >> /dev/null
++    ddr_stage_end
+ 	unpack_bin_result=`cat check_result`
+-	if [ $unpack_bin_result -eq 500 ]
++	if [ $unpack_bin_result -eq 100 ]
+ 	then
+ 		echo "$num.unpack tar test: Success" >> "${DDR_LOG}"
+ 	else
+@@ -189,6 +202,7 @@ echo "---------ddr test start time: $(date "+%Y-%m-%d %H:%M:%S")---------"
+ if [ "$1" == "-c" ]
+ then
+     count=0
++    DDR_ROUNDS=$2
+ 	system_test_init
+ 	#mkdir -p /mnt/ddr_test
+ 	echo "---------ddr test start time: $(date "+%Y-%m-%d %H:%M:%S")---------" >> "${DDR_LOG}"

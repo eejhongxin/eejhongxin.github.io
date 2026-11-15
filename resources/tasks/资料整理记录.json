@@ -1,0 +1,1116 @@
+{
+  "date": "2026-11-09",
+  "summaries": [
+    {
+      "task": "20260920-USB快充相关文档",
+      "images": 30,
+      "documents": 11,
+      "encrypted": 7
+    },
+    {
+      "task": "20261009-MTP驱动提速",
+      "images": 0,
+      "documents": 3,
+      "encrypted": 1
+    },
+    {
+      "task": "20261015-MTP开启提速",
+      "images": 1,
+      "documents": 2,
+      "encrypted": 1
+    },
+    {
+      "task": "20261015-UART压测_线程绑核",
+      "images": 60,
+      "documents": 8,
+      "encrypted": 3
+    },
+    {
+      "task": "20261030-DDR压测_imx6ul",
+      "images": 58,
+      "documents": 28,
+      "encrypted": 6
+    },
+    {
+      "task": "20261104-xenomai实时性测试_PWM_IMU",
+      "images": 3,
+      "documents": 4,
+      "encrypted": 0
+    }
+  ],
+  "encryptedFiles": [
+    "2026/20260920-USB快充相关文档/硬件资料/15000300q8-e00-site20-power-v1_.pdf",
+    "2026/20260920-USB快充相关文档/硬件资料/15000300r6-x17-rv1126bj-v2_0_0_.pdf",
+    "2026/20260920-USB快充相关文档/硬件资料/CH224K.pdf",
+    "2026/20260920-USB快充相关文档/硬件资料/HUSB311.pdf",
+    "2026/20260920-USB快充相关文档/硬件资料/SGM41574 Advance Datasheet_20241024_GB(1).pdf",
+    "2026/20260920-USB快充相关文档/硬件资料/UM7222.pdf",
+    "2026/20260920-USB快充相关文档/硬件资料/USB驱动方案资料.docx",
+    "2026/20261009-MTP驱动提速/Umtprd升级使用说明.docx",
+    "2026/20261015-MTP开启提速/USB_GADGET改动说明.docx",
+    "2026/20261015-UART压测_线程绑核/cpu_test/测试报告/原有参考资料/Linux系统实时性测试报告.xlsx",
+    "2026/20261015-UART压测_线程绑核/Linux系统实时性测试报告.xlsx",
+    "2026/20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_.pdf",
+    "2026/20261030-DDR压测_imx6ul/04_检查与分析/八轮速率明细.csv",
+    "2026/20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet.pdf",
+    "2026/20261030-DDR压测_imx6ul/06_参考资料/IMX6UL DDR3配置测试步骤.doc",
+    "2026/20261030-DDR压测_imx6ul/06_参考资料/P5.pdf",
+    "2026/20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1).doc",
+    "2026/20261030-DDR压测_imx6ul/文件来源清单.csv"
+  ],
+  "records": [
+    {
+      "action": "Typora图片本地化",
+      "source": "C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20261009160201812.png",
+      "target": "2026/20261015-MTP开启提速/image/image-20261009160201812.png",
+      "sha256": "79b670b4a7f7bf7c4e38e02af0cdf3c3a0df71a8aac500f7c98b46e2425b0e13"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/cpu_test/测试报告/RK3576_CPU测试/不隔离CPU_测量线程绑CPU7/idle/cyclictest_hist_cpu7.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/cpu_test/测试报告/RK3576_CPU测试/不隔离CPU_测量线程绑CPU7/idle/cyclictest_hist_cpu7.png",
+      "sha256": "2bb575e0a7a0e172bc27609935dbcd47e6d69f6afd76e6a5fd66cc43ebb687fe"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/cpu_test/测试报告/RK3576_CPU测试/不隔离CPU_测量线程绑CPU7/load50/cyclictest_hist_cpu7.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/cpu_test/测试报告/RK3576_CPU测试/不隔离CPU_测量线程绑CPU7/load50/cyclictest_hist_cpu7.png",
+      "sha256": "35e1c8ddaa85ec7ce1e8696c41289661157576342ce96a3dca6c003cb734ad6d"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/cpu_test/测试报告/RK3576_CPU测试/不隔离CPU_测量线程绑CPU7/load80/cyclictest_hist_cpu7.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/cpu_test/测试报告/RK3576_CPU测试/不隔离CPU_测量线程绑CPU7/load80/cyclictest_hist_cpu7.png",
+      "sha256": "806e6b7da112bf3fe335dfd79a5d2ea96141ba4dafe18e974f13e572a2b626d1"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/cpu_test/测试报告/RK3576_CPU测试/隔离CPU7/idle/cyclictest_hist_cpu7.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/cpu_test/测试报告/RK3576_CPU测试/隔离CPU7/idle/cyclictest_hist_cpu7.png",
+      "sha256": "dcfb5a0703ac35ea0ef3d8941cdf585cd8c7e307afe1353dde873351aa2454ad"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/cpu_test/测试报告/RK3576_CPU测试/隔离CPU7/load50/cyclictest_hist_cpu7.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/cpu_test/测试报告/RK3576_CPU测试/隔离CPU7/load50/cyclictest_hist_cpu7.png",
+      "sha256": "dc49ce5140e7a0df50cabab49866e0f202f45591af8f9914ae38bc7cc0129d20"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/cpu_test/测试报告/RK3576_CPU测试/隔离CPU7/load80/cyclictest_hist_cpu7.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/cpu_test/测试报告/RK3576_CPU测试/隔离CPU7/load80/cyclictest_hist_cpu7.png",
+      "sha256": "1e428ae27bc5f80f2ae49166f4c2de5b3130a2be1c73a573a375447df2168836"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/cpu_test/测试报告/RK3576_CPU测试/隔离CPU7/load80/without_3264us/cyclictest_hist_cpu7_without_3264us.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/cpu_test/测试报告/RK3576_CPU测试/隔离CPU7/load80/without_3264us/cyclictest_hist_cpu7_without_3264us.png",
+      "sha256": "09cd7d450ad7a1ce9f19d77398bd369237c0954874ca95c357e4e8253b86cbc6"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/Linux系统实时性测试报告-增加3576的报告(1)/Linux系统实时性测试报告-增加3576的报告_01.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/Linux系统实时性测试报告-增加3576的报告(1)/Linux系统实时性测试报告-增加3576的报告_01.png",
+      "sha256": "edc64985eb42a333fa296ba8decdf9b6b8a54bb550837bc387a2066e4b85145e"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/Linux系统实时性测试报告-增加3576的报告(1)/Linux系统实时性测试报告-增加3576的报告_02.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/Linux系统实时性测试报告-增加3576的报告(1)/Linux系统实时性测试报告-增加3576的报告_02.png",
+      "sha256": "52e4babf476ba20bd51c367dfa45efde2f639046a2a1e8c81bd7c8f1974ea79f"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/Linux系统实时性测试报告-增加3576的报告(1)/Linux系统实时性测试报告-增加3576的报告_03.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/Linux系统实时性测试报告-增加3576的报告(1)/Linux系统实时性测试报告-增加3576的报告_03.png",
+      "sha256": "d0f29ca50c3b377b056ade76b599c43a07f414649f2ebfeb4b76eaf6cf0c9aaa"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/Linux系统实时性测试报告-增加3576的报告(1)/Linux系统实时性测试报告-增加3576的报告_04.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/Linux系统实时性测试报告-增加3576的报告(1)/Linux系统实时性测试报告-增加3576的报告_04.png",
+      "sha256": "fa5ea87edf5406fb5b8bc134a320fa1a293471bee2ddb75455b386ab856e91f2"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__01.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__01.png",
+      "sha256": "09c7f498b96c5b036ee95dd4e868b1a4742c2ae44051a2e0b61383091c4dea1b"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__02.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__02.png",
+      "sha256": "b462df8007806d9e116981d4d17cc06a00c3143b1cc38023d875c7ebda7eea4a"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__03.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__03.png",
+      "sha256": "b0284702c06397aeb586890428c9ee5d239e557fb990f4d0a509c82f5643eaf7"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__04.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__04.png",
+      "sha256": "bbe37c340d4a4365a5108e03ec927930cbc13e74ede3819df03eb48002a3c161"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__05.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__05.png",
+      "sha256": "86e74d4d0a45dd5926207cd2782fa615385a2da59317fe76f353cc6d6cab7304"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__06.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__06.png",
+      "sha256": "9debe15d5c8dd828911e2b7c2c4e121f168b64ca8330c03900d3cc065f844ab4"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__07.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__07.png",
+      "sha256": "a7778613e9a39ac7443fce0c4233346305826da6f01e16cda913a817857cd7c7"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__08.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__08.png",
+      "sha256": "e3cf12f17a6fad6fef712897a492fad81a29e183a8845b2ab8e09096366d9bbf"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__09.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__09.png",
+      "sha256": "9f1a94c8d3c6ee61dace86ae25d416a829198f596b2494954da72b171a40c54b"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__10.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__10.png",
+      "sha256": "753c7554c5b58d37605700ae6e8b76a486c72caf489498fdb1a9432063d30f7b"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__11.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__11.png",
+      "sha256": "2d4572cacedadb272f11568cf7ee69b03da9ce8be7f1bf3740b51486ab0d78f6"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__12.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__12.png",
+      "sha256": "439491a033973befbb01058b85abad4f6921415189e119e68b366b0679107abe"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__13.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__13.png",
+      "sha256": "56f8e20c7529b7cd3eb4912dc3dd064c80b6786e16d46b69891684671ce455b5"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__14.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__14.png",
+      "sha256": "4acf486f47240243f2e6f0bf8329dc87728251e9f21d0f19847c3069bdcbb646"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__15.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__15.png",
+      "sha256": "bae700a30894af73f5891012014e0653b531f4864f2aef9445cf79e18516fccf"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__16.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__16.png",
+      "sha256": "674b750a272ca9e03923c4748a849180e09df79b191cfc1f8dba248cd771bad1"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__17.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__17.png",
+      "sha256": "b788d4ad2408a104d8c9d3922f6fe3bb313c813b2f228f92ec1d570e033ec7a1"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__18.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__18.png",
+      "sha256": "bf3c1cad360791142175e4fd29f5613b360a881e127d86b2f3bf8fc11def4637"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__19.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__19.png",
+      "sha256": "1fa4c1ebf6d2a21899b7d2a36f635f6a7630ae4e9ca4e869876defb2b523404a"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__20.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__20.png",
+      "sha256": "faa2e47fc591ae373eca3de281be658055060fa9b0a019ac092d8ec0b92c93d4"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__21.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__21.png",
+      "sha256": "307c1ecefa1a6bf9942a35a1312ce0111e030f40b32d1e9c531825a03d83f4a8"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__22.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__22.png",
+      "sha256": "100ff0c04895669fbb20fca6dcd0c7c8db5e86a2a4d154e7faab9e5647b13ca9"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__23.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__23.png",
+      "sha256": "250bf3a5ed1d243efb5c70405405acfda54d72e343b4796dd5ab5025a38e3b8a"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__24.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__24.png",
+      "sha256": "8af5c6b99290d21b77301ff1fc1751d0446f358a1ebd0115f254d9c213b9a29f"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__25.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__25.png",
+      "sha256": "7b5358107fdd51240fe97216f56ea22e70668aa25639a39285d300c77b401ece"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__26.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__26.png",
+      "sha256": "641e3c9075926f38a0f118d471d3a94ac42f79c41ab5d3a3ded8a746bc2f2b81"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__27.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__27.png",
+      "sha256": "26ae06cc2b0d3084ee04f63653987e485df86002fbba1691beff33f0fee67b64"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__28.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__28.png",
+      "sha256": "bd4c21be9902c7369089788e010643cedb21332380ca2c3638991e9d6bc1cd76"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__29.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__29.png",
+      "sha256": "5e3fb4ee6a9672b206dcfb9794568c20b65572786e2a70326afdd9edb54bec02"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__30.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__30.png",
+      "sha256": "612de278542b629ef1d5d5f7d17466e11d8fe2b262121228d9d1b047225f464e"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__31.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__31.png",
+      "sha256": "b3e07905f0fa5db1cfaa55f91198eb641d179b157fd43d560f50addc88d0c769"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__32.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__32.png",
+      "sha256": "3c22e522cc8c456122ef4e0ca2ed09b4adc3cbc2ed34641bf02ce9121a6d8ac0"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__33.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__33.png",
+      "sha256": "540923e7611ed345d41aea873783fbe7c4db9fc76709331f34e61be8c5bac0d4"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__34.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__34.png",
+      "sha256": "8b637b2251b3f88c301030214dcdcb690e990b11af422684551519e6022cd06a"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__35.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__35.png",
+      "sha256": "3062f217bee89e1d5b01b16403d1ab900b9775da25254ce933d2613a3e86269a"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__36.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__36.png",
+      "sha256": "a43f9fae2b2079f2e786606f5c6838391dd4468a24e3322ee30ac7d933095bf0"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__37.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__37.png",
+      "sha256": "9ea9edc522bc679160e1aaa59aaf020d355f177ed8d46ccc6f97e94801d776bd"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__38.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__38.png",
+      "sha256": "c807c0bf9c4ee17038c160ad9a7a10ed71ce0d3ca7cc54f520eaf817d80020e8"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__39.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__39.png",
+      "sha256": "f7a040b5169565ccd3fea4734f6612b9dabd744afd3cecb0ca3de14417806b57"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__40.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__40.png",
+      "sha256": "ab6c853e30eae55ec0ac91a385e8aba722c3d8a11760e7dd85ea8db639a7f7e4"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__41.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__41.png",
+      "sha256": "76a246c183acf05ed00fa773dcf3604e02e4a76066d33d5cf8ff80d0ef2575ee"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__42.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__42.png",
+      "sha256": "d5e436650935df0d444e6b30fc645dec9b20f8781583b9f01afe83cf553bbf58"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__43.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__43.png",
+      "sha256": "db3def47ba182eca3e53870ee0b8f7cf1b712d51a519f4763f919ab689e8771f"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__44.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__44.png",
+      "sha256": "d6c03df77bda06f6c39900c6aa30671b2db962d92e3ea08cfb73b5211e671c3f"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__45.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__45.png",
+      "sha256": "43591bbd28c4434fa4a993ace25e25c6be73034f14eefe11d7534b82ae34b4d3"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__46.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__46.png",
+      "sha256": "f1de9cce8bfec76aa8cf5ed5a20c9fd9c7b879580722d01f85b7d310faadd232"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__47.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__47.png",
+      "sha256": "c14b4af4f5ea41562bf0a5130cfa12057316bbba6c3eae0f63b3d821ddf74db9"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__48.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__48.png",
+      "sha256": "d1d60150c2e41235943ec66ca9d2dcf2ed2d8e911b8c89803f56605e3ad2cc54"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261015-UART压测_线程绑核/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__49.png",
+      "target": "2026/20261015-UART压测_线程绑核/image/RK_EVB1_RK3576_LP4XD200P132SD6_/RK_EVB1_RK3576_LP4XD200P132SD6__49.png",
+      "sha256": "b73ea1a94973b5a377a58a04f031b3fc9e85aa52d783d3d715f6af4828faf500"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_01.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_01.png",
+      "sha256": "89bba778fc0d70ac1cfc378c08e5ce53e97227755611f35b962981fc32052b06"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_02.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_02.png",
+      "sha256": "6e7855a9faa15789004d57396b912b41e4f3916d48b2ad2d51f5b61e24acfa8c"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_03.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_03.png",
+      "sha256": "a8a224a43c54c152933fa1e1019af15abe3fcd42c8eff0841bd8541b0a858a66"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_04.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_04.png",
+      "sha256": "0663dc463897ebfe4a3b71a54c440faa275fb1eee7c8b537ff4754c055382fb3"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_05.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_05.png",
+      "sha256": "b2a2df3425fec43f2062382dda334936749bb00a2b9ffe9d8c29b8c66ab31494"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_06.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_06.png",
+      "sha256": "57ca68453b5fdb8899dc876b285b17b1460a34046fcf9f14d74c733b6c3084ac"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_07.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_07.png",
+      "sha256": "efd02a67a3c10db49f33c7831564afb56237a7ed3b3b8e86448670c5b22c6356"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_08.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_08.png",
+      "sha256": "4c267c7ff81431ba57d911e8052801729658f737a19581d641a3bc0def9b56a0"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_09.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_09.png",
+      "sha256": "a3abe55de16764138abd4a0cb7911828aa0682e5a5278b663e388b6dc0bebe15"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_10.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_10.png",
+      "sha256": "bcf80d5b4b288db3f63a0de4454a47365f28aac9b63304556302f8c5e5266df3"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_11.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_11.png",
+      "sha256": "5b78dbb2f6e92d85aefa6859fd1079c236f92073ad3c1814b8a0a4e0b685ed64"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_12.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_12.png",
+      "sha256": "a7e50166eff413705dcaabd22be42cd8629896878081b30a94a297854c758310"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_13.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_13.png",
+      "sha256": "83e5290e644da4b955b86cc05208942ca4ee452b4ea1a939f15b980a2984e0a5"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_14.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_14.png",
+      "sha256": "44e8e32fe30af7cff6f8236ccf2de5c62cd9d132326c954aef71b82dd0f8cb69"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_15.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_15.png",
+      "sha256": "a43db622c54b4da468212e9c20bb925821d82ccfb0ee6c2362eb7a18d03538ec"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_16.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_16.png",
+      "sha256": "d38970acac03069194e8caf5249b87161ae76809127af7d808577ba0e0db79f0"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_17.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_17.png",
+      "sha256": "adbe5084b67c48a2958dd4463de0de1fbaa81e18114b9f6ef7eab67155970571"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_18.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/FORESEE_F60C1A0002-M6_Datasheet/FORESEE_F60C1A0002-M6_Datasheet_18.png",
+      "sha256": "1197aed2513a0688c0c2eac09abbdf3ac0e544eb1ec1a846680353dcaf0b9693"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/IMX6UL DDR3配置测试步骤/IMX6UL DDR3配置测试步骤_01.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/IMX6UL DDR3配置测试步骤/IMX6UL DDR3配置测试步骤_01.png",
+      "sha256": "bd1c7c8397e280686e9b6bd7a8286af0b87c5d2e5c06c03fbc023fe0bc8bb61d"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/IMX6UL DDR3配置测试步骤/IMX6UL DDR3配置测试步骤_02.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/IMX6UL DDR3配置测试步骤/IMX6UL DDR3配置测试步骤_02.png",
+      "sha256": "bcb63168bd71a796f9acc9af79baf89f981ce2c90869481eca03069edb2b9ab6"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/IMX6UL DDR3配置测试步骤/IMX6UL DDR3配置测试步骤_03.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/IMX6UL DDR3配置测试步骤/IMX6UL DDR3配置测试步骤_03.png",
+      "sha256": "ef11ce3463a76c87b7757f253574e6926860a7a59fbb930c97bc606a1ab1827a"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_01.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_01.png",
+      "sha256": "9a5c49bb2c5f150150b96196c9f5707bc578e1c7502c8a2f83c25dbdf663989d"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_02.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_02.png",
+      "sha256": "6879d9537d51a4a772c95344a5c8268e60176865d361fb4142339237f12b7486"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_03.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_03.png",
+      "sha256": "fa2f9bbe36936c8b8191665c64b19df364aa03b1cc912116eba0a62e40ef52c5"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_04.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_04.png",
+      "sha256": "ea0470a588e22791fa4cfd71d2693f318c42ee17b06523c1f88e1ca0be855a98"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_05.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_05.png",
+      "sha256": "e19b1bcb1efcfabfd5c0a98a6cdd9a99a493ccf39ff1a886ec88bb40519157e7"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_06.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_06.png",
+      "sha256": "5b6fdd99072fa295dc390c208b0532dab80d47aba53cd479103148753b3736b0"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_07.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_07.png",
+      "sha256": "978a1b36e9470f0271a5e5c210ce9783252cb166d0ea3e75c8d731b2ddf1bc7f"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_08.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_08.png",
+      "sha256": "f55053478838ef492e3727480fb1fa1c72cf7e9719ed768d248514a75b2816e4"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_09.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_09.png",
+      "sha256": "265ac738c3d1818b6c0913e8e21e7d31583b03f2ddc95d5af22e46ecbe6189cf"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_10.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_10.png",
+      "sha256": "022f6cdfdfd60bea857a60efe3949173525b198d93a1af8d99d13fd48b913fcc"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_11.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_11.png",
+      "sha256": "216a7284eb40e804c938adcee409e579e3fd72532806790142b73d9150d0da0e"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_12.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_12.png",
+      "sha256": "522722a35e84b9f981dd2d9a70edd9f0ae623bf65abfa26bf8982f279c495ca1"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_13.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_13.png",
+      "sha256": "adf11f7c7f66e5a096023e3ad05e44cb71cf80722f98c77f480941e22d2153a3"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_14.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_14.png",
+      "sha256": "73f0f34f15d32ab2b499942c846d4ad283509bd86915d9e16ff2da5a79034695"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_15.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_15.png",
+      "sha256": "9aeb698126e34d3374dc5c91890e01dda82f6107034e526bbb451b7d022d57b1"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_16.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_16.png",
+      "sha256": "41030a77e0ec4ce0ebc5083cfe6d09c8eb4526bd372478372e7934b2ce60ec1e"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_17.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_17.png",
+      "sha256": "7eb5aa82efaba37d87e073606dc70e203b4120c0f151107d91d45946bc8cd1c1"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_18.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_18.png",
+      "sha256": "fb48f4ebc4f22c04d80a16207906344f864277b4feaceb50a86d5a670232d5f3"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_19.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_19.png",
+      "sha256": "8c51a589521df97b7da3f0570d6230a2eed5da770b6411f4759f9c8234b36177"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_20.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_20.png",
+      "sha256": "fcfb765eec28ff380351542f191aa1b1f27000ce6c9666be5ea5341c8cf7cb11"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_21.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_21.png",
+      "sha256": "50aff7d3f5650d55d5870c26f60e718438af09e5d01bc3ac9774621eded46957"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_22.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_22.png",
+      "sha256": "3093b86b96a47d380ac513ee0349b06a7b7c00f2b2b2cd8c1afd8b1e16d58c73"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_23.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_23.png",
+      "sha256": "6b6e69976489928d4c2282d43e386d1237e9185430c7b4e8ca8f7378ac33fcba"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/P5/P5_24.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/P5/P5_24.png",
+      "sha256": "d5c6fb40fbdebfb7f52a8b18e3e7509431476ac67d43c0c623c767a98c203ad4"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_01.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_01.png",
+      "sha256": "ae14dce25fd77ed8703d2854b3ef505c861a684064b04269f265aed73ecaa53e"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_02.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_02.png",
+      "sha256": "67feff302717086fbdf6989e85dbbd84852ac331c05ecab40347852ab32c16d2"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_03.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_03.png",
+      "sha256": "0df43e2e3f3c5b213700b1e591658e0fa014721c1222fc6a9da3a3a42ac378e4"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_04.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_04.png",
+      "sha256": "7dba8dabea08ea2ae3dc951386d080d82843090b832a19c47a7fda91db21f3cc"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_05.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_05.png",
+      "sha256": "a728d8b982ce2bc7681adf6141506c8ff4bd9ef9f806cf5f44f1038998cd7cf8"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_06.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_06.png",
+      "sha256": "fa4ce66ab8a781164cf7c6001cbc2087d42a73ee0c705d6b3e189b7f003fbfca"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_07.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_07.png",
+      "sha256": "68891ff89ed0020dd192ad50c1af9cd01b14b72cad3354545937b1267e7b657a"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_08.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_08.png",
+      "sha256": "a2021939fdaf0ad9f75971536842f233d7db8769f7fc4cc202261f139d5a5490"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_09.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_09.png",
+      "sha256": "2dfbf8ec0d6a90eb446cbf407ee541ac68aeba1fe8f307c95747b2db0f098898"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_10.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_10.png",
+      "sha256": "f5d089c58013231e342218e608b8fbf3399a634c866f2a9fb176c83dd4fb4bc1"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_11.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_11.png",
+      "sha256": "319bd49f5f66d9baa47b27effed3b41a38bfb54570bdaf89a92915cea782f2a3"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_12.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_12.png",
+      "sha256": "e5917ab035e43f7dcc24ed903ce2c681cc99a9c7f0a8f20c57c81af2a8824db2"
+    },
+    {
+      "action": "图片归入image",
+      "source": "20261030-DDR压测_imx6ul/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_13.png",
+      "target": "2026/20261030-DDR压测_imx6ul/image/06_参考资料/嵌入式驱动平台DDR压力测试工具及方法介绍(1)/嵌入式驱动平台DDR压力测试工具及方法介绍(1)_13.png",
+      "sha256": "98da3902fc355f8cfe83ce5f36d875382174428d8ca808d8fe7daa8974885eb2"
+    },
+    {
+      "action": "Typora图片本地化",
+      "source": "C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20261105104126494.png",
+      "target": "2026/20261104-xenomai实时性测试_PWM_IMU/image/image-20261105104126494.png",
+      "sha256": "545659ae24995fd63d641406de7a825f051d2469dbf1db6a94374c4fe05dd782"
+    },
+    {
+      "action": "Typora图片本地化",
+      "source": "C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20261105104337555.png",
+      "target": "2026/20261104-xenomai实时性测试_PWM_IMU/image/image-20261105104337555.png",
+      "sha256": "99bbd2da29e845800dcd881249725ca07b4d3f38ba85caea998bce8cdb001bb1"
+    },
+    {
+      "action": "Typora图片本地化",
+      "source": "C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20261105104432489.png",
+      "target": "2026/20261104-xenomai实时性测试_PWM_IMU/image/image-20261105104432489.png",
+      "sha256": "5dabfc8a5fbe24539486114fcd32d95ae3ed6946966dcfae46aa10a8be722587"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/15000300q8-e00-site20-power-v1_.pdf",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/15000300q8-e00-site20-power-v1_.pdf",
+      "sha256": "210220559172108537fa9e57e9e57326ef82264e5e47622e098db1122a9e1f42"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/15000300r6-x17-rv1126bj-v2_0_0_.pdf",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/15000300r6-x17-rv1126bj-v2_0_0_.pdf",
+      "sha256": "7ca01ad404fbb9d8a4e9946f16acb3b0c235134299d33b9c4dfbcb590d6f6414"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/CH224K.pdf",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/CH224K.pdf",
+      "sha256": "6eee361b4a4fe7c168543f8e14c211a3453c7f24b2c6d0592c55ed51d04bf78e"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/HUSB311.pdf",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/HUSB311.pdf",
+      "sha256": "566eb8b5ba4a574642237c3b8f5999a6b50900946a28c64381bea732f3fbf5ad"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/README.md",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/README.md",
+      "sha256": "55e5d32d940822d325497538f9bf91eca84e595159ff7d1a3bc475269d8ecf65"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/SGM41574 Advance Datasheet_20241024_GB(1).pdf",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/SGM41574 Advance Datasheet_20241024_GB(1).pdf",
+      "sha256": "bc42a74a776114be1e881039a7796d5aa6a7a3687821051ba75344311c5c427f"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/UM7222.pdf",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/UM7222.pdf",
+      "sha256": "769cbf0ef092187e2ba19de4b9e4461d0d68b4dc6f1b652f7c6aed94dea4720e"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料.docx",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/USB驱动方案资料.docx",
+      "sha256": "687824415d6f28895f79d2170ff9118d761c79816f8fefc0c17ce8ac127b43a3"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx",
+      "target": "2026/20260920-USB快充相关文档/硬件资料/USB驱动方案资料_函数标注版.docx",
+      "sha256": "1d3282c4ff36ddd5bd6ec49075b6bc4ffb3afa74d3c5ac00905d642e94198f2b"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/Sate20/固件升级/SITE20 RV1126B USB虚拟网卡配置过程（Windows.txt",
+      "target": "2026/20260920-USB快充相关文档/SITE20 RV1126B USB虚拟网卡配置过程（Windows.txt",
+      "sha256": "d1fba1522765be6ce31fd3517d1ef8d68d99526950c6d5fc5101cdf0a14a4e61"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/RK3576/Umtprd升级使用说明.md",
+      "target": "2026/20261009-MTP驱动提速/Umtprd升级使用说明.md",
+      "sha256": "ba4fd66cc8d79d2779027929c7616b78775af42e810044c4976b35d65876a26d"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/RK3576/MTP_ASYNC_UPLOAD.md",
+      "target": "2026/20261009-MTP驱动提速/MTP_ASYNC_UPLOAD.md",
+      "sha256": "7811ac9fc1d005d3158185aaa67a4d7aab5b2a198e169e4c1e45a2cb6e98b511"
+    },
+    {
+      "action": "补充附件",
+      "source": "D:/Documents/project/RK3576/Umtprd升级使用说明.docx",
+      "target": "2026/20261009-MTP驱动提速/Umtprd升级使用说明.docx",
+      "sha256": "d60a88e013f399c6a7413f1d68ad4f71069573bcf5934bca88d40b646220f763"
+    },
+    {
+      "action": "保留原始校验清单",
+      "source": "20261030-DDR压测_imx6ul/SHA256SUMS",
+      "target": "2026/20261030-DDR压测_imx6ul/原始归档_SHA256SUMS",
+      "sha256": "41a8ba97b8517cd6219052fd44346a97779a74a946b873d6e2048a291809cf38"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image1.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image1.png",
+      "sha256": "4e87b248a7771e899704f57d407e1c7bc75b79f401343118525ea69c567912fc"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image10.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image10.png",
+      "sha256": "ae9dc6aef1d53b456dd20d62478a3db26f619fc983eafd7d4b2bc756be4f1be5"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image11.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image11.png",
+      "sha256": "c90a6861e3177dec87501aabaa0a28a8e8c84c6245224c6c2378167a1edf306a"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image12.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image12.png",
+      "sha256": "29fbd54b50ba9184e6cf3000356cf2b8f4ece2949abef86e22c533e44cde767d"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image13.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image13.png",
+      "sha256": "d508a8cab58e1d7fc8da869c0b0569e600c9a07af9f8eef816b36dd1ed172d34"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image14.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image14.png",
+      "sha256": "45f7c0a0ee4c84c983e1e64e342c15564e4e884f8a78e021100e7f01bed2d55b"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image15.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image15.png",
+      "sha256": "726ad824a5f704f2fdb9982b5d9990511ab53b3ac91fd456e981cbe32c456ed0"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image16.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image16.png",
+      "sha256": "596ab653a9a21a5d443a50c89c051d80ce0eb5c1fdea9a321979c0ce00d019fc"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image17.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image17.png",
+      "sha256": "3ca6a87110ca409ce5fba7af8faa7253fb76b3ca79aa8b3dac77ac95f3cb5939"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image18.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image18.png",
+      "sha256": "b0fff99bf2f68cc844a1acb45b023d102704f25637bf80b4af5036a269d833d9"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image19.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image19.png",
+      "sha256": "274d9eba102237343adbe3cb724fa591f0008d398ebc15599cae7e28e6f636dc"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image2.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image2.png",
+      "sha256": "df4e315207ae8b4b07b30ddd0bae6317c327091b7baaee41699e81ceda380e30"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image20.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image20.png",
+      "sha256": "af76f926c55707a2d1fa832a078c6a7d36a1977a9b9af712d60fc346c4d9feec"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image21.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image21.png",
+      "sha256": "55c104886eecf378370d80893ac840228afdef6be8ba87a287df96522645b743"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image22.emf",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image22.emf",
+      "sha256": "00c71a69f2596476cf74b72d2dc28f3a4427a368c24b2665763032506ee2e3c2"
+    },
+    {
+      "action": "EMF预览转PNG",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image22.emf",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image22.png",
+      "sha256": "e25a7a483db5cbf583b8b10ac2272230f1fd39fd7f186f6438b56e129050b63c"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image23.emf",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image23.emf",
+      "sha256": "d23a783649b24b13490e2738fbcbc04e2eebaebd3d83a2ba22aef24d7ed87a89"
+    },
+    {
+      "action": "EMF预览转PNG",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image23.emf",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image23.png",
+      "sha256": "c9405af4912352fe638d92739398cceeb9f17c1241f6deb9fd3b62a1a8999452"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image24.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image24.png",
+      "sha256": "e9b249dcdeb7752163b8de67918e86126383400607d7308a83204260e022f96e"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image25.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image25.png",
+      "sha256": "0a77ae2829cf7ac7e10371b197ab65980ab9906a8fd1987b3f8a84cb290d1a41"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image26.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image26.png",
+      "sha256": "373684cc3491f5ca0e06959d3c988ec50ddbe6d7ae8a137d6cbeda41923b0909"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image27.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image27.png",
+      "sha256": "87152c11be66bba91b68b91c706ccefb90ace0526f10ece131884145ae0ecdb5"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image28.jpeg",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image28.jpeg",
+      "sha256": "9462f3ad159422e09cc76afd9f3433e5c918288bb06c0e7f406d632ab6165f1a"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image3.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image3.png",
+      "sha256": "04cc8e6f769338b408363764cb04ce4ae793478fa22986b1e75b15ad805a82c1"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image4.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image4.png",
+      "sha256": "2d4c81c560500a1a51005647b0fa01923db6b152a9435684b28881fb5e3c2a8d"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image5.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image5.png",
+      "sha256": "37941d7d8c65f254ebb45d1d195d97e6945e8961cce45e9901a5b8c07be35ad2"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image6.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image6.png",
+      "sha256": "3ccd3e5a581aa83a2fde2cd845543ea631b69882d08f066b95a620cd96e45d21"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image7.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image7.png",
+      "sha256": "38813e62e7410060c79bfd33a51ecf3a593626f123bc11e648c5b9827f1051f2"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image8.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image8.png",
+      "sha256": "9a289a683aa0e4a6175fa658a07e49117cb7f36793e3818cb353aa986153c6ea"
+    },
+    {
+      "action": "Word内嵌图片提取",
+      "source": "D:/Documents/project/Sate20/硬件资料/USB驱动方案资料_函数标注版.docx#word/media/image9.png",
+      "target": "2026/20260920-USB快充相关文档/image/Word附件/USB驱动方案资料_函数标注版/image9.png",
+      "sha256": "06c804825f8c21e9dd6a7a813e86d35dc62636745a8845251c50b2951252bda0"
+    },
+    {
+      "action": "串口传输图片本地化",
+      "source": "C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20261102111637935.png",
+      "target": "2026/20261102-传输方式记录/image/image-20261102111637935.png",
+      "sha256": "6b050685c1f23a339e2b577ced1ffe5df7f93dea9ed3c25b8f1abeeee32b75cc"
+    },
+    {
+      "action": "串口传输图片本地化",
+      "source": "C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20261102192831986.png",
+      "target": "2026/20261102-传输方式记录/image/image-20261102192831986.png",
+      "sha256": "2e348c9ff75fffa4c489843fc520ae6f494414bd46ddd5629992ae78ab3a633b"
+    }
+  ],
+  "hexo": {
+    "date": "2026-11-09",
+    "index": "/resources/tasks/",
+    "entries": [
+      {
+        "source": "2026/20260920-USB快充相关文档.md",
+        "title": "X16 USB Type-C 与 PD 快充开发记录",
+        "permalink": "2026/09/20/20260920-USB快充相关文档/",
+        "entry": "X16_USB_TypeC完整逻辑梳理.md"
+      },
+      {
+        "source": "2026/20261009-MTP驱动提速.md",
+        "title": "RK3576 MTP 传输提速与 uMTPrd 升级",
+        "permalink": "2026/10/09/20261009-MTP驱动提速/",
+        "entry": "Umtprd升级使用说明.md"
+      },
+      {
+        "source": "2026/20261015-MTP开启提速.md",
+        "title": "RK3576 USB Gadget 与 MTP 启动提速",
+        "permalink": "2026/10/15/20261015-MTP开启提速/",
+        "entry": "USB_GADGET启动优化交接说明.md"
+      },
+      {
+        "source": "2026/20261015-UART压测_线程绑核.md",
+        "title": "RK3576 UART 压测与 CPU 线程绑核记录",
+        "permalink": "2026/10/15/20261015-UART压测_线程绑核/",
+        "entry": "cpu_test/README.md"
+      },
+      {
+        "source": "2026/20261030-DDR压测_imx6ul.md",
+        "title": "i.MX6UL P5 DDR 压测与数据归档",
+        "permalink": "2026/10/30/20261030-DDR压测_imx6ul/",
+        "entry": "README.md"
+      },
+      {
+        "source": "2026/20261104-xenomai实时性测试_PWM_IMU.md",
+        "title": "Xenomai 实时性测试与 PWM IMU 验证",
+        "permalink": "2026/11/04/20261104-xenomai实时性测试_PWM_IMU/",
+        "entry": "测试步骤.md"
+      }
+    ],
+    "note": "任务入口作为文章，文件夹内Markdown作为资料页；构建时改写相对引用，独立图片和附件按原始字节输出。"
+  },
+  "pathBase": "source/_posts",
+  "structure": "全部文章统一按 年份/YYYYMMDD-名称 归档，正文旁的同名文件夹保存附带文档、image 和其他附件。"
+}

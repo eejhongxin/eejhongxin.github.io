@@ -1,0 +1,1 @@
+storagemedia=scsi androidboot.storagemedia=scsi androidboot.mode=normal  rw rootwait earlycon=uart8250,mmio32,0x2ad40000 console=ttyFIQ0 root=PARTUUID=614e0000-0000 rcupdate.rcu_expedited=1 isolcpus=domain,managed_irq,7 irqaffinity=0-6 nohz_full=7 rcu_nocbs=7 androidboot.fwver=ddr-v1.12-ef40306b8f,bl31-v1.24,uboot-g59487ad40-10/10/2026

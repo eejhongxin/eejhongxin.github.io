@@ -1,0 +1,52 @@
+/* Site-owned additions to Stellar; no edits to the installed theme. */
+.learning-hub { --learn-accent: #287b78; --learn-border: color-mix(in srgb, currentColor 12%, transparent); }
+.learning-hub a { text-decoration: none !important; border: 0 !important; }
+.learn-intro { padding: 8px 0 28px; }
+.learn-eyebrow { color: var(--learn-accent); font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+.learning-hub .learn-intro h2 { margin: 10px 0 12px; font-size: clamp(24px, 3vw, 34px); line-height: 1.35; }
+.learning-hub p { margin: 0; }
+.learn-intro p, .learn-description, .learn-meta, .learn-empty { color: var(--text-p3, #75817d); }
+.learn-tabs { display: flex; gap: 8px; flex-wrap: wrap; padding-bottom: 26px; }
+.learn-tabs a { padding: 8px 13px; border-radius: 8px; background: var(--block, #edf2f0); font-size: 13px; color: var(--text-p2); }
+.learn-tabs a:first-child { color: var(--learn-accent); background: color-mix(in srgb, var(--learn-accent) 10%, transparent); }
+.learn-tabs b { margin-left: 6px; }
+.learn-section { margin-bottom: 32px; scroll-margin-top: 24px; }
+.learn-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 24px 0 14px; }
+.learning-hub .learn-section-head h2, .learning-hub .learn-section-head h3 { margin: 0; font-size: 18px; }
+.learn-section-head > span { font-size: 12px; color: var(--text-p3); }
+.learn-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.learning-hub .learn-card { display: flex; flex-direction: column; margin: 0; padding: 22px; border: 1px solid var(--learn-border); border-radius: 16px; background: var(--card, #fff); }
+.learn-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.learn-status { display: inline-block; border-radius: 5px; padding: 3px 8px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.learn-status.active { background: color-mix(in srgb, #287b78 12%, transparent); color: var(--learn-accent); }
+.learn-status.planned { background: color-mix(in srgb, #a47746 12%, transparent); color: var(--learn-planned, #a47746); }
+.learn-status.done { background: color-mix(in srgb, #64835b 12%, transparent); color: var(--learn-done, #64835b); }
+.learning-hub .learn-card h3 { margin: 20px 0 9px; font-size: 23px; line-height: 1.35; }
+.learn-card h3 a { color: var(--text-p1); }
+.learning-hub .learn-description { font-size: 13px; line-height: 1.8; margin-bottom: 18px; }
+.learn-meta { font-size: 11px; line-height: 1.7; }
+.learn-progress { height: 4px; border-radius: 9px; background: var(--learn-border); overflow: hidden; margin: auto 0 9px; }
+.learn-progress span { display: block; height: 100%; background: var(--learn-accent); }
+.learning-hub .learn-current { font-size: 12px; margin-top: 14px; }
+.learn-card-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.learn-primary { display: inline-block; padding: 9px 13px; background: #287b78; color: #fff !important; border-radius: 7px; font-size: 12px; line-height: 1.5; }
+.learn-primary:hover { background: #1d625f; }
+.learn-secondary, .learn-back { font-size: 12px; color: var(--learn-accent); }
+.learn-empty { padding: 20px 0; font-size: 13px; }
+.learn-topic-summary { margin: 24px 0; }
+.learn-topic-summary > p { margin: 14px 0 22px; }
+.learning-hub .learn-chapters { list-style: none; margin: 20px 0; padding: 0; }
+.learn-chapters li { padding: 18px 0; border-bottom: 1px solid var(--learn-border); }
+.learn-chapters li > div { display: flex; align-items: center; gap: 12px; }
+.learning-hub .learn-chapters h3 { font-size: 15px; margin: 0; }
+.learn-chapters .learn-meta { margin: 8px 0 0; }
+.learning-hub a:focus-visible { outline: 2px solid var(--learn-accent); outline-offset: 4px; }
+@media (max-width: 640px) {
+  .learn-grid { grid-template-columns: 1fr; }
+  .learning-hub .learn-card { padding: 18px; }
+  .learn-chapters li > div { align-items: flex-start; }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .learning-hub { --learn-accent: #83c4b9; --learn-planned: #d5b383; --learn-done: #a0c596; }
+}
+:root[data-theme="dark"] .learning-hub { --learn-accent: #83c4b9; --learn-planned: #d5b383; --learn-done: #a0c596; }

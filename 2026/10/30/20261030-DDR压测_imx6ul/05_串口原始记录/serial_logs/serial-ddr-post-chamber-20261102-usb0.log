@@ -1,0 +1,237 @@
+
+root@imx6ul: # echo INITIAL_BEGIN; cat /sys/fsl_otp/HW_OCOTP_CFG0 /sys/fsl_otp/H
+W_OCOTP_CFG1; cat /proc/uptime; cat /proc/cmdline; cat /proc/mounts; ps | grep -
+E '[d]dr_test|[s]tressapptest|[m]emtester|[c]heck_update|[w]td_feed'; ls -la /mn
+t/ddr_work; ls -la /mnt/ddr_work/ddr_backup; echo INITIAL_END
+INITIAL_BEGIN
+0xe1998bf2
+0xc3599d4
+163.24 1.02
+console=ttymxc0,115200 cma=0 root=/dev/mtdblock3 rootfstype=jffs2 mtdparts=21e0000.qspi:1M(uboot),6M(kernel),1M(dtb),-(rootfs) rootwait rw
+/dev/root / jffs2 rw,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=124056k,nr_inodes=31014,mode=755 0 0
+none /sys sysfs rw,relatime 0 0
+ramfs /mem ramfs rw,relatime 0 0
+none /dev ramfs rw,relatime 0 0
+proc /proc proc rw,relatime 0 0
+none /dev/pts devpts rw,relatime,mode=622 0 0
+tmpfs /tmp tmpfs rw,relatime 0 0
+/dev/mmcblk1p7 /mnt vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p5 /data ext4 ro,relatime,norecovery 0 0
+/dev/mmcblk1p1 /recovery vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p2 /firmware vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p3 /reserve vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p6 /data/app/log ext4 ro,relatime,norecovery 0 0
+  285 root       0:00 sh /mnt/ddr_work/ddr_p5/wtd_feed.sh --worker
+  382 root       0:00 sh ./ddr_test.sh -c 6
+  454 root       0:00 sh ./ddr_test.sh -c 6
+  455 root       2:33 /mnt/ddr_work/full/ddr_p5/libexec/stressapptest -M 218 -m 8 -s 3600 -W -l /mnt/ddr_work/ddr_all_test/stressapptest_0.log
+total 42512
+drwxr-xr-x   10 root     root         16384 Jan  1 00:00 [1;34m.[0m
+drwxr-xr-x    5 root     root         16384 Jan  1 00:00 [1;34m..[0m
+drwxr-xr-x    2 root     root         16384 Jan  1  1980 [1;34mboot_setup[0m
+-rwxr-xr-x    1 root     root          3160 Oct 20  2026 [1;32mddr-p5-boot-v2.tar.gz[0m
+-rwxr-xr-x    1 root     root          3383 Oct 22  2026 [1;32mddr-p5-boot.tar.gz[0m
+-rwxr-xr-x    1 root     root      42106880 Jan  1  1980 [1;32mddr-p5-full.tar.gz[0m
+-rwxr-xr-x    1 root     root       1194822 Oct 20  2026 [1;32mddr-p5-tools.tar.gz[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mddr-tar-recover.eIbGq0[0m
+drwxr-xr-x    2 root     root         16384 Jan  1 00:00 [1;34mddr_all_test[0m
+-rwxr-xr-x    1 root     root             2 Jan  1  1980 [1;32mddr_autostart.count[0m
+-rwxr-xr-x    1 root     root          3889 Jan  1  1980 [1;32mddr_autostart.sh[0m
+drwxr-xr-x    8 root     root         16384 Jan  1 00:00 [1;34mddr_backup[0m
+drwxr-xr-x    7 root     root         16384 Jan  1  1980 [1;34mddr_p5[0m
+drwxr-xr-x    4 root     root         16384 Jan  1  1980 [1;34mfull[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprogress_patch[0m
+drwxr-xr-x    2 root     root         16384 Jan  1  1980 [1;34mx6_fixture_20201225[0m
+total 128
+drwxr-xr-x    8 root     root         16384 Jan  1 00:00 [1;34m.[0m
+drwxr-xr-x   10 root     root         16384 Jan  1 00:00 [1;34m..[0m
+drwxr-xr-x    3 root     root         16384 Jan  1 00:00 [1;34mprevious.1fozbK[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.9xVApI[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.dEbi4H[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.fXOrPH[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.pObVAK[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.rzDZnJ[0m
+INITIAL_END
+root@imx6ul: # echo DATASETS_BEGIN; for D in /mnt/ddr_work/ddr_backup/* /mnt/ddr
+_work/ddr_all_test; do [ -d "$D" ] || continue; L="$D/ddr_all_test"; [ "$D" = /m
+nt/ddr_work/ddr_all_test ] && L="$D"; echo DIR=$D; if [ ! -f "$L/ddr_log.log" ];
+ then echo NO_SUMMARY; continue; fi; awk '/count:/{r++;last=$2+1} /ddr stressapp
+test result: PASS/{s++} /unpack bin test: Success/{b++} /unpack tar test: Succes
+s/{t++} /ddr test end/{e=1} /CPU temperature:/{if(!seen||$3<lo)lo=$3;if(!seen||$
+3>hi)hi=$3;seen++} END{printf "ROUNDS=%d LAST=%d SAT_PASS=%d BIN_OK=%d TAR_OK=%d
+ END=%d TEMP_N=%d TEMP_MIN=%s TEMP_MAX=%s\n",r,last,s,b,t,e,seen,lo,hi}' "$L/ddr
+_log.log"; echo EXIT_CODE; cat "$L/runner_exit_code" 2>/dev/null; echo MEM_DONE;
+ for F in "$L"/memtester_*.log; do [ -f "$F" ] || continue; grep -q '^Done\.' "$
+F" && echo "DONE ${F##*/}"; grep -iE 'FAILURE|killed|cannot|failed' "$F"; done; 
+echo OOM; for F in "$L"/kernel-before.log "$L"/kernel-after.log; do [ -f "$F" ] 
+|| continue; grep -iE 'invoked oom-killer|Out of memory|Killed process|page a
+> 
+> 
+> '; done; done; echo DATASETS_ABORTED
+DATASETS_BEGIN
+DIR=/mnt/ddr_work/ddr_backup/previous.1fozbK
+ROUNDS=6 LAST=6 SAT_PASS=6 BIN_OK=6 TAR_OK=6 END=1 TEMP_N=6 TEMP_MIN=-30.28 TEMP_MAX=-29.72
+EXIT_CODE
+0
+MEM_DONE
+DONE memtester_0.log
+DONE memtester_1.log
+DONE memtester_2.log
+DONE memtester_3.log
+DONE memtester_4.log
+DONE memtester_5.log
+OOM
+DIR=/mnt/ddr_work/ddr_backup/previous.9xVApI
+ROUNDS=8 LAST=8 SAT_PASS=8 BIN_OK=8 TAR_OK=8 END=1 TEMP_N=8 TEMP_MIN=42.73 TEMP_MAX=43.86
+EXIT_CODE
+0
+MEM_DONE
+DONE memtester_0.log
+DONE memtester_1.log
+DONE memtester_2.log
+DONE memtester_3.log
+DONE memtester_4.log
+DONE memtester_5.log
+DONE memtester_6.log
+DONE memtester_7.log
+OOM
+DIR=/mnt/ddr_work/ddr_backup/previous.dEbi4H
+ROUNDS=1 LAST=1 SAT_PASS=0 BIN_OK=0 TAR_OK=0 END=0 TEMP_N=0 TEMP_MIN= TEMP_MAX=
+EXIT_CODE
+MEM_DONE
+OOM
+DIR=/mnt/ddr_work/ddr_backup/previous.fXOrPH
+ROUNDS=1 LAST=1 SAT_PASS=0 BIN_OK=0 TAR_OK=0 END=0 TEMP_N=0 TEMP_MIN= TEMP_MAX=
+EXIT_CODE
+MEM_DONE
+OOM
+DIR=/mnt/ddr_work/ddr_backup/previous.pObVAK
+ROUNDS=6 LAST=6 SAT_PASS=6 BIN_OK=6 TAR_OK=6 END=1 TEMP_N=6 TEMP_MIN=78.95 TEMP_MAX=79.52
+EXIT_CODE
+0
+MEM_DONE
+DONE memtester_0.log
+DONE memtester_1.log
+DONE memtester_2.log
+DONE memtester_3.log
+DONE memtester_4.log
+DONE memtester_5.log
+OOM
+DIR=/mnt/ddr_work/ddr_backup/previous.rzDZnJ
+ROUNDS=1 LAST=1 SAT_PASS=0 BIN_OK=0 TAR_OK=0 END=0 TEMP_N=0 TEMP_MIN= TEMP_MAX=
+EXIT_CODE
+MEM_DONE
+OOM
+DIR=/mnt/ddr_work/ddr_all_test
+ROUNDS=1 LAST=1 SAT_PASS=0 BIN_OK=0 TAR_OK=0 END=0 TEMP_N=0 TEMP_MIN= TEMP_MAX=
+EXIT_CODE
+MEM_DONE
+OOM
+DATASETS_ABORTED
+root@imx6ul: # ????????
+-/bin/sh: firmware: not found
+root@imx6ul: # ôô
+root@imx6ul: # echo SHORT_VERIFY_BEGIN; cat /sys/fsl_otp/HW_OCOTP_CFG1; cat /pro
+c/uptime
+SHORT_VERIFY_BEGIN
+0x483699d4
+281.24 1.01
+root@imx6ul: # úú
+root@imx6ul: # echo SHORT_VERIFY_BEGIN; cat /sys/fsl_otp/HW_OCOTP_CFG1; cat /pro
+c/uptime
+SHORT_VERIFY_BEGIN
+0xc3599d4
+379.09 1.00
+root@imx6ul: # L=/mnt/ddr_work/ddr_backup/previous.pObVAK/ddr_all_test; echo HOT
+_SAT; grep -hE 'Stats: Completed:|Status:' "$L"/stressapptest_*.log
+HOT_SAT
+echo HOT_MEM; for F in "$L"/memtester_*.log1970/01/01-01:00:07(UTC) Stats: Completed: 1763118.00M in 3600.69s 489.66MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-01:00:07(UTC) Status: PASS - please verify no corrected errors
+; do echo ${F##*/};1970/01/01-03:35:28(UTC) Stats: Completed: 1764368.00M in 3599.70s 490.14MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-03:35:28(UTC) Status: PASS - please verify no corrected errors
+ grep -o 'ok' "$1970/01/01-06:02:39(UTC) Stats: Completed: 1765242.00M in 3599.63s 490.40MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-06:02:39(UTC) Status: PASS - please verify no corrected errors
+F" | wc -l;1970/01/01-08:29:26(UTC) Stats: Completed: 1765038.00M in 3599.68s 490.33MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-08:29:26(UTC) Status: PASS - please verify no corrected errors
+ grep -E '^Done1970/01/01-10:56:24(UTC) Stats: Completed: 1767550.00M in 3599.70s 491.03MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-10:56:24(UTC) Status: PASS - please verify no corrected errors
+\.|FAILURE' "$F1970/01/01-13:23:21(UTC) Stats: Completed: 1765088.00M in 3600.69s 490.21MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-13:23:21(UTC) Status: PASS - please verify no corrected errors
+root@imx6ul: # echo HOT_MEM; for F in "$L"/memtester_*.log; do echo ${F##*/}; gr
+ep -o 'ok' "$F" | wc -l; grep -E '^Done\.|FAILURE' "$F"; done
+HOT_MEM
+memtester_0.log
+echo HOT_KERNEL; grep -hiE 'invoked oom-killer|Out of memory|K18
+illed process|page allocation failure' "$L"/kernelDone.
+memtester_1.log
+-*.log; echo HOT_COUNTER; cat "$L"/unpack_bin/check18
+_result "$L"/unpack_tar/check_result
+L=Done.
+memtester_2.log
+/mnt/ddr_work/ddr_backup/previous.1fozbK/ddr_all_18
+test; echo COLD_SAT; grep -hE 'Stats: CompDone.
+memtester_3.log
+leted:|Status:' "$L"/stressapptest_*.log
+echo COLD_18
+MEM; for F in "$L"/memtester_*.log; do echoDone.
+memtester_4.log
+ ${F##*/}; grep -o 'ok' "$F" | wc -l; grep -E '^Don18
+e\.|FAILURE' "$F"; done
+echo COLD_KERNEL; grDone.
+memtester_5.log
+ep -hiE 'invoked oom-killer|Out of memory|Killed pro18
+cess|page allocation failure' "$L"/kerneDone.
+l-*.root@imx6ul: # echo HOT_KERNEL; grep -hiE 'invoked oom-killer|Out of memory|Kill
+ed process|page allocation failure' "$L"/kernel-*.log; echo HOT_COUNTER; cat "$L
+"/unpack_bin/check_result "$L"/unpack_tar/check_result
+HOT_KERNEL
+OLD_COUNTER; cat "$L"/unpack_bin/check_result "$L"/unpack_tar/check_result;HOT_COUNTER
+ echo SHORT_VERIFY_EN1000
+D
+100
+root@imx6ul: # L=/mnt/ddr_work/ddr_backup/previous.1fozbK/ddr_all_test; echo COL
+D_SAT; grep -hE 'Stats: Completed:|Status:' "$L"/stressapptest_*.log
+COLD_SAT
+1970/01/01-01:00:06(UTC) Stats: Completed: 1766024.00M in 3599.67s 490.61MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-01:00:06(UTC) Status: PASS - please verify no corrected errors
+1970/01/01-03:36:08(UTC) Stats: Completed: 1763180.00M in 3600.65s 489.68MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-03:36:08(UTC) Status: PASS - please verify no corrected errors
+1970/01/01-06:03:12(UTC) Stats: Completed: 1766320.00M in 3599.67s 490.69MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-06:03:12(UTC) Status: PASS - please verify no corrected errors
+1970/01/01-08:30:02(UTC) Stats: Completed: 1765286.00M in 3600.67s 490.27MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-08:30:02(UTC) Status: PASS - please verify no corrected errors
+1970/01/01-10:57:07(UTC) Stats: Completed: 1763608.00M in 3599.70s 489.93MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-10:57:07(UTC) Status: PASS - please verify no corrected errors
+1970/01/01-13:24:20(UTC) Stats: Completed: 1764940.00M in 3599.75s 490.30MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-13:24:20(UTC) Status: PASS - please verify no corrected errors
+root@imx6ul: # echo COLD_MEM; for F in "$L"/memtester_*.log; do echo ${F##*/}; g
+rep -o 'ok' "$F" | wc -l; grep -E '^Done\.|FAILURE' "$F"; done
+COLD_MEM
+memtester_0.log
+18
+Done.
+memtester_1.log
+18
+Done.
+memtester_2.log
+18
+Done.
+memtester_3.log
+18
+Done.
+memtester_4.log
+18
+Done.
+memtester_5.log
+18
+Done.
+root@imx6ul: # echo COLD_KERNEL; grep -hiE 'invoked oom-killer|Out of memory|Kil
+led process|page allocation failure' "$L"/kernel-*.log; echo COLD_COUNTER; cat "
+$L"/unpack_bin/check_result "$L"/unpack_tar/check_result; echo SHORT_VERIFY_END
+COLD_KERNEL
+COLD_COUNTER
+1000
+100
+SHORT_VERIFY_END
+root@imx6ul: # 

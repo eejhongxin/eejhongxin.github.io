@@ -1,0 +1,15 @@
+{
+  "started": "2026-10-20T11:32:54.993570+08:00",
+  "finished": "2026-10-20T11:42:56.134990+08:00",
+  "reset_count": 1,
+  "rounds": [
+    {
+      "number": 1,
+      "pid": 141,
+      "started": "2026-10-20T11:32:59.004498+08:00",
+      "console": "/mnt/ddr_work/intermittent_1792467178_round1.console.log",
+      "result": "interrupted_by_reset"
+    }
+  ],
+  "log": "/home/jihongxin/Documents/imx6ul/out/ddr-intermittent-observation.log"
+}

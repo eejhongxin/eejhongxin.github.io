@@ -1,0 +1,6 @@
+stressapptest: upstream v1.0.8, rebuilt with /opt/imx6 SDK
+memtester: rootfs/usr/bin/memtester (4.3.0)
+lrz, lsz, BusyBox and private C++ libraries: current rootfs checkout
+Requires the board base /lib ARM hard-float glibc runtime.
+checkupdate is NOT included or replaced. BIN tests use the existing /data/sbin/checkupdate; mount /data first.
+BIN fixture compatibility with the existing board tool must be verified by a small unpack-only test before long full-suite runs.

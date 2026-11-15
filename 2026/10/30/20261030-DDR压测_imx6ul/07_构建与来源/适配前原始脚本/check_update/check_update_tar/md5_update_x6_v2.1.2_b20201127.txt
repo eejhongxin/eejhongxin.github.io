@@ -1,0 +1,5 @@
+0569ad3cf8316159c05cb9cd8de48e4e  update/app.bin
+c1a98fc94b85a47d933cdb71aec4da50  update/dtb.bin
+49d38c466384ea26601a4d59a365031f  update/install.sh
+84e39e3e0966d1c8302f305c67fda2f3  update/kernel.bin
+019b703057c26224ba9a6b1ad73105a7  update/rootfs.bin

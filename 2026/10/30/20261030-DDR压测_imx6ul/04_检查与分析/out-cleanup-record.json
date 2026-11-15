@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-27 Asia/Shanghai",
+  "removed": [
+    {
+      "path": "ddr-p5-boot-v2.tar.gz",
+      "type": "file",
+      "files": 1,
+      "bytes": 3160,
+      "sha256": "42c0bb19b70e55fa1b2182d5b70ef1cc37c0cb029536ba047ce6af0e29ea9b99"
+    },
+    {
+      "path": "ddr-x6-fixture.tar.gz",
+      "type": "file",
+      "files": 1,
+      "bytes": 19209116,
+      "sha256": "4e0dac0512b651762d4e29b0ab2ef674cf14192fa5e0d8195c96921270c0eb77"
+    },
+    {
+      "path": "ddr-x6-integration-patch.tar.gz",
+      "type": "file",
+      "files": 1,
+      "bytes": 7275,
+      "sha256": "a1670557cddf62faa261f26caaaf549b5caa578748a952680d70fec214c21da5"
+    },
+    {
+      "path": "ddr-p5-tar-tail-17511936.bin",
+      "type": "file",
+      "files": 1,
+      "bytes": 1847923,
+      "sha256": "172bb1326d0da33ee9adebac1bd0fcceff8fe50e2da0c6c557bcc00afb103725"
+    },
+    {
+      "path": "rootfs-p5-base-memtester.jffs2",
+      "type": "file",
+      "files": 1,
+      "bytes": 6619136,
+      "sha256": "c7fba16f6eff471645246c689dd6a4a83d1f2aed59e893ccb18440fa6e3e3507"
+    },
+    {
+      "path": "rootfs-p5-base-memtester.jffs2.sha256",
+      "type": "file",
+      "files": 1,
+      "bytes": 97,
+      "sha256": "372e9a73849fa9f0182eb30c1174aca472083be142e8dc7774887a03d2f853a5"
+    },
+    {
+      "path": "ddr-build/full-x6-verification",
+      "type": "directory",
+      "files": 50,
+      "bytes": 41679708,
+      "sha256": null
+    },
+    {
+      "path": "ddr-build/bundle-check",
+      "type": "directory",
+      "files": 10,
+      "bytes": 359035,
+      "sha256": null
+    },
+    {
+      "path": "ddr-build/tar-check",
+      "type": "directory",
+      "files": 5,
+      "bytes": 19687016,
+      "sha256": null
+    },
+    {
+      "path": "ddr-build/progress-patch",
+      "type": "directory",
+      "files": 6,
+      "bytes": 22672,
+      "sha256": null
+    },
+    {
+      "path": "ddr-build/autoreconf.log",
+      "type": "file",
+      "files": 1,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ddr-build/configure.log",
+      "type": "file",
+      "files": 1,
+      "bytes": 6267,
+      "sha256": "773f36d48372fb8fd2a4d66fc5c9b1078da65f88f9f66f29022034630da96762"
+    },
+    {
+      "path": "ddr-build/make.log",
+      "type": "file",
+      "files": 1,
+      "bytes": 8903,
+      "sha256": "4ebd3b2cc40f891eb1f857cd327bb49e21d9f042dbf2db87d33dd2f6529436ce"
+    },
+    {
+      "path": "ddr-build/qemu-stress.log",
+      "type": "file",
+      "files": 1,
+      "bytes": 1337,
+      "sha256": "8c49a2979b6d2ca40228ac38407e9b324d5391cf40e1954df1b985a52c8950cc"
+    },
+    {
+      "path": "ddr-build/stressapptest-1.0.8/config.log",
+      "type": "file",
+      "files": 1,
+      "bytes": 96270,
+      "sha256": "36df7187144799057a3501697d4a4fff525cb2f1e52d8a4147cafbec551533f1"
+    }
+  ],
+  "total_bytes": 89547915
+}

@@ -1,0 +1,302 @@
+
+root@imx6ul: # echo POST_CHAMBER_BEGIN; cat /sys/fsl_otp/HW_OCOTP_CFG1; cat /pro
+c/uptime; cat /proc/cmdline; cat /proc/mounts; ps | grep -E '[d]dr_test|[s]tress
+apptest|[m]emtester|[c]heck_update|[w]td_feed'; ls -la /mnt/ddr_work; ls -la /mn
+t/ddr_work/ddr_backup; echo POST_CHAMBER_END
+POST_CHAMBER_BEGIN
+0x483699d4
+171.26 1.00
+console=ttymxc0,115200 cma=0 root=/dev/mtdblock3 rootfstype=jffs2 mtdparts=21e0000.qspi:1M(uboot),6M(kernel),1M(dtb),-(rootfs) rootwait rw
+/dev/root / jffs2 rw,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=124056k,nr_inodes=31014,mode=755 0 0
+none /sys sysfs rw,relatime 0 0
+ramfs /mem ramfs rw,relatime 0 0
+none /dev ramfs rw,relatime 0 0
+proc /proc proc rw,relatime 0 0
+none /dev/pts devpts rw,relatime,mode=622 0 0
+tmpfs /tmp tmpfs rw,relatime 0 0
+/dev/mmcblk1p7 /mnt vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p5 /data ext4 ro,relatime,norecovery 0 0
+/dev/mmcblk1p1 /recovery vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p2 /firmware vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p3 /reserve vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p6 /data/app/log ext4 ro,relatime,norecovery 0 0
+  285 root       0:00 sh /mnt/ddr_work/ddr_p5/wtd_feed.sh --worker
+  382 root       0:00 sh ./ddr_test.sh -c 6
+  454 root       0:00 sh ./ddr_test.sh -c 6
+  455 root       2:41 /mnt/ddr_work/full/ddr_p5/libexec/stressapptest -M 218 -m 8 -s 3600 -W -l /mnt/ddr_work/ddr_all_test/stressapptest_0.log
+total 45504
+drwxr-xr-x   11 root     root         16384 Jan  1 00:00 [1;34m.[0m
+drwxr-xr-x    6 root     root         16384 Jan  1 00:00 [1;34m..[0m
+drwxr-xr-x    2 root     root         16384 Jan  1  1980 [1;34mboot_setup[0m
+drwxr-xr-x    2 root     root         16384 Jan  1  1980 [1;34mcheckupdate_diagnosis[0m
+-rwxr-xr-x    1 root     root          3160 Oct 20  2026 [1;32mddr-p5-boot-v2.tar.gz[0m
+-rwxr-xr-x    1 root     root          3383 Oct 22  2026 [1;32mddr-p5-boot.tar.gz[0m
+-rwxr-xr-x    1 root     root      45143105 Oct 20  2026 [1;32mddr-p5-full.tar.gz[0m
+-rwxr-xr-x    1 root     root       1194822 Jan  1  1980 [1;32mddr-p5-tools.tar.gz[0m
+drwxr-xr-x    2 root     root         16384 Jan  1 00:00 [1;34mddr_all_test[0m
+-rwxr-xr-x    1 root     root             2 Jan  1  1980 [1;32mddr_autostart.count[0m
+-rwxr-xr-x    1 root     root          3889 Jan  1  1980 [1;32mddr_autostart.sh[0m
+drwxr-xr-x    8 root     root         16384 Jan  1 00:00 [1;34mddr_backup[0m
+drwxr-xr-x    7 root     root         16384 Jan  1  1980 [1;34mddr_p5[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mfull[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprogress_patch[0m
+drwxr-xr-x    4 root     root         16384 Jan  1  1980 [1;34mx6-integration.5hcZyc[0m
+drwxr-xr-x    2 root     root         16384 Jan  1  1980 [1;34mx6_fixture_20201225[0m
+total 128
+drwxr-xr-x    8 root     root         16384 Jan  1 00:00 [1;34m.[0m
+drwxr-xr-x   11 root     root         16384 Jan  1 00:00 [1;34m..[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.3GlTVI[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.HBWIzK[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.N2gjaL[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.XNsEnJ[0m
+drwxr-xr-x    3 root     root         16384 Jan  1 00:00 [1;34mprevious.ZaOTYH[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.dkjdZI[0m
+POST_CHAMBER_END
+root@imx6ul: # echo BATCH_AUDIT_BEGIN; for D in /mnt/ddr_work/ddr_backup/* /mnt/
+ddr_work; do L="$D/ddr_all_test"; [ -d "$L" ] || continue; echo DIR=$L; du -sk "
+$L"; awk '/count:/{r++;last=$2+1} /ddr stressapptest result: PASS/{s++} /unpack 
+bin test: Success/{b++} /unpack tar test: Success/{t++} /ddr test end/{e=1} /CPU
+ temperature:/{v=$3+0;if(!n||v<lo)lo=v;if(!n||v>hi)hi=v;n++} END{printf "rounds=
+%d last=%d SAT_PASS=%d BIN_OK=%d TAR_OK=%d end=%d temperatures=%d min=%.2f max=%
+.2f\n",r,last,s,b,t,e,n,lo,hi}' "$L/ddr_log.log"; echo EXIT; cat "$L/runner_exit
+_code" 2>/dev/null; echo MEM; for F in "$L"/memtester_*.log; do [ -f "$F" ] || c
+ontinue; printf '%s ' "${F##*/}"; grep -c '^Done\.' "$F"; grep -iE 'FAILURE|kill
+ed|cannot|failed' "$F"; done; echo LAST; tail -n 2 "$L/console.log"; echo KERNEL
+; for F in "$L"/kernel*.log; do [ -f "$F" ] || continue; grep -iE 'invoked oom|O
+ut of memory|Killed process|allocation failure|corrupted|I/O error' "$F"; done; 
+done; echo BATCH_AUDIT_END
+BATCH_AUDIT_BEGIN
+DIR=/mnt/ddr_work/ddr_backup/previous.3GlTVI/ddr_all_test
+2784	/mnt/ddr_work/ddr_backup/previous.3GlTVI/ddr_all_test
+rounds=6 last=6 SAT_PASS=6 BIN_OK=6 TAR_OK=6 end=1 temperatures=6 min=83.49 max=83.49
+EXIT
+0
+MEM
+memtester_0.log 1
+memtester_1.log 1
+memtester_2.log 1
+memtester_3.log 1
+memtester_4.log 1
+memtester_5.log 1
+LAST
+Runner exited with code 0; this is NOT an overall PASS verdict.
+Inspect individual results and kernel logs for OOM/killed processes.
+KERNEL
+DIR=/mnt/ddr_work/ddr_backup/previous.HBWIzK/ddr_all_test
+96	/mnt/ddr_work/ddr_backup/previous.HBWIzK/ddr_all_test
+rounds=1 last=1 SAT_PASS=0 BIN_OK=0 TAR_OK=0 end=0 temperatures=0 min=0.00 max=0.00
+EXIT
+MEM
+LAST
+1970/01/01-00:10:26(UTC) Log: Seconds remaining: 2980
+1970/01/01-00:10:36(UTC) Log: Seconds remaining: 2970
+KERNEL
+DIR=/mnt/ddr_work/ddr_backup/previous.N2gjaL/ddr_all_test
+96	/mnt/ddr_work/ddr_backup/previous.N2gjaL/ddr_all_test
+rounds=1 last=1 SAT_PASS=0 BIN_OK=0 TAR_OK=0 end=0 temperatures=0 min=0.00 max=0.00
+EXIT
+MEM
+LAST
+1970/01/01-00:36:26(UTC) Log: Seconds remaining: 1420
+1970/01/01-00:36:36(UTC) Log: Seconds remaining: 1410
+KERNEL
+DIR=/mnt/ddr_work/ddr_backup/previous.XNsEnJ/ddr_all_test
+3584	/mnt/ddr_work/ddr_backup/previous.XNsEnJ/ddr_all_test
+rounds=8 last=8 SAT_PASS=8 BIN_OK=8 TAR_OK=8 end=1 temperatures=8 min=49.17 max=50.76
+EXIT
+0
+MEM
+memtester_0.log 1
+memtester_1.log 1
+memtester_2.log 1
+memtester_3.log 1
+memtester_4.log 1
+memtester_5.log 1
+memtester_6.log 1
+memtester_7.log 1
+LAST
+Runner exited with code 0; this is NOT an overall PASS verdict.
+Inspect individual results and kernel logs for OOM/killed processes.
+KERNEL
+DIR=/mnt/ddr_work/ddr_backup/previous.ZaOTYH/ddr_all_test
+2784	/mnt/ddr_work/ddr_backup/previous.ZaOTYH/ddr_all_test
+rounds=6 last=6 SAT_PASS=6 BIN_OK=6 TAR_OK=6 end=1 temperatures=6 min=-20.00 max=-19.47
+EXIT
+0
+MEM
+memtester_0.log 1
+memtester_1.log 1
+memtester_2.log 1
+memtester_3.log 1
+memtester_4.log 1
+memtester_5.log 1
+LAST
+Runner exited with code 0; this is NOT an overall PASS verdict.
+Inspect individual results and kernel logs for OOM/killed processes.
+KERNEL
+DIR=/mnt/ddr_work/ddr_backup/previous.dkjdZI/ddr_all_test
+96	/mnt/ddr_work/ddr_backup/previous.dkjdZI/ddr_all_test
+rounds=1 last=1 SAT_PASS=0 BIN_OK=0 TAR_OK=0 end=0 temperatures=0 min=0.00 max=0.00
+EXIT
+MEM
+LAST
+1970/01/01-00:02:26(UTC) Log: Seconds remaining: 3460
+1970/01/01-00:02:36(UTC) Log: Seconds remaining: 3450
+KERNEL
+DIR=/mnt/ddr_work/ddr_all_test
+96	/mnt/ddr_work/ddr_all_test
+rounds=1 last=1 SAT_PASS=0 BIN_OK=0 TAR_OK=0 end=0 temperatures=0 min=0.00 max=0.00
+EXIT
+MEM
+LAST
+1970/01/01-00:03:26(UTC) Log: Seconds remaining: 3400
+1970/01/01-00:03:36(UTC) Log: Seconds remaining: 3390
+KERNEL
+BATCH_AUDIT_END
+root@imx6ul: # echo VERIFY_BATCH_BEGIN; for B in previous.3GlTVI previous.ZaOTYH
+; do L=/mnt/ddr_work/ddr_backup/$B/ddr_all_test; echo BATCH=$B; grep -E 'CPU tem
+perature:|ddr test start|ddr test end|unpack .*test:' "$L/ddr_log.log"; echo FIN
+AL_COUNTERS; cat "$L/unpack_bin/check_result" "$L/unpack_tar/check_result"; for 
+F in "$L"/stressapptest_*.log; do echo SAT=${F##*/}; grep -E 'Stats: Completed:|
+Stats: Memory Copy:|Status:' "$F"; done; for F in "$L"/memtester_*.log; do print
+f 'MEM=%s ok=' "${F##*/}"; grep -o 'ok' "$F" | wc -l; grep -E 'got .*mlock|^Done
+\.' "$F"; done; done; echo LIVE_KERNEL; dmesg | grep -iE 'invoked oom|Out of mem
+ory|Killed process|allocation failure|corrupted|I/O error'; echo VERIFY_BATCH_EN
+D
+VERIFY_BATCH_BEGIN
+BATCH=previous.3GlTVI
+---------ddr test start time: 1970-01-01 00:00:05---------
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: 83.49 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: 83.49 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: 83.49 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: 83.49 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: 83.49 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: 83.49 C
+[1970-01-01 14:51:41] ddr test end
+FINAL_COUNTERS
+1000
+100
+SAT=stressapptest_0.log
+1970/01/01-01:00:07(UTC) Stats: Completed: 1763190.00M in 3600.69s 489.68MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-01:00:07(UTC) Stats: Memory Copy: 1763190.00M at 489.72MB/s
+1970/01/01-01:00:07(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_1.log
+1970/01/01-03:36:08(UTC) Stats: Completed: 1766886.00M in 3600.67s 490.71MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-03:36:08(UTC) Stats: Memory Copy: 1766886.00M at 490.72MB/s
+1970/01/01-03:36:08(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_2.log
+1970/01/01-06:03:22(UTC) Stats: Completed: 1768046.00M in 3600.64s 491.04MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-06:03:22(UTC) Stats: Memory Copy: 1768046.00M at 491.05MB/s
+1970/01/01-06:03:22(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_3.log
+1970/01/01-08:30:27(UTC) Stats: Completed: 1762888.00M in 3600.70s 489.60MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-08:30:27(UTC) Stats: Memory Copy: 1762888.00M at 489.60MB/s
+1970/01/01-08:30:27(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_4.log
+1970/01/01-10:57:40(UTC) Stats: Completed: 1764616.00M in 3599.74s 490.21MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-10:57:40(UTC) Stats: Memory Copy: 1764616.00M at 490.22MB/s
+1970/01/01-10:57:40(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_5.log
+1970/01/01-13:24:45(UTC) Stats: Completed: 1761380.00M in 3599.68s 489.32MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-13:24:45(UTC) Stats: Memory Copy: 1761380.00M at 489.33MB/s
+1970/01/01-13:24:45(UTC) Status: PASS - please verify no corrected errors
+MEM=memtester_0.log ok=18
+got  217MB (227540992 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_1.log ok=18
+got  141MB (147849216 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_2.log ok=18
+got  141MB (147849216 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_3.log ok=18
+got  140MB (146800640 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_4.log ok=18
+got  140MB (146800640 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_5.log ok=18
+got  139MB (145752064 bytes), trying mlock ...locked.
+Done.
+BATCH=previous.ZaOTYH
+---------ddr test start time: 1970-01-01 00:00:05---------
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: -20.00 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: -20.00 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: -19.47 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: -20.00 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: -19.47 C
+3.unpack bin test: Success
+4.unpack tar test: Success
+CPU temperature: -20.00 C
+[1970-01-01 14:50:51] ddr test end
+FINAL_COUNTERS
+1000
+100
+SAT=stressapptest_0.log
+1970/01/01-01:00:06(UTC) Stats: Completed: 1763772.00M in 3599.69s 489.98MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-01:00:06(UTC) Stats: Memory Copy: 1763772.00M at 490.00MB/s
+1970/01/01-01:00:06(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_1.log
+1970/01/01-03:36:05(UTC) Stats: Completed: 1767338.00M in 3600.64s 490.84MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-03:36:05(UTC) Stats: Memory Copy: 1767338.00M at 490.87MB/s
+1970/01/01-03:36:05(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_2.log
+1970/01/01-06:02:51(UTC) Stats: Completed: 1763690.00M in 3599.66s 489.96MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-06:02:51(UTC) Stats: Memory Copy: 1763690.00M at 489.99MB/s
+1970/01/01-06:02:51(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_3.log
+1970/01/01-08:30:14(UTC) Stats: Completed: 1765290.00M in 3600.69s 490.26MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-08:30:14(UTC) Stats: Memory Copy: 1765290.00M at 490.29MB/s
+1970/01/01-08:30:14(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_4.log
+1970/01/01-10:57:19(UTC) Stats: Completed: 1766942.00M in 3600.68s 490.73MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-10:57:19(UTC) Stats: Memory Copy: 1766942.00M at 490.76MB/s
+1970/01/01-10:57:19(UTC) Status: PASS - please verify no corrected errors
+SAT=stressapptest_5.log
+1970/01/01-13:24:16(UTC) Stats: Completed: 1763684.00M in 3599.69s 489.95MB/s, with 0 hardware incidents, 0 errors
+1970/01/01-13:24:16(UTC) Stats: Memory Copy: 1763684.00M at 489.97MB/s
+1970/01/01-13:24:16(UTC) Status: PASS - please verify no corrected errors
+MEM=memtester_0.log ok=18
+got  217MB (227540992 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_1.log ok=18
+got  141MB (147849216 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_2.log ok=18
+got  141MB (147849216 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_3.log ok=18
+got  141MB (147849216 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_4.log ok=18
+got  140MB (146800640 bytes), trying mlock ...locked.
+Done.
+MEM=memtester_5.log ok=18
+got  139MB (145752064 bytes), trying mlock ...locked.
+Done.
+LIVE_KERNEL
+VERIFY_BATCH_END
+root@imx6ul: # 

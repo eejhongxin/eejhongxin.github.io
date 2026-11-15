@@ -1,0 +1,151 @@
+
+root@imx6ul: # echo AUDIT_BOOT_BEGIN; cat /sys/fsl_otp/HW_OCOTP_CFG1; cat /proc/
+uptime; cat /proc/cmdline; echo COUNT; cat /mnt/ddr_work/ddr_autostart.count; ec
+ho ENTRY; cat /etc/inittab; grep -n ddr_boot /etc/init.d/rcS; echo BOOT_LOG; cat
+ /tmp/ddr-boot.log; echo LAUNCH_LOG; cat /tmp/ddr-autotest-launch.log; echo RUNN
+ING; ps | grep -E '[d]dr_test|[d]dr_autostart|[s]tressapptest|[m]emtester|[c]hec
+k_update|[w]td_feed'; echo CONSOLE_HEAD; head -n 15 /mnt/ddr_work/ddr_all_test/c
+onsole.log; echo AUDIT_BOOT_END
+AUDIT_BOOT_BEGIN
+0x3c3699d4
+507.66 1.01
+console=ttymxc0,115200 cma=0 root=/dev/mtdblock3 rootfstype=jffs2 mtdparts=21e0000.qspi:1M(uboot),6M(kernel),1M(dtb),-(rootfs) rootwait rw
+COUNT
+6
+ENTRY
+::sysinit:/etc/init.d/rcS
+#::respawn:-/bin/sh
+#::respawn:-/bin/login
+console::askfirst:-/bin/sh
+#tty2::askfirst:-/bin/sh
+::ctrlaltdel:/bin/umount -a -r
+224:/bin/sh /etc/init.d/ddr_boot_prepare.sh > /tmp/ddr-boot.log 2>&1
+BOOT_LOG
+Ready: /dev/mmcblk1p7 mounted on /mnt (vfat/rw)
+Started: PID=285; pulse=50ms; interval=10s; log=/mem/ddr-wtd-feed/feed.log
+Running: PID=285; log=/mem/ddr-wtd-feed/feed.log
+Autotest scheduled: rounds=6; startup log=/tmp/ddr-autotest-launch.log
+LAUNCH_LOG
+Previous data archived: /mnt/ddr_work/ddr_backup/previous.nBn65H
+Console log: /mnt/ddr_work/ddr_all_test/console.log; previous data: /mnt/ddr_work/ddr_backup/previous.nBn65H
+RUNNING
+  285 root       0:00 sh /mnt/ddr_work/ddr_p5/wtd_feed.sh --worker
+  344 root       0:00 sh /mnt/ddr_work/ddr_autostart.sh --worker 6
+  382 root       0:00 sh ./ddr_test.sh -c 6
+  454 root       0:00 sh ./ddr_test.sh -c 6
+  455 root       8:15 /mnt/ddr_work/full/ddr_p5/libexec/stressapptest -M 218 -m 8 -s 3600 -W -l /mnt/ddr_work/ddr_all_test/stressapptest_0.log
+CONSOLE_HEAD
+1970/01/01-00:00:05(UTC) Log: Commandline - /mnt/ddr_work/full/ddr_p5/libexec/stressapptest -M 218 -m 8 -s 3600 -W -l /mnt/ddr_work/ddr_all_test/stressapptest_0.log
+1970/01/01-00:00:05(UTC) Stats: SAT revision 1.0.8_autoconf, 32 bit binary
+1970/01/01-00:00:05(UTC) Log: jihongxin @ ubuntu on Tue Oct 20 01:26:30 PDT 2026 from open source release
+1970/01/01-00:00:05(UTC) Log: 1 nodes, 1 cpus.
+1970/01/01-00:00:05(UTC) Log: Flooring memory allocation to multiple of 4: 216MB
+1970/01/01-00:00:05(UTC) Log: Prefer plain malloc memory allocation.
+1970/01/01-00:00:05(UTC) Log: Using mmap() allocation at 0x68c33000.
+1970/01/01-00:00:05(UTC) Stats: Starting SAT, 216M, 3600 seconds
+1970/01/01-00:00:06(UTC) Log: region number 4 exceeds region count 1
+1970/01/01-00:00:06(UTC) Log: Region mask: 0x1
+1970/01/01-00:00:16(UTC) Log: Seconds remaining: 3590
+1970/01/01-00:00:26(UTC) Log: Seconds remaining: 3580
+1970/01/01-00:00:36(UTC) Log: Seconds remaining: 3570
+1970/01/01-00:00:46(UTC) Log: Seconds remaining: 3560
+1970/01/01-00:00:56(UTC) Log: Seconds remaining: 3550
+AUDIT_BOOT_END
+root@imx6ul: # echo AUDIT_HEALTH_BEGIN; echo HASH; sha256sum /mnt/ddr_work/ddr_a
+utostart.sh /mnt/ddr_work/boot_setup/ddr_autostart.sh /etc/init.d/ddr_boot_prepa
+re.sh /mnt/ddr_work/full/ddr_p5/ddr_test.sh /mnt/ddr_work/full/ddr_p5/ddr_progre
+ss.sh; echo FEEDER; sh /mnt/ddr_work/ddr_p5/wtd_feed.sh status; cat /mem/ddr-wtd
+-feed/feed.log; echo MOUNTS; cat /proc/mounts; df -h /mnt; echo TEMP; cat /sys/c
+lass/thermal/thermal_zone1/type /sys/class/thermal/thermal_zone1/temp; echo PROG
+RESS; tail -n 8 /mnt/ddr_work/ddr_all_test/console.log; tail -n 10 /mnt/ddr_work
+/ddr_all_test/ddr_log.log; echo KERNEL_ALERTS; dmesg | grep -iE 'out of memory|o
+om-killer|killed process|allocation failure|corrupted|I/O error|FAT-fs'; echo AU
+DIT_HEALTH_END
+AUDIT_HEALTH_BEGIN
+HASH
+8d35eebd8437f69e59935eb9c5d154776eefdeabffe1707390716643dfa31076  /mnt/ddr_work/ddr_autostart.sh
+8d35eebd8437f69e59935eb9c5d154776eefdeabffe1707390716643dfa31076  /mnt/ddr_work/boot_setup/ddr_autostart.sh
+20de9120d63fa4e495eb81d3f9904886bacda73037d97513745efac72c53af2a  /etc/init.d/ddr_boot_prepare.sh
+b5f6ef0e3de0721db2d0bf569f5550dba9e8b32139c5f270c3aa0cd90508609a  /mnt/ddr_work/full/ddr_p5/ddr_test.sh
+abe2f6de1485ad8829ecc582d1df3f2a235a0a13a5afba180219dd9bf1585058  /mnt/ddr_work/full/ddr_p5/ddr_progress.sh
+FEEDER
+Running: PID=285; log=/mem/ddr-wtd-feed/feed.log
+MOUNTS
+/dev/root / jffs2 rw,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=124056k,nr_inodes=31014,mode=755 0 0
+none /sys sysfs rw,relatime 0 0
+ramfs /mem ramfs rw,relatime 0 0
+none /dev ramfs rw,relatime 0 0
+proc /proc proc rw,relatime 0 0
+none /dev/pts devpts rw,relatime,mode=622 0 0
+tmpfs /tmp tmpfs rw,relatime 0 0
+/dev/mmcblk1p7 /mnt vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p5 /data ext4 ro,relatime,norecovery 0 0
+/dev/mmcblk1p1 /recovery vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p2 /firmware vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p3 /reserve vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/mmcblk1p6 /data/app/log ext4 ro,relatime,norecovery 0 0
+Filesystem                Size      Used Available Use% Mounted on
+/dev/mmcblk1p7           28.1G    131.3M     28.0G   0% /mnt
+TEMP
+imx_thermal_zone
+49020
+PROGRESS
+1970/01/01-00:07:36(UTC) Log: Seconds remaining: 3150
+1970/01/01-00:07:46(UTC) Log: Seconds remaining: 3140
+1970/01/01-00:07:56(UTC) Log: Seconds remaining: 3130
+1970/01/01-00:08:06(UTC) Log: Seconds remaining: 3120
+1970/01/01-00:08:16(UTC) Log: Seconds remaining: 3110
+1970/01/01-00:08:26(UTC) Log: Seconds remaining: 3100
+1970/01/01-00:08:36(UTC) Log: Seconds remaining: 3090
+1970/01/01-00:08:46(UTC) Log: Seconds remaining: 3080
+---------ddr test start time: 1970-01-01 00:00:05---------
+----------count: 0----------
+Test memory size (MB): 218 (Total available - 10MB)
+KERNEL_ALERTS
+[    4.710204] FAT-fs (mmcblk1p7): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+AUDIT_HEALTH_END
+root@imx6ul: # echo AUDIT_FINAL_BEGIN; for f in /etc/init.d/ddr_boot_prepare.sh 
+/mnt/ddr_work/ddr_autostart.sh /mnt/ddr_work/boot_setup/ddr_autostart.sh /mnt/dd
+r_work/full/ddr_p5/ddr_test.sh /mnt/ddr_work/full/ddr_p5/ddr_progress.sh /mnt/dd
+r_work/ddr_p5/wtd_feed.sh; do sh -n "$f" && echo "SYNTAX_OK $f"; done; echo MATE
+RIALS; ls -lh /mnt/ddr_work/full/ddr_p5/check_update/check_update_bin/ /mnt/ddr_
+work/full/ddr_p5/check_update/check_update_tar/; echo SAVED_ARGS; fw_printenv 2>
+/dev/null | grep -E '^.*args=.*cma|^bootdelay='; echo AUDIT_FINAL_END
+AUDIT_FINAL_BEGIN
+SYNTAX_OK /etc/init.d/ddr_boot_prepare.sh
+SYNTAX_OK /mnt/ddr_work/ddr_autostart.sh
+SYNTAX_OK /mnt/ddr_work/boot_setup/ddr_autostart.sh
+SYNTAX_OK /mnt/ddr_work/full/ddr_p5/ddr_test.sh
+SYNTAX_OK /mnt/ddr_work/full/ddr_p5/ddr_progress.sh
+SYNTAX_OK /mnt/ddr_work/ddr_p5/wtd_feed.sh
+MATERIALS
+/mnt/ddr_work/full/ddr_p5/check_update/check_update_bin/:
+total 19264
+-rwxr-xr-x    1 root     root        1010 Oct 21  2026 [1;32mcheck_update.sh[0m
+-rwxr-xr-x    1 root     root         254 Oct 21  2026 [1;32mmd5_update_x6_v2.1.2_b20201127.txt[0m
+-rwxr-xr-x    1 root     root       18.8M Jan  1  1980 [1;32mx6_v2.1.2.4B560lcyT_b20201225.bin[0m
+
+/mnt/ddr_work/full/ddr_p5/check_update/check_update_tar/:
+total 18944
+-rwxr-xr-x    1 root     root         988 Oct 20  2026 [1;32mcheck_update.sh[0m
+-rwxr-xr-x    1 root     root         254 Oct 20  2026 [1;32mmd5_update_x6_v2.1.2_b20201127.txt[0m
+-rwxr-xr-x    1 root     root       18.5M Oct 20  2026 [1;32mupdate.tar.bz2[0m
+SAVED_ARGS
+bootdelay=3
+mfgtool_args=setenv bootargs console=${console},${baudrate} cma=96M rdinit=/linuxrc g_mass_storage.stall=0 g_mass_storage.removable=1 g_mass_storage.idVendor=0x066F g_mass_storage.idProduct=0x37FF g_mass_storage.iSerialNumber="" clk_ignore_unused 
+mmcargs=setenv bootargs console=${console},${baudrate} cma=96M root=${mmcroot}
+netargs=setenv bootargs console=${console},${baudrate} cma=96M root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp
+qspi_args=setenv bootargs console=${console},${baudrate} cma=0 root=${qspi_root}
+AUDIT_FINAL_END
+root@imx6ul: # echo AUDIT_SNAPSHOT_BEGIN; cat /proc/uptime; tail -n 1 /mnt/ddr_w
+ork/ddr_all_test/console.log; grep 'count:' /mnt/ddr_work/ddr_all_test/ddr_log.l
+og | tail -n 1; sh /mnt/ddr_work/ddr_p5/wtd_feed.sh status; echo AUDIT_SNAPSHOT_
+END
+AUDIT_SNAPSHOT_BEGIN
+598.67 1.01
+1970/01/01-00:09:46(UTC) Log: Seconds remaining: 3020
+----------count: 0----------
+Running: PID=285; log=/mem/ddr-wtd-feed/feed.log
+AUDIT_SNAPSHOT_END
+root@imx6ul: # 

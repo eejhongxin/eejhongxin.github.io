@@ -1,0 +1,212 @@
+# Source: ttyUSB0:/mnt/ddr_work/ddr_backup/previous.rti0QJ/ddr_all_test/kernel-after.log
+# Original lines: 352-560. Exported 2026-10-26 Asia/Shanghai.
+# UART prompt/CR characters removed; kernel lines retained.
+[ 3613.996178] Bus freq set to 400000000 start...
+[ 3613.996986] Bus freq set to 400000000 done!
+[ 3617.078432] 
+[ 3617.078432] Bus freq set to 24000000 start...
+[ 3617.078893] Bus freq set to 24000000 done!
+[ 3624.196896] 
+[ 3624.196896] Bus freq set to 400000000 start...
+[ 3624.197705] Bus freq set to 400000000 done!
+[ 3627.298477] 
+[ 3627.298477] Bus freq set to 24000000 start...
+[ 3627.298926] Bus freq set to 24000000 done!
+[ 3634.396210] 
+[ 3634.396210] Bus freq set to 400000000 start...
+[ 3634.397055] Bus freq set to 400000000 done!
+[ 3637.478504] 
+[ 3637.478504] Bus freq set to 24000000 start...
+[ 3637.478963] Bus freq set to 24000000 done!
+[ 3639.776076] 
+[ 3639.776076] Bus freq set to 400000000 start...
+[ 3639.776856] Bus freq set to 400000000 done!
+[ 3640.335268] memtester invoked oom-killer: gfp_mask=0x2084d0, order=0, oom_score_adj=0
+[ 3640.343526] CPU: 0 PID: 2285 Comm: memtester Not tainted 4.1.15-1.2.0 #2
+[ 3640.350330] Hardware name: Freescale i.MX6 Ultralite (Device Tree)
+[ 3640.356567] [<80016f18>] (unwind_backtrace) from [<80012d40>] (show_stack+0x10/0x14)
+[ 3640.364425] [<80012d40>] (show_stack) from [<8075d5e8>] (dump_stack+0x94/0xd4)
+[ 3640.371732] [<8075d5e8>] (dump_stack) from [<8075b720>] (dump_header+0x88/0x1b0)
+[ 3640.379195] [<8075b720>] (dump_header) from [<800b0564>] (oom_kill_process+0x20c/0x3f4)
+[ 3640.387224] [<800b0564>] (oom_kill_process) from [<800b0a0c>] (__out_of_memory+0x250/0x37c)
+[ 3640.395640] [<800b0a0c>] (__out_of_memory) from [<800b0cd4>] (out_of_memory+0x58/0x70)
+[ 3640.403646] [<800b0cd4>] (out_of_memory) from [<800b4d74>] (__alloc_pages_nodemask+0x5bc/0x894)
+[ 3640.412419] [<800b4d74>] (__alloc_pages_nodemask) from [<800cd1b8>] (__pte_alloc+0x24/0x168)
+[ 3640.420929] [<800cd1b8>] (__pte_alloc) from [<800cfab8>] (handle_mm_fault+0x65c/0xd44)
+[ 3640.428921] [<800cfab8>] (handle_mm_fault) from [<800cb3c4>] (__get_user_pages+0xd8/0x498)
+[ 3640.437213] [<800cb3c4>] (__get_user_pages) from [<800cbc60>] (populate_vma_page_range+0x64/0x6c)
+[ 3640.446143] [<800cbc60>] (populate_vma_page_range) from [<800cbd08>] (__mm_populate+0xa0/0x124)
+[ 3640.454898] [<800cbd08>] (__mm_populate) from [<800d1408>] (SyS_mlock+0x104/0x130)
+[ 3640.462527] [<800d1408>] (SyS_mlock) from [<8000f440>] (ret_fast_syscall+0x0/0x3c)
+[ 3640.470450] Mem-Info:
+[ 3640.472774] active_anon:142 inactive_anon:0 isolated_anon:0
+[ 3640.472774]  active_file:6 inactive_file:6 isolated_file:0
+[ 3640.472774]  unevictable:35076 dirty:2 writeback:0 unstable:0
+[ 3640.472774]  slab_reclaimable:531 slab_unreclaimable:964
+[ 3640.472774]  mapped:4 shmem:2 pagetables:101 bounce:0
+[ 3640.472774]  free:24563 free_pcp:1 free_cma:24083
+[ 3640.504923] Normal free:98252kB min:1988kB low:2484kB high:2980kB active_anon:568kB inactive_anon:0kB active_file:24kB inactive_file:24kB unevictable:140304kB isolated(anon):0kB isolated(file):0kB present:262144kB managed:248336kB mlocked:140304kB dirty:8kB writeback:0kB mapped:16kB shmem:8kB slab_reclaimable:2124kB slab_unreclaimable:3856kB kernel_stack:384kB pagetables:404kB unstable:0kB bounce:0kB free_pcp:4kB local_pcp:4kB free_cma:96332kB writeback_tmp:0kB pages_scanned:392 all_unreclaimable? yes
+[ 3640.549545] lowmem_reserve[]: 0 0 0
+[ 3640.553120] Normal: 95*4kB (M) 14*8kB (UMC) 4*16kB (UM) 3*32kB (UM) 1*64kB (C) 2*128kB (UM) 0*256kB 0*512kB 1*1024kB (U) 1*2048kB (C) 1*4096kB (C) 1*8192kB (C) 1*16384kB (C) 2*32768kB (C) = 98252kB
+[ 3640.571254] 23 total pagecache pages
+[ 3640.574841] 0 pages in swap cache
+[ 3640.578194] Swap cache stats: add 0, delete 0, find 0/0
+[ 3640.583427] Free swap  = 0kB
+[ 3640.586314] Total swap = 0kB
+[ 3640.589228] 65536 pages RAM
+[ 3640.592032] 0 pages HighMem/MovableOnly
+[ 3640.595875] 4294946172 pages reserved
+[ 3640.599634] 24576 pages cma reserved
+[ 3640.603222] [ pid ]   uid  tgid total_vm      rss nr_ptes nr_pmds swapents oom_score_adj name
+[ 3640.611815] [  285]     0   285      747       22       5       0        0             0 sh
+[ 3640.620214] [  344]     0   344      747       23       4       0        0             0 sh
+[ 3640.628609] [  382]     0   382      751       27       5       0        0             0 sh
+[ 3640.636979] [  485]     0   485      747       18       4       0        0             0 init
+[ 3640.645548] [ 2268]     0  2268      714        8       4       0        0             0 sleep
+[ 3640.654253] [ 2285]     0  2285    55937    35031      73       0        0             0 memtester
+[ 3640.663267] [ 2286]     0  2286      747        8       5       0        0             0 busybox
+[ 3640.672095] Out of memory: Kill process 2285 (memtester) score 548 or sacrifice child
+[ 3640.679967] Killed process 2285 (memtester) total-vm:223748kB, anon-rss:140124kB, file-rss:0kB
+[ 8480.028434] 
+[ 8480.028434] Bus freq set to 24000000 start...
+[ 8480.028915] Bus freq set to 24000000 done!
+[ 8480.927060] 
+[ 8480.927060] Bus freq set to 400000000 start...
+[ 8480.927781] Bus freq set to 400000000 done!
+[ 8483.988393] 
+[ 8483.988393] Bus freq set to 24000000 start...
+[ 8483.988838] Bus freq set to 24000000 done!
+[ 8486.972605] 
+[ 8486.972605] Bus freq set to 400000000 start...
+[ 8486.973378] Bus freq set to 400000000 done!
+[ 8490.038450] 
+[ 8490.038450] Bus freq set to 24000000 start...
+[ 8490.038930] Bus freq set to 24000000 done!
+[ 8492.172948] 
+[ 8492.172948] Bus freq set to 400000000 start...
+[ 8492.173785] Bus freq set to 400000000 done!
+[ 9080.168430] 
+[ 9080.168430] Bus freq set to 24000000 start...
+[ 9080.168886] Bus freq set to 24000000 done!
+[ 9080.946813] 
+[ 9080.946813] Bus freq set to 400000000 start...
+[ 9080.947560] Bus freq set to 400000000 done!
+[ 9084.018461] 
+[ 9084.018461] Bus freq set to 24000000 start...
+[ 9084.018902] Bus freq set to 24000000 done!
+[ 9086.586293] 
+[ 9086.586293] Bus freq set to 400000000 start...
+[ 9086.587107] Bus freq set to 400000000 done!
+[ 9090.168471] 
+[ 9090.168471] Bus freq set to 24000000 start...
+[ 9090.168930] Bus freq set to 24000000 done!
+[ 9092.206199] 
+[ 9092.206199] Bus freq set to 400000000 start...
+[ 9092.207067] Bus freq set to 400000000 done!
+[ 9680.308458] 
+[ 9680.308458] Bus freq set to 24000000 start...
+[ 9680.308955] Bus freq set to 24000000 done!
+[ 9687.262239] 
+[ 9687.262239] Bus freq set to 400000000 start...
+[ 9687.263018] Bus freq set to 400000000 done!
+[ 9690.328494] 
+[ 9690.328494] Bus freq set to 24000000 start...
+[ 9690.328995] Bus freq set to 24000000 done!
+[ 9692.454977] 
+[ 9692.454977] Bus freq set to 400000000 start...
+[ 9692.455850] Bus freq set to 400000000 done!
+[10280.458436] 
+[10280.458436] Bus freq set to 24000000 start...
+[10280.458947] Bus freq set to 24000000 done!
+[10281.746864] 
+[10281.746864] Bus freq set to 400000000 start...
+[10281.747643] Bus freq set to 400000000 done!
+[10284.848422] 
+[10284.848422] Bus freq set to 24000000 start...
+[10284.848950] Bus freq set to 24000000 done!
+[10287.411041] 
+[10287.411041] Bus freq set to 400000000 start...
+[10287.411790] Bus freq set to 400000000 done!
+[10290.478488] 
+[10290.478488] Bus freq set to 24000000 start...
+[10290.478985] Bus freq set to 24000000 done!
+[10291.956178] 
+[10291.956178] Bus freq set to 400000000 start...
+[10291.956884] Bus freq set to 400000000 done!
+[10880.508450] 
+[10880.508450] Bus freq set to 24000000 start...
+[10880.508912] Bus freq set to 24000000 done!
+[10884.676009] 
+[10884.676009] Bus freq set to 400000000 start...
+[10884.676847] Bus freq set to 400000000 done!
+[10890.508498] 
+[10890.508498] Bus freq set to 24000000 start...
+[10890.509019] Bus freq set to 24000000 done!
+[10890.956715] 
+[10890.956715] Bus freq set to 400000000 start...
+[10890.957461] Bus freq set to 400000000 done!
+[11482.008465] 
+[11482.008465] Bus freq set to 24000000 start...
+[11482.008913] Bus freq set to 24000000 done!
+[11487.656778] 
+[11487.656778] Bus freq set to 400000000 start...
+[11487.657590] Bus freq set to 400000000 done!
+[11490.738450] 
+[11490.738450] Bus freq set to 24000000 start...
+[11490.738948] Bus freq set to 24000000 done!
+[11490.967478] 
+[11490.967478] Bus freq set to 400000000 start...
+[11490.970034] Bus freq set to 400000000 done!
+[11494.038412] 
+[11494.038412] Bus freq set to 24000000 start...
+[11494.038868] Bus freq set to 24000000 done!
+[11497.845294] 
+[11497.845294] Bus freq set to 400000000 start...
+[11497.846100] Bus freq set to 400000000 done!
+[11500.928459] 
+[11500.928459] Bus freq set to 24000000 start...
+[11500.928928] Bus freq set to 24000000 done!
+[11500.986767] 
+[11500.986767] Bus freq set to 400000000 start...
+[11500.987490] Bus freq set to 400000000 done!
+[11504.048424] 
+[11504.048424] Bus freq set to 24000000 start...
+[11504.048830] Bus freq set to 24000000 done!
+[11508.035662] 
+[11508.035662] Bus freq set to 400000000 start...
+[11508.036438] Bus freq set to 400000000 done!
+[17326.958418] 
+[17326.958418] Bus freq set to 24000000 start...
+[17326.958917] Bus freq set to 24000000 done!
+[17327.736822] 
+[17327.736822] Bus freq set to 400000000 start...
+[17327.737630] Bus freq set to 400000000 done!
+[17330.838392] 
+[17330.838392] Bus freq set to 24000000 start...
+[17330.838850] Bus freq set to 24000000 done!
+[17333.913933] 
+[17333.913933] Bus freq set to 400000000 start...
+[17333.914709] Bus freq set to 400000000 done!
+[17336.978472] 
+[17336.978472] Bus freq set to 24000000 start...
+[17336.978951] Bus freq set to 24000000 done!
+[17337.916130] 
+[17337.916130] Bus freq set to 400000000 start...
+[17337.916906] Bus freq set to 400000000 done!
+[17927.018399] 
+[17927.018399] Bus freq set to 24000000 start...
+[17927.018921] Bus freq set to 24000000 done!
+[17930.827214] 
+[17930.827214] Bus freq set to 400000000 start...
+[17930.838221] Bus freq set to 400000000 done!
+[17933.928432] 
+[17933.928432] Bus freq set to 24000000 start...
+[17933.928913] Bus freq set to 24000000 done!
+[17933.972845] 
+[17933.972845] Bus freq set to 400000000 start...
+[17933.973626] Bus freq set to 400000000 done!
+[17937.038419] 
+[17937.038419] Bus freq set to 24000000 start...
+[17937.038873] Bus freq set to 24000000 done!
+[17939.085663] 
+[17939.085663] Bus freq set to 400000000 start...

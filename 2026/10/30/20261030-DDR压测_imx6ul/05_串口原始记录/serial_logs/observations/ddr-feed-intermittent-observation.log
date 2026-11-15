@@ -1,0 +1,290 @@
+[2026-10-20T11:42:56.296715+08:00] START intermittent 16MiB tests, 60s stressapptest + 1 memtester loop, 300s idle between rounds.
+[2026-10-20T11:42:56.296899+08:00] Deadline: 2026-10-20T12:27:46+08:00
+[2026-10-20T11:42:56.296979+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:42:56.307434+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_1__:%s\n' "$?"
+
+[2026-10-20T11:42:56.322627+08:00] UART 527.25 522.10
+
+__DDR_RPC_1__:0
+root@imx6ul: # 
+[2026-10-20T11:42:56.797878+08:00] COMMAND test -w /sys/class/leds/LED_Wtd_Done/brightness && command -v usleep
+[2026-10-20T11:42:56.802309+08:00] UART test -w /sys/cl
+[2026-10-20T11:42:56.833341+08:00] UART ass/leds/LED_Wtd_Done/brightness && command -v usl
+eep; printf '\n__DDR_RPC_2__:%s\n' "$?"
+/bin/usleep
+
+__DDR_RPC_2__:0
+root@imx6ul: # 
+[2026-10-20T11:42:57.299369+08:00] COMMAND sh -c 'P=/sys/class/leds/LED_Wtd_Done/brightness
+sleeper=
+cleanup() {
+    if [ -n "$sleeper" ]; then
+        kill "$sleeper" 2>/dev/null
+        wait "$sleeper" 2>/dev/null
+    fi
+    echo 0 > "$P"
+    exit 0
+}
+trap cleanup INT TERM HUP
+while :; do
+    echo 1 > "$P" || exit 1
+    usleep 50000
+    echo 0 > "$P" || exit 1
+    sleep 10 &
+    sleeper=$!
+    wait "$sleeper"
+    sleeper=
+done
+' ddr-wtd-feed > /mem/ddr-wtd-feed.log 2>&1 & DDR_FEED=$!; echo __DDR_FEED_PID__:$DDR_FEED
+[2026-10-20T11:42:57.312687+08:00] UART sh -c 'P=/sys/class/leds/L
+[2026-10-20T11:42:57.393958+08:00] UART ED_Wtd_Done/brightness
+t 0
+}
+trap cleanup INT TERM > sleeper=
+   sleeper=$!
+    wait "$sleepe> cleanup() {
+ echo __DDR_FEED_PID__:$DDR>     if [ -n "$sleeper" ]; then
+>         kill "$sleeper" 2>/dev/null
+>         wait "$sleeper" 2>/dev/null
+>     fi
+>     echo 0 > "$P"
+>     exit 0
+> }
+> trap cleanup INT TERM HUP
+> while :; do
+>     echo 1 > "$P" || exit 1
+>     usleep 50000
+>     echo 0 > "$P" || exit 1
+>     sleep 10 &
+>     sleeper=$!
+>     wait "$sleeper"
+>     sle
+[2026-10-20T11:42:57.425642+08:00] UART eper=
+> done
+> ' ddr-wtd-feed > /mem/ddr-wtd-feed.log 2>&1 & DDR_FEED=$!; echo __DDR_FEED_PID
+__:$DDR_FEED; printf '\n__DDR_RPC_3__:%s\n' "$?"
+__DDR_FEED_PID__:121
+
+__DDR_RPC_3__:0
+root@imx6ul: # 
+[2026-10-20T11:42:57.802072+08:00] COMMAND kill -0 "$DDR_FEED"
+[2026-10-20T11:42:57.809436+08:00] UART kill -0 "$DDR_FEED"; printf '\n__DDR_RPC_4__:%s\n' "$?"
+
+[2026-10-20T11:42:57.825446+08:00] UART 
+__DDR_RPC_4__:0
+root@imx6ul: # 
+[2026-10-20T11:42:58.303287+08:00] TEMPORARY EXTERNAL WATCHDOG FEEDER STARTED pid=121
+[2026-10-20T11:42:58.303504+08:00] COMMAND cat /proc/mounts
+[2026-10-20T11:42:58.321079+08:00] UART cat /proc/mounts; printf '\n__DDR_RPC_5__:%s\n' "$?"
+
+[2026-10-20T11:42:58.368083+08:00] UART /dev/root / jffs2 rw,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=74808k,nr_inodes=18702,mode=755 0 0
+none /sys sysfs rw,relatime 0 0
+ramfs /mem ramfs rw,relatime 0 0
+none /dev ramfs rw,relatime 0 0
+proc /proc proc rw,relatime 0 0
+none /dev/pts devpts rw,relatime,mode=622 0 0
+tmpfs /tmp tmpfs rw,relatime 0 0
+
+__DDR_RPC_5__:0
+root@imx6ul: # 
+[2026-10-20T11:42:58.804354+08:00] COMMAND if awk '$2=="/mnt" {ok=1} END {exit !ok}' /proc/mounts; then :; else mount -t vfat -o rw /dev/mmcblk1p7 /mnt; fi
+[2026-10-20T11:42:58.817758+08:00] UART if awk '$2=="/mnt" {ok=1} END {exi
+[2026-10-20T11:42:58.838630+08:00] UART t !ok}' /proc/mounts; then :; e
+lse mount -t vfat -o rw /dev/mmcblk1p7 /mnt; fi; printf '\n__DDR_RPC_6__:%s\n' "
+$?"
+
+[2026-10-20T11:42:58.887036+08:00] UART [  529.831563] FAT-
+[2026-10-20T11:42:58.913900+08:00] UART fs (mmcblk1p7): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+
+__DDR_RPC_6__:0
+root@imx6ul: # 
+[2026-10-20T11:42:59.305299+08:00] COMMAND cd /mnt/ddr_work/ddr_p5 && sha256sum -c SHA256SUMS && sh ddr_test.sh --check --memory 16 --seconds 60
+[2026-10-20T11:42:59.333340+08:00] UART cd /mnt/ddr_work/ddr_p5 && sha256sum -c SHA256SUMS && sh ddr_test
+.sh --check --memory 16 --seconds 60; printf '\n__DDR_RPC_7__:%s\n' "$?"
+
+[2026-10-20T11:42:59.365265+08:00] UART ./README.md: OK
+
+[2026-10-20T11:42:59.381289+08:00] UART ./bin/memtester: OK
+
+[2026-10-20T11:42:59.469273+08:00] UART ./bin/stressapptest: OK
+./ddr_mem_usage.sh: OK
+./ddr_test.sh: OK
+./licenses/memtester-COPYING: OK
+./licenses/stressapptest-COPYING: OK
+./licenses/stressapptest-NOTICE: OK
+./licenses/stressapptest-source.sha256: OK
+
+[2026-10-20T11:42:59.594798+08:00] UART Preflight OK: memory=16MiB copy_threads=1 seconds=60 rounds=1 unpack=0
+
+__DDR_RPC_7__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:43:00.806423+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:43:00.809195+08:00] UART cat /proc/u
+[2026-10-20T11:43:00.825204+08:00] UART ptime; printf '\n__DDR_RPC_8__:%s\n' "$?"
+
+[2026-10-20T11:43:00.841229+08:00] UART 531.76 526.06
+
+__DDR_RPC_8__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:43:01.307576+08:00] COMMAND kill -0 "$DDR_FEED"
+[2026-10-20T11:43:01.333816+08:00] UART kill -0 "$DDR_FEED"; printf '\n__DDR_RPC_9__:%s\n' "$?"
+
+__DDR_RPC_9__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:43:01.808793+08:00] COMMAND sh -c 'child=
+trap '"'"'if [ -n "$child" ]; then kill -TERM "$child" 2>/dev/null; wait "$child" 2>/dev/null; fi; exit 143'"'"' INT TERM HUP
+sh "$1" -c 1 --memory 16 --seconds 60 &
+child=$!
+wait "$child"
+result=$?
+child=
+printf '"'"'\n__DDR_ROUND_RESULT__:%s:%s\n'"'"' "$2" "$result"
+sync
+exit "$result"
+' ddr-round /mnt/ddr_work/ddr_p5/ddr_test.sh 1 > /mnt/ddr_work/intermittent_1792467781_round1.console.log 2>&1 & DDR_JOB=$!; echo __DDR_JOB_PID__:$DDR_JOB
+[2026-10-20T11:43:01.813105+08:00] UART s
+[2026-10-20T11:43:01.828388+08:00] UART h -c 'child=
+> trap '"'"'if [ -n "$child" ]; then kill -TER
+[2026-10-20T11:43:01.849449+08:00] UART M "$child" 2>/dev/null; wait "$chi
+ld" 2>/dev/null; fi; exit 143'"'"' INT TERM HUP
+OB_PID__:$
+[2026-10-20T11:43:01.916355+08:00] UART > sh "$1" -c 1 --memory 16 --seconds 60 &
+> child=$!
+> wait "$child"
+> result=$?
+> child=
+> printf '"'"'\n__DDR_ROUND_RESULT__:%s:%s\n'"'"' "$2" "$result"
+> sync
+> exit "$result"
+> ' ddr-round /mnt/ddr_work/ddr_p5/ddr_test.sh 1 > /mnt/ddr_work/intermittent_17
+92467781_round1.console.log 2>&1 & DDR_JOB=$!; echo __DDR_JOB_PID__:$DDR_JOB; pr
+intf '\n__DDR_RPC_10__:%s\n' "$?"
+__DDR_JOB_PID__:138
+
+__DDR_RPC_10__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:43:02.310008+08:00] ROUND 1 STARTED
+[2026-10-20T11:43:32.323700+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:43:32.326209+08:00] UART cat /p
+[2026-10-20T11:43:32.342133+08:00] UART roc/uptime; printf '\n__DDR_RPC_11__:%s\n' "$?"
+
+[2026-10-20T11:43:32.388233+08:00] UART 563.28 557.19
+
+__DDR_RPC_11__:0
+[2]+  Done(1)                    sh -c "child=
+trap ""\'""if [ -n \"\$child\" ]; then kill -TERM \"\$child\" 2>/dev/null; wait \"\$child\" 2>/dev/null; fi; exit 143""\'"" INT TERM HUP
+sh \"\$1\" -c 1 --memory 16 --seconds 60 &
+child=\$!
+wait \"\$child\"
+result=\$?
+child=
+printf ""\'""\n__DDR_ROUND_RESULT__:%s:%s\n""\'"" \"\$2\" \"\$result\"
+sync
+exit \"\$result\"
+" ddr-round /mnt/ddr_work/ddr_p5/ddr_test.sh 1 1>/mnt/ddr_work/intermittent_179246778
+[2026-10-20T11:43:32.403309+08:00] UART 1_round1.console.log 2>&1
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:43:32.825297+08:00] COMMAND kill -0 "$DDR_FEED"
+[2026-10-20T11:43:32.835268+08:00] UART kill -0 "$DDR_FEED"; printf '\n__DDR_RPC_12
+[2026-10-20T11:43:32.851066+08:00] UART __:%s\n' "$?"
+
+__DDR_RPC_12__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:43:33.326618+08:00] COMMAND tail -n 10 /mnt/ddr_work/intermittent_1792467781_round1.console.log
+[2026-10-20T11:43:33.330197+08:00] UART ta
+[2026-10-20T11:43:33.356317+08:00] UART il -n 10 /mnt/ddr_work/intermittent_1792467781_round1.con
+sole.log; printf '\n__DDR_RPC_13__:%s\n' "$?"
+
+[2026-10-20T11:43:33.390349+08:00] UART Preflight OK: memory=16MiB copy_threads=1 seconds=60 rounds=1 unpack=0
+ERROR: Another test is active, or a stale lock exists: /mnt/ddr_work/.ddr-test.lock
+
+__DDR_ROUND_RESULT__:1:1
+
+__DDR_RPC_13__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:43:33.827475+08:00] COMMAND wait "$DDR_JOB"; echo __DDR_JOB_REAPED__
+[2026-10-20T11:43:33.838019+08:00] UART wait "$DDR_JOB"; echo __DDR_JOB_REAPED__; printf '\n_
+[2026-10-20T11:43:33.858979+08:00] UART _DDR_R
+PC_14__:%s\n' "$?"
+__DDR_JOB_REAPED__
+
+__DDR_RPC_14__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:43:34.329782+08:00] ROUND 1 finished, exit=1; idle for 300s.
+[2026-10-20T11:44:04.348287+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:44:04.364495+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_15__:%s\n' "$?"
+
+[2026-10-20T11:44:04.380770+08:00] UART 595.30 589.01
+
+__DDR_RPC_15__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:44:04.850459+08:00] COMMAND kill -0 "$DDR_FEED"
+[2026-10-20T11:44:04.860126+08:00] UART kill -0 "$DDR_FEED"; printf '\n__DDR_RPC_16__:%s\n' "$?"
+[2026-10-20T11:44:04.876257+08:00] UART 
+
+__DDR_RPC_16__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:44:35.365159+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:44:35.382125+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_17__:%s\n' "$?"
+
+[2026-10-20T11:44:35.397458+08:00] UART 626.32 619.87
+
+__DDR_RPC_17__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:44:35.866130+08:00] COMMAND kill -0 "$DDR_FEED"
+[2026-10-20T11:44:35.893251+08:00] UART kill -0 "$DDR_FEED"; printf '\n__DDR_RPC_18__:%s\n' "$?"
+
+__DDR_RPC_18__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:45:06.385932+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:45:06.397601+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_19__:%s\n' "$?"
+
+[2026-10-20T11:45:06.414027+08:00] UART 657.34 650.74
+
+__DDR_RPC_19__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:45:06.887275+08:00] COMMAND kill -0 "$DDR_FEED"
+[2026-10-20T11:45:06.893027+08:00] UART kill -0 "$DDR_F
+[2026-10-20T11:45:06.915221+08:00] UART EED"; printf '\n__DDR_RPC_20__:%s\n' "$?"
+
+__DDR_RPC_20__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:45:09.035320+08:00] MONITOR ERROR KeyboardInterrupt()
+[2026-10-20T11:45:09.035449+08:00] COMMAND sync
+[2026-10-20T11:45:09.041559+08:00] UART sync; printf '\n__DDR_RPC_21__:%s\n' "$?"
+
+[2026-10-20T11:45:09.057563+08:00] UART 
+__DDR_RPC_21__:0
+ro
+[2026-10-20T11:45:09.073524+08:00] UART ot@imx6ul: ddr_p5# 
+[2026-10-20T11:45:09.536344+08:00] COMMAND kill -TERM "$DDR_FEED"; wait "$DDR_FEED"; echo __DDR_FEED_STOPPED__
+[2026-10-20T11:45:09.591332+08:00] UART kill -TERM "$DDR_FEED"; wait "$DDR_FEED"; echo __DDR_FEED_S
+TOPPED__; printf '\n__DDR_RPC_22__:%s\n' "$?"
+__DDR_FEED_STOPPED__
+
+__DDR_RPC_22__:0
+[1]+  Done                       sh -c "P=/sys/class/leds/LED_Wtd_Done/brightness
+sleeper=
+cleanup() {
+    if [ -n \"\$sleeper\" ]; then
+        kill \"\$sleeper\" 2>/dev/null
+        wait \"\$sleeper\" 2>/dev/null
+    fi
+    echo 0 > \"\$P\"
+    exit 0
+}
+trap cleanup INT TERM HUP
+while :; do
+    echo 1 > \"\$P\" || exit 1
+    usl
+[2026-10-20T11:45:09.622943+08:00] UART eep 50000
+    echo 0 > \"\$P\" || exit 1
+    sleep 10 &
+    sleeper=\$!
+    wait \"\$sleeper\"
+    sleeper=
+done
+" ddr-wtd-feed 1>/mem/ddr-wtd-feed.log 2>&1
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:45:10.038903+08:00] SUMMARY {"started": "2026-10-20T11:42:56.296667+08:00", "finished": "2026-10-20T11:45:10.037405+08:00", "reset_count": 0, "rounds": [{"number": 1, "pid": 138, "started": "2026-10-20T11:43:02.309983+08:00", "console": "/mnt/ddr_work/intermittent_1792467781_round1.console.log", "result": 1, "finished": "2026-10-20T11:43:34.329706+08:00"}], "log": "/home/jihongxin/Documents/imx6ul/out/ddr-feed-intermittent-observation.log", "feeding_requested": true, "feeder_pid": 121, "feeder_retained": false}

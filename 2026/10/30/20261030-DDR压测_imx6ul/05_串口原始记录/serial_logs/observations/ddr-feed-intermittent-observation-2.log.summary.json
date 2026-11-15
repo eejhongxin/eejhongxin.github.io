@@ -1,0 +1,43 @@
+{
+  "started": "2026-10-20T11:45:10.117937+08:00",
+  "finished": "2026-10-20T12:27:47.207750+08:00",
+  "reset_count": 0,
+  "rounds": [
+    {
+      "number": 1,
+      "pid": 215,
+      "started": "2026-10-20T11:45:17.132957+08:00",
+      "console": "/mnt/ddr_work/intermittent_1792467916_round1.console.log",
+      "result": 0,
+      "finished": "2026-10-20T11:48:26.745766+08:00"
+    },
+    {
+      "number": 2,
+      "pid": 436,
+      "started": "2026-10-20T11:53:27.431765+08:00",
+      "console": "/mnt/ddr_work/intermittent_1792468406_round2.console.log",
+      "result": 0,
+      "finished": "2026-10-20T11:56:47.566845+08:00"
+    },
+    {
+      "number": 3,
+      "pid": 659,
+      "started": "2026-10-20T12:01:48.250951+08:00",
+      "console": "/mnt/ddr_work/intermittent_1792468907_round3.console.log",
+      "result": 0,
+      "finished": "2026-10-20T12:05:08.376821+08:00"
+    },
+    {
+      "number": 4,
+      "pid": 885,
+      "started": "2026-10-20T12:10:09.051310+08:00",
+      "console": "/mnt/ddr_work/intermittent_1792469408_round4.console.log",
+      "result": 0,
+      "finished": "2026-10-20T12:13:29.178934+08:00"
+    }
+  ],
+  "log": "/home/jihongxin/Documents/imx6ul/out/ddr-feed-intermittent-observation-2.log",
+  "feeding_requested": true,
+  "feeder_pid": 196,
+  "feeder_retained": true
+}

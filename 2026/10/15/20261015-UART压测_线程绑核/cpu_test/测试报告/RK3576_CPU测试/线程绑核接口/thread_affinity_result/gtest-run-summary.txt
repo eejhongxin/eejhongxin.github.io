@@ -1,0 +1,16 @@
+GTest target-side coverage run
+Generated: 2021-01-01 13:29:17 +0000
+Binary directory: /tmp/thread-affinity-test
+Coverage root: /userdata/gtest
+Coverage details: /userdata/gtest/details
+GCOV_PREFIX_STRIP: 0
+Verbose output: 1
+Strict coverage: 0
+
+Test|Result|Exit code|GCDA files|Nonempty GCDA files|Coverage
+----|------|----------|-----------|--------------------|--------
+hc_gtest_thread_affinity|PASS|0|28|28|COMPLETE
+
+Totals: pass=1, skip=0, fail=0
+Coverage: COMPLETE
+Coverage archive: /userdata/gtest/gtest-coverage-data.tar.gz

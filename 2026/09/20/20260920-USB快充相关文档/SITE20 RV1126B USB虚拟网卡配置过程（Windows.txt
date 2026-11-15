@@ -1,0 +1,56 @@
+SITE20 RV1126B USB虚拟网卡配置过程（Windows）
+================================================
+
+一、用途
+--------
+
+通过USB数据线连接Windows电脑和SITE20板卡，在Windows与板卡之间建立网络连接，
+用于SSH登录、SFTP/SCP传输boot.img及其他调试文件。
+
+板卡USB网卡地址：192.168.253.1
+Windows USB网卡地址：192.168.253.2
+子网掩码：255.255.255.0
+
+
+二、准备工作
+------------
+
+1. 使用支持数据传输的USB线。
+2. USB线连接板卡的USB Device/OTG接口，不能连接纯供电口或USB Host口。
+3. 保持板卡调试串口连接，以便在USB网络未配置好时操作板卡。
+4. 板卡应能正常启动并进入以下命令行：
+
+   root@rv1126b-buildroot:~#
+
+
+三、配置板卡端usb0
+------------------
+
+以下命令必须在板卡调试串口中执行，不能在Windows或Ubuntu虚拟机中执行：
+
+   ip link show usb0
+   ip link set usb0 up
+   ip addr flush dev usb0
+   ip addr add 192.168.253.1/24 dev usb0
+   ip addr show usb0
+
+配置成功后，应能看到类似内容：
+
+   inet 192.168.253.1/24
+
+如果找不到usb0，检查板卡USB模式：
+
+   cat /sys/kernel/debug/usb/21500000.usb/mode
+
+如当前不是device模式，可以执行：
+
+   echo device > /sys/kernel/debug/usb/21500000.usb/mode
+
+然后重新插拔USB数据线，再检查：
+
+   ip link show usb0
+
+注意：以上ip命令是临时配置，普通情况下板卡重启后需要重新执行，除非已经将
+USB网卡配置加入板卡开机启动脚本或固件rootfs。
+
+

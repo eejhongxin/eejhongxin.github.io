@@ -1,0 +1,14 @@
+GTest target-side coverage validation
+Format-Version: 1
+Generated: 2021-01-01 13:29:34 +0000
+Coverage root: /userdata/gtest
+Archive: /userdata/gtest/gtest-coverage-data.tar.gz
+Strict coverage: 0
+
+Test|Result|Exit code|GCDA files|Nonempty GCDA files|Coverage
+----|------|----------|-----------|--------------------|--------
+hc_gtest_thread_affinity|PASS|0|28|28|COMPLETE
+
+Tests: PASS
+Coverage: COMPLETE
+Archive: PASS

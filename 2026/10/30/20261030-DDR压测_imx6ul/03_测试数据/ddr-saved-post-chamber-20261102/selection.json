@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-02 Asia/Shanghai",
+  "scope": "local and Windows DDR test datasets only; board unchanged",
+  "kept_batches": [
+    {
+      "chip": "chip_0c3599d4",
+      "condition": "roomtemp",
+      "rounds": 8,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.9xVApI",
+      "path": "chip_0c3599d4/roomtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_0c3599d4",
+      "condition": "hightemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.pObVAK",
+      "path": "chip_0c3599d4/hightemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_0c3599d4",
+      "condition": "lowtemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.1fozbK",
+      "path": "chip_0c3599d4/lowtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "condition": "roomtemp",
+      "rounds": 8,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.nBn65H",
+      "path": "chip_3c3699d4/roomtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "condition": "hightemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.5f5VnI",
+      "path": "chip_3c3699d4/hightemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "condition": "lowtemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.JOqVbI",
+      "path": "chip_3c3699d4/lowtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_483699d4",
+      "condition": "roomtemp",
+      "rounds": 8,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.XNsEnJ",
+      "path": "chip_483699d4/roomtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_483699d4",
+      "condition": "hightemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.3GlTVI",
+      "path": "chip_483699d4/hightemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_483699d4",
+      "condition": "lowtemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.ZaOTYH",
+      "path": "chip_483699d4/lowtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    }
+  ],
+  "removed": [],
+  "selected_raw_files_verified": 201
+}

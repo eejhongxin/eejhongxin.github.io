@@ -1,0 +1,681 @@
+
+root@imx6ul: ddr_backup# cat /proc/uptime
+c/mounts277.79 261.14
+root@imx6ul: ddr_backup# cat /proc/mounts | grep ' /mnt '
+ps
+/dev/mmcblk1p7 /mnt vfat ro,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+root@imx6ul: ddr_backup# ps
+PID   USER     TIME   COMMAND
+    1 root       0:02 init
+    2 root       0:00 [kthreadd]
+    3 root       0:00 [ksoftirqd/0]
+    4 root       0:00 [kworker/0:0]
+    5 root       0:00 [kworker/0:0H]
+    6 root       0:00 [kworker/u2:0]
+    7 root       0:00 [rcu_preempt]
+    8 root       0:00 [rcu_sched]
+    9 root       0:00 [rcu_bh]
+   10 root       0:00 [migration/0]
+   11 root       0:00 [khelper]
+   12 root       0:00 [kdevtmpfs]
+   13 root       0:00 [perf]
+   14 root       0:00 [writeback]
+   15 root       0:00 [crypto]
+   16 root       0:00 [bioset]
+   17 root       0:00 [kblockd]
+   18 root       0:03 [kworker/0:1]
+   19 root       0:00 [rpciod]
+   20 root       0:00 [kswapd0]
+   21 root       0:00 [fsnotify_mark]
+   22 root       0:00 [nfsiod]
+   59 root       0:00 [pxp_dispatch]
+   60 root       0:00 [spi0]
+   61 root       0:00 [ci_otg]
+   62 root       0:00 [kworker/0:2]
+   63 root       0:00 [cfinteractive]
+   64 root       0:00 [irq/223-mmc0]
+   65 root       0:00 [kworker/u2:1]
+   66 root       0:00 [irq/224-mmc1]
+   67 root       0:00 [ipv6_addrconf]
+   68 root       0:00 [krfcommd]
+   69 root       0:00 [deferwq]
+   70 root       0:00 [kworker/u2:2]
+   71 root       0:00 [irq/203-imx_the]
+   72 root       0:00 [mmcqd/1]
+   73 root       0:00 [mmcqd/1boot0]
+   74 root       0:00 [mmcqd/1boot1]
+   75 root       0:00 [mmcqd/1rpmb]
+   76 root       0:01 [jffs2_gcd_mtd3]
+   92 root       0:00 [kworker/0:1H]
+  285 root       0:00 sh /mnt/ddr_work/ddr_p5/wtd_feed.sh --worker
+  372 root       0:01 -/bin/sh
+  519 root       0:00 sleep 10
+  524 root       0:00 ps
+root@imx6ul: ddr_backup# cd /root
+ort root@imx6ul: ~# export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+root@imx6ul: ~# command -v nohup
+/usr/bin/nohup
+root@imx6ul: ~# command -v setsid
+/usr/bin/setsid
+root@imx6ul: ~# command -v usleep
+/bin/usleep
+root@imx6ul: ~# ls -l /bin/busybox /sbin/fsck.vfat
+cat -rwxrwxr-x    1 1103     1107        892292 May 28  2022 [1;32m/bin/busybox[0m
+-rwxrwxr-x    1 1103     1107        142389 May 28  2022 [1;32m/sbin/fsck.vfat[0m
+root@imx6ul: ~# cat /mnt/ddr_work/ddr_autostart.count
+cat 6
+root@imx6ul: ~# cat /tmp/ddr-autotest-launch.log
+mktemp: Input/output error
+ERROR: Cannot create backup directory
+root@imx6ul: ~# cat /mnt/ddr_work/ddr_p5/wtd_feed.sh
+rea#!/bin/sh
+set -u
+
+SELF=$(CDPATH= cd "$(dirname "$0")" && pwd)/$(basename "$0")
+PATH="${SELF%/*}/bin:$PATH"
+export PATH
+GPIO=${WTD_GPIO:-/sys/class/leds/LED_Wtd_Done/brightness}d
+RUN=${WTD_RUN_DIR:-/mem/ddr-wtd-feed}
+LOCK="$RUN/lock"
+PIDFILE="$LOCK/pid"
+LOG="$RUN/feed.log"
+PID=
+SLEEPER=
+
+die() { echo "ERROR: $*" >&2; exit 1; }
+read_pid() {
+    PID=
+    [ -r "$PIDFILE" ] || return 1
+    read -r PID < "$PIDFILE" || return 1
+    case "$PID" in ''|*[!0-9]*) return 1 ;; esac
+    [ "$PID" -gt 1 ]
+}
+is_worker() {
+    kill -0 "$PID" 2>/dev/null || return 1
+    [ "$(awk '{print $3}' "/proc/$PID/stat" 2>/dev/null)" != Z ] || return 1
+    tr '\000' '\n' < "/proc/$PID/cmdline" 2>/dev/null | grep -Fx "$SELF" >/dev/null || return 1
+    tr '\000' '\n' < "/proc/$PID/cmdline" 2>/dev/null | grep -Fx -- '--worker' >/dev/null
+}
+cleanup() {
+    trap - EXIT
+    if [ -n "$SLEEPER" ]; then
+        kill "$SLEEPER" 2>/dev/null || :
+        wait "$SLEEPER" 2>/dev/null || :
+    fi
+    echo 0 > "$GPIO" || :
+    if read_pid && [ "$PID" = "$$" ]; then
+        rm -f "$PIDFILE"
+        rmdir "$LOCK" 2>/dev/null || :
+    fi
+}
+worker() {
+    [ -d "$LOCK" ] || die "Start with: sh $SELF start"
+    trap cleanup EXIT
+    trap 'exit 0' TERM INT
+    echo 0 > "$GPIO" || exit 1
+    echo "$$" > "$PIDFILE" || exit 1
+    while :; do
+        echo 1 > "$GPIO" || exit 1
+        usleep 50000 || exit 1
+        echo 0 > "$GPIO" || exit 1
+        sleep 10 &
+        SLEEPER=$!
+        wait "$SLEEPER" || exit 1
+        SLEEPER=
+    done
+}
+start() {
+    if read_pid && is_worker; then
+        echo "Already running: PID=$PID"
+        return 0
+    fi
+    [ -w "$GPIO" ] || die "Cannot write $GPIO"
+    command -v usleep >/dev/null 2>&1 || die "Missing usleep"
+    command -v nohup >/dev/null 2>&1 || die "Missing nohup"
+    command -v setsid >/dev/null 2>&1 || die "Missing setsid"
+    # Refuse the earlier manual feeder instead of driving DONE from two loops.
+    for cmdline in /proc/[0-9]*/cmdline; do
+        [ -r "$cmdline" ] || continue
+        if tr '\000' '\n' < "$cmdline" 2>/dev/null | grep -Fx "P=$GPIO" >/dev/null; then
+            other=${cmdline%/cmdline}
+            die "Manual feeder PID=${other##*/} exists; stop it with kill -TERM first"
+        fi
+    done
+    mkdir -p "$RUN" || die "Cannot create $RUN"
+    if ! mkdir "$LOCK" 2>/dev/null; then
+        if read_pid && is_worker; then
+            echo "Already running: PID=$PID"
+            return 0
+        fi
+        die "Startup/stale lock exists: $LOCK; inspect status, then stop before retrying"
+    fi
+    # A separate session also protects BusyBox sleep children from terminal HUP.
+    nohup setsid sh "$SELF" --worker > "$LOG" 2>&1 < /dev/null &
+    child=$!
+    n=0
+    while [ "$n" -lt 50 ]; do
+        if read_pid && is_worker; then
+            echo "Started: PID=$PID; pulse=50ms; interval=10s; log=$LOG"
+            return 0
+        fi
+        usleep 100000
+        n=$((n + 1))
+    done
+    kill -TERM "$child" 2>/dev/null || :
+    wait "$child" 2>/dev/null || :
+    rmdir "$LOCK" 2>/dev/null || :
+    die "Feeder failed to start; inspect $LOG"
+}
+stop() {
+    if read_pid; then
+        if is_worker; then
+            target=$PID
+            kill -TERM "$target" || die "Cannot stop PID=$target"
+            n=0
+            while [ "$n" -lt 50 ]; do
+                PID=$target
+                if ! is_worker && [ ! -d "$LOCK" ]; then
+                    echo "Stopped: PID=$target. Watchdog is STILL ENABLED; reset may follow."
+                    return 0
+                fi
+                usleep 100000
+                n=$((n + 1))
+            done
+            die "Stop not confirmed; inspect PID=$target and $LOG; do not start another feeder"
+        fi
+        kill -0 "$PID" 2>/dev/null && die "PID=$PID is not this worker; refusing to signal it"
+        rm -f "$PIDFILE" || die "Cannot remove stale PID file"
+        rmdir "$LOCK" || die "Cannot remove stale lock"
+    elif [ -d "$LOCK" ]; then
+        die "Lock has no valid PID; startup may be in progreslink /proc/285/cwd
+ls -l /proc/285/fd
+s: $LOCK"
+    fi
+    echo "Not running. Watchdog is STILL ENABLED; reset may follow."
+}
+
+[ "$#" -le 1 ] || die "Usage: sh wtd_feed.sh [start|stop|status]"
+case "${1:-start}" in
+    -h|--help)
+        echo "Usage: sh wtd_feed.sh [start|stop|status] (default: start)"
+        echo "Temporary external watchdog feeder; no boot configuration is changed."
+        echo "Stopping it does NOT disable the watchdog; the board may reset."
+        exit 0 ;;
+    start|stop|--worker)
+        [ "$(id -u)" = 0 ] || die "Run as root"
+        case "${1:-start}" in start) start ;; stop) stop ;; --worker) worker ;; esac ;;
+    status)
+        if read_pid && is_worker; then
+            echo "Running: PID=$PID; log=$LOG"
+        else
+            echo "Not running, or stale startup state: $LOCK"
+            exit 1
+        fi ;;
+    *) die "Usage: sh wtd_feed.sh [start|stop|status]" ;;
+esac
+root@imx6ul: ~# readlink /proc/285/cwd
+/
+root@imx6ul: ~# ls -l /proc/285/fd
+total 0
+lr-x------    1 root     root            64 Jan  1 00:04 [1;36m0[0m -> [1;35m/dev/null[0m
+l-wx------    1 root     root            64 Jan  1 00:04 [1;36m1[0m -> [0;0m/mem/ddr-wtd-feed/feed.log[0m
+lr-x------    1 root     root            64 Jan  1 00:04 [1;36m10[0m -> [1;32m/mnt/ddr_work/ddr_p5/wtd_feed.sh[0m
+l-wx------    1 root     root            64 Jan  1 00:04 [1;36m2[0m -> [0;0m/mem/ddr-wtd-feed/feed.log[0m
+root@imx6ul: ~# cp /mnt/ddr_work/ddr_p5/wtd_feed.sh /mem/wtd_feed.sh
+t/ddr_root@imx6ul: ~# cmp /mnt/ddr_work/ddr_p5/wtd_feed.sh /mem/wtd_feed.sh
+sh -nroot@imx6ul: ~# sh -n /mem/wtd_feed.sh
+sh /root@imx6ul: ~# sh /mnt/ddr_work/ddr_p5/wtd_feed.sh status
+Running: PID=285; log=/mem/ddr-wtd-feed/feed.log
+root@imx6ul: ~# sh /mnt/ddr_work/ddr_p5/wtd_feed.sh stop && { sh /mem/wtd_feed.s
+h start || sh /mnt/ddr_work/ddr_p5/wtd_feed.sh start; }
+/mnt/ddr_work/ddr_p5/wtd_feed.sh: line 143: can't open /proc/285/cmdline: no such file
+Stopped: PID=285. Watchdog is STILL ENABLED; reset may follow.
+Started: PID=679; pulse=50ms; interval=10s; log=/mem/ddr-wtd-feed/feed.log
+root@imx6ul: ~# sh /mem/wtd_feed.sh status
+ /mnt
+sync
+umount /mnt
+cat /proc/mountRunning: PID=679; log=/mem/ddr-wtd-feed/feed.log
+root@imx6ul: ~# fuser -m /mnt
+ | grep ' /mnt root@imx6ul: ~# sync
+'
+root@imx6ul: ~# umount /mnt
+root@imx6ul: ~# cat /proc/mounts | grep ' /mnt '
+root@imx6ul: ~# if grep -q ' /mnt ' /proc/mounts; then echo 'STOP: still mounted
+'; else fsck.vfat -a -v /dev/mmcblk1p7; echo "FSCK_EXIT=$?"; fi
+dosfsck 2.11 (12 Mar 2005)
+dosfsck 2.11, 12 Mar 2005, FAT32, LFN
+Checking we can access the last sector of the filesystem
+There are differences between boot sector and its backup.
+Differences: (offset:original/backup)
+  65:01/00
+  Not automatically fixing this.
+Boot sector contents:
+System ID "mkdosfs"
+Media byte 0xf8 (hard disk)
+       512 bytes per logical sector
+     16384 bytes per cluster
+         6 reserved sectors
+First FAT starts at byte 3072 (sector 6)
+         2 FATs, 32 bit entries
+   7373824 bytes per FAT (= 14402 sectors)
+Root directory start at cluster 2 (arbitrary size)
+Data area starts at byte 14750720 (sector 28810)
+   1843387 data clusters (30202052608 bytes)
+32 sectors/track, 64 heads
+         0 hidden sectors
+  59017216 sectors total
+/ddr_work/ddr-p5-full.tar.gz
+  File size is 42106880 bytes, cluster chain length is > 42106880 bytes.
+  Truncating file to 42106880 bytes.
+/ddr_work/ddr_backup
+ Start does point to root directory. Deleting dir. 
+Reclaiming unconnected clusters.
+Reclaimed 119 unused clusters (1949696 bytes) in 24 chains.
+Checking free cluster summary.
+Free cluster summary wrong (1834198 vs. really 1834094)
+  Auto-correcting.
+Performing changes.
+/dev/mmcblk1p7: 201 files, 9293/1843387 clusters
+FSCK_EXIT=1
+root@imx6ul: ~# fsck.vfat -n /dev/mmcblk1p7
+VERIFY_EXIT=$?"
+dosfsck 2.11, 12 Mar 2005, FAT32, LFN
+There are differences between boot sector and its backup.
+Differences: (offset:original/backup)
+  65:01/00
+  Not automatically fixing this.
+Orphaned long file name part "ddr_backup"
+  Auto-deleting.
+Leaving file system unchanged.
+/dev/mmcblk1p7: 200 files, 9293/1843387 clusters
+root@imx6ul: ~# echo "VERIFY_EXIT=$?"
+VERIFY_EXIT=1
+root@imx6ul: ~# fsck.vfat -r /dev/mmcblk1p7
+dosfsck 2.11, 12 Mar 2005, FAT32, LFN
+There are differences between boot sector and its backup.
+Differences: (offset:original/backup)
+  65:01/00
+1) Copy original to backup
+2) Copy backup to original
+3) No action
+? 2
+Orphaned long file name part "ddr_backup"
+1: Delete.
+2: Leave it.
+? 1
+Perform changes ? (y/n) y
+/dev/mmcblk1p7: 200 files, 9293/1843387 clusters
+root@imx6ul: ~# fsck.vfat -n /dev/mmcblk1p7
+dosfsck 2.11, 12 Mar 2005, FAT32, LFN
+/dev/mmcblk1p7: 200 files, 9293/1843387 clusters
+root@imx6ul: ~# echo "VERIFY_EXIT=$?"
+VERIFY_EXIT=0
+root@imx6ul: ~# mount -t vfat -o rw /dev/mmcblk1p7 /mnt
+-p /mnt/ddr_work/ddr_broot@imx6ul: ~# mkdir -p /mnt/ddr_work/ddr_backup
+TEroot@imx6ul: ~# TESTDIR=$(mktemp -d /mnt/ddr_work/ddr_backup/.repair-check.XXXXX
+X) && rmdir "$TESTDIR" && echo BACKUP_DIRECTORY_OK
+sync
+cat /BACKUP_DIRECTORY_OK
+root@imx6ul: ~# sync
+roc/mountsroot@imx6ul: ~# cat /proc/mounts | grep ' /mnt '
+sh -n //dev/mmcblk1p7 /mnt vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+root@imx6ul: ~# sh -n /mnt/ddr_work/full/ddr_p5/ddr_test.sh
+cat /mnt/ddr_work/droot@imx6ul: ~# cat /mnt/ddr_work/ddr_autostart.count
+grep 6
+root@imx6ul: ~# grep -n ddr_boot_prepare /etc/init.d/rcS
+sh 224:/bin/sh /etc/init.d/ddr_boot_prepare.sh > /tmp/ddr-boot.log 2>&1
+/root@imx6ul: ~# sh /mem/wtd_feed.sh status
+Running: PID=679; log=/mem/ddr-wtd-feed/feed.log
+root@imx6ul: ~# cd /root
+
+umroot@imx6ul: ~# sync
+root@imx6ul: ~# umount /mnt
+root@imx6ul: ~# reboot
+The system is going down NOW!
+Sent SIGTERM to all processes
+Terminated
+root@imx6ul: ~# Sent SIGKILL to all processesRequesting system reboot
+[  407.771708] reboot: Restarting system
+
+
+U-Boot 2015.04-g95dc76b-dirty (Oct 19 2026 - 04:15:26)
+
+I2C:   ready
+DRAM:  256 MiB
+force_idle_bus: sda=0 scl=1 sda.gp=0x45 scl.gp=0x46
+force_idle_bus: failed to clear bus, sda=0 scl=1
+PMIC: PFUZE300 DEV_ID=0x30 REV_ID=0x11
+MMC:   FSL_SDHC: 0, FSL_SDHC: 1
+256 Bytes, erase size 64 KiB, total 32 MiB
+In:    serial
+Out:   serial
+Err:   serial
+Net:   imx6 oled init....
+MMC: no card present
+reading bootgrap/bootgrap
+Invalid FAT entry
+** Unable to read file bootgrap/bootgrap **
+do run mmc rescan;fatload mmc 1:3 0x80800000 bootgrap/bootgrap error!
+FEC0
+256 Bytes, erase size 64 KiB, total 32 MiB
+Erasing SPI flash...Writing to SPI flash...done
+Normal Boot
+### Hit cmd to stop autoboot: 3
+256 Bytes, erase size 64 KiB, total 32 MiB
+SF: 6291456 bytes @ 0x100000 Read: OK
+Booting from qspi ...
+SF: 1048576 bytes @ 0x700000 Read: OK
+Kernel image @ 0x80800000 [ 0x000000 - 0x5cafe0 ]
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.1.15-1.2.0 (shangjunwei@hcqrsjcsvr01) (gcc version 4.9.2 (GCC) ) #2 SMP PREEMPT Thu May 21 16:45:11 CST 2026
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c53c7d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] Machine model: Freescale i.MX6 UltraLite 14x14 EVK Board
+[    0.000000] cma: Reserved 96 MiB at 0x8a000000
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] PERCPU: Embedded 12 pages/cpu @89da0000 s17472 r8192 d23488 u49152
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 65024
+[    0.000000] Kernel command line: console=ttymxc0,115200 cma=96M root=/dev/mtdblock3 rootfstype=jffs2 mtdparts=21e0000.qspi:1M(uboot),6M(kernel),1M(dtb),-(rootfs) rootwait rw
+[    0.000000] PID hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.000000] Dentry cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Inode-cache hash table entries: 16384 (order: 4, 65536 bytes)
+[    0.000000] Memory: 149616K/262144K available (7767K kernel code, 379K rwdata, 2532K rodata, 416K init, 442K bss, 14224K reserved, 98304K cma-reserved, 0K highmem)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0x90800000 - 0xff000000   (1768 MB)
+[    0.000000]     lowmem  : 0x80000000 - 0x90000000   ( 256 MB)
+[    0.000000]     pkmap   : 0x7fe00000 - 0x80000000   (   2 MB)
+[    0.000000]     modules : 0x7f000000 - 0x7fe00000   (  14 MB)
+[    0.000000]       .text : 0x80008000 - 0x80a17014   (10301 kB)
+[    0.000000]       .init : 0x80a18000 - 0x80a80000   ( 416 kB)
+[    0.000000]       .data : 0x80a80000 - 0x80adeca0   ( 380 kB)
+[    0.000000]        .bss : 0x80adeca0 - 0x80b4d800   ( 443 kB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] 	Additional per-CPU info printed with stalls.
+[    0.000000] 	RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=1.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=1
+[    0.000000] NR_IRQS:16 nr_irqs:16 16
+[    0.000000] mxc_clocksource_init 24000000
+[    0.000000] Switching to timer-based delay loop, resolution 41ns
+[    0.000015] sched_clock: 32 bits at 24MHz, resolution 41ns, wraps every 89478484971ns
+[    0.000053] clocksource mxc_timer1: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 79635851949 ns
+[    0.002775] Console: colour dummy device 80x30
+[    0.002816] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=240000)
+[    0.002852] pid_max: default: 32768 minimum: 301
+[    0.003061] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.003089] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.004316] Initializing cgroup subsys net_cls
+[    0.004397] CPU: Testing write buffer coherency: ok
+[    0.004853] /cpus/cpu@0 missing clock-frequency property
+[    0.004891] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+[    0.005002] Setting up static identity map for 0x80008280 - 0x800082d8
+[    0.041115] Brought up 1 CPUs
+[    0.041152] SMP: Total of 1 processors activated (48.00 BogoMIPS).
+[    0.041170] CPU: All CPU(s) started in SVC mode.
+[    0.042192] devtmpfs: initialized
+[    0.063239] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 5
+[    0.064048] clocksource jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.071504] pinctrl core: initialized pinctrl subsystem
+[    0.074055] NET: Registered protocol family 16
+[    0.091287] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.120815] cpuidle: using governor ladder
+[    0.150867] cpuidle: using governor menu
+[    0.198846] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.198880] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.203787] imx6ul-pinctrl 20e0000.iomuxc: initialized IMX pinctrl driver
+[    0.268002] mxs-dma 1804000.dma-apbh: initialized
+[    0.274662] SCSI subsystem initialized
+[    0.275398] usbcore: registered new interface driver usbfs
+[    0.275557] usbcore: registered new interface driver hub
+[    0.275784] usbcore: registered new device driver usb
+[    0.279352] i2c i2c-0: IMX I2C adapter registered
+[    0.279399] i2c i2c-0: can't use DMA
+[    0.280814] i2c i2c-1: IMX I2C adapter registered
+[    0.280857] i2c i2c-1: can't use DMA
+[    0.281244] pps_core: LinuxPPS API ver. 1 registered
+[    0.281264] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.281341] PTP clock support registered
+[    0.284499] MIPI CSI2 driver module loaded
+[    0.285143] Advanced Linux Sound Architecture Driver Initialized.
+[    0.287228] Bluetooth: Core ver 2.20
+[    0.287350] NET: Registered protocol family 31
+[    0.287369] Bluetooth: HCI device and connection manager initialized
+[    0.287405] Bluetooth: HCI socket layer initialized
+[    0.287430] Bluetooth: L2CAP socket layer initialized
+[    0.287502] Bluetooth: SCO socket layer initialized
+[    0.288085] Switched to clocksource mxc_timer1
+[    0.311584] NET: Registered protocol family 2
+[    0.313248] TCP established hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.313338] TCP bind hash table entries: 2048 (order: 2, 16384 bytes)
+[    0.313428] TCP: Hash tables configured (established 2048 bind 2048)
+[    0.313560] UDP hash table entries: 256 (order: 1, 8192 bytes)
+[    0.313618] UDP-Lite hash table entries: 256 (order: 1, 8192 bytes)
+[    0.314019] NET: Registered protocol family 1
+[    0.314751] RPC: Registered named UNIX socket transport module.
+[    0.314782] RPC: Registered udp transport module.
+[    0.314798] RPC: Registered tcp transport module.
+[    0.314815] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.318354] imx rpmsg driver is registered.
+[    0.320441] Bus freq driver module loaded
+[    0.322482] futex hash table entries: 256 (order: 2, 16384 bytes)
+[    0.338851] VFS: Disk quotas dquot_6.6.0
+[    0.339332] VFS: Dquot-cache hash table entries: 1024 (order 0, 4096 bytes)
+[    0.344397] NFS: Registering the id_resolver key type
+[    0.344509] Key type id_resolver registered
+[    0.344530] Key type id_legacy registered
+[    0.344712] jffs2: version 2.2. (NAND) © 2001-2006 Red Hat, Inc.
+[    0.346499] fuse init (API version 7.23)
+[    0.356359] io scheduler noop registered
+[    0.356407] io scheduler deadline registered
+[    0.356812] io scheduler cfq registered (default)
+[    0.358258] imx-weim 21b8000.weim: Driver registered.
+[    0.363710] backlight supply power not found, using dummy regulator
+[    0.366211] MIPI DSI driver module loaded
+[    0.366719] MIPI DSI driver module loaded
+[    0.377632] imx-sdma 20ec000.sdma: no event needs to be remapped
+[    0.377844] imx-sdma 20ec000.sdma: loaded firmware 3.3
+[    0.385337] imx-sdma 20ec000.sdma: initialized
+[    0.387915] pfuze100-regulator 0-0008: Full layer: 1, Metal layer: 1
+[    0.388612] pfuze100-regulator 0-0008: FAB: 0, FIN: 0
+[    0.388645] pfuze100-regulator 0-0008: pfuze3000 found.
+[    0.406963] 2020000.serial: ttymxc0 at MMIO 0x2020000 (irq = 20, base_baud = 5000000) is a IMX
+[    1.070540] console [ttymxc0] enabled
+[    1.076143] 21e8000.serial: ttymxc1 at MMIO 0x21e8000 (irq = 231, base_baud = 5000000) is a IMX
+[    1.086320] 21ec000.serial: ttymxc2 at MMIO 0x21ec000 (irq = 232, base_baud = 5000000) is a IMX
+[    1.096372] 21f0000.serial: ttymxc3 at MMIO 0x21f0000 (irq = 233, base_baud = 5000000) is a IMX
+[    1.106407] 21f4000.serial: ttymxc4 at MMIO 0x21f4000 (irq = 234, base_baud = 5000000) is a IMX
+[    1.116508] 21fc000.serial: ttymxc5 at MMIO 0x21fc000 (irq = 235, base_baud = 5000000) is a IMX
+[    1.130786] imx sema4 driver is registered.
+[    1.135169] [drm] Initialized drm 1.1.0 20060810
+[    1.141063] [drm] Initialized vivante 1.0.0 20120216 on minor 0
+[    1.171628] brd: module loaded
+[    1.186910] loop: module loaded
+[    1.191326] (hci_tty): inside hci_tty_init
+[    1.195919] (hci_tty): allocated 248, 0
+[    1.204336] ### winbond_quad_enable
+[    1.208162] fsl-quadspi 21e0000.qspi: w25q256 (32768 Kbytes)
+[    1.213887] 4 cmdlinepart partitions found on MTD device 21e0000.qspi
+[    1.220400] Creating 4 MTD partitions on "21e0000.qspi":
+[    1.225749] 0x000000000000-0x000000100000 : "uboot"
+[    1.233124] 0x000000100000-0x000000700000 : "kernel"
+[    1.240515] 0x000000700000-0x000000800000 : "dtb"
+[    1.247571] 0x000000800000-0x000002000000 : "rootfs"
+[    1.261338] spi_master spi0: spi-tx-bus-width 8 not supported
+[    1.268005] spi_imx 2008000.ecspi: probed
+[    1.275070] tun: Universal TUN/TAP device driver, 1.6
+[    1.280246] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    1.286946] CAN device driver interface
+[    1.293918] flexcan 2090000.can: device registered (reg_base=90a00000, irq=26)
+[    1.303757] 20b4000.ethernet supply phy not found, using dummy regulator
+[    1.719200] pps pps0: new PPS source ptp0
+[    1.723718] fec 20b4000.ethernet (unnamed net_device) (uninitialized): Invalid MAC address: 00:00:00:00:00:00
+[    1.733820] fec 20b4000.ethernet (unnamed net_device) (uninitialized): Using random MAC address: 7e:cb:e1:60:a2:0d
+[    1.745025] libphy: fec_enet_mii_bus: probed
+[    1.749582] ### get_phy_device phy id = 0xffffffff, addr = 0
+[    1.755518] ### get_phy_device phy id = 0xffffffff, addr = 1
+[    1.762816] fec 20b4000.ethernet eth0: registered PHC device 0
+[    1.770545] 2188000.ethernet supply phy not found, using dummy regulator
+[    2.079108] pps pps1: new PPS source ptp1
+[    2.085555] fec 2188000.ethernet eth1: registered PHC device 1
+[    2.093365] PPP generic driver version 2.4.2
+[    2.098343] PPP BSD Compression module registered
+[    2.103103] PPP Deflate Compression module registered
+[    2.108313] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    2.114890] ehci-platform: EHCI generic platform driver
+[    2.121008] ehci-mxc: Freescale On-Chip EHCI Host driver
+[    2.127345] usbcore: registered new interface driver cdc_acm
+[    2.133125] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    2.141462] usbcore: registered new interface driver usb-storage
+[    2.147824] usbcore: registered new interface driver usbserial
+[    2.153879] usbcore: registered new interface driver usbserial_generic
+[    2.160612] usbserial: USB Serial support registered for generic
+[    2.166774] usbcore: registered new interface driver option
+[    2.172528] usbserial: USB Serial support registered for GSM modem (1-port)
+[    2.179718] usbcore: registered new interface driver usb_ehset_test
+[    2.189019] 2184800.usbmisc supply vbus-wakeup not found, using dummy regulator
+[    2.205724] 2184200.usb supply vbus not found, using dummy regulator
+[    2.216061] ci_hdrc ci_hdrc.1: EHCI Host Controller
+[    2.221117] ci_hdrc ci_hdrc.1: new USB bus registered, assigned bus number 1
+[    2.248172] ci_hdrc ci_hdrc.1: USB 2.0 started, EHCI 1.00
+[    2.255624] hub 1-0:1.0: USB hub found
+[    2.259654] hub 1-0:1.0: 1 port detected
+[    2.267249] input: 20cc000.snvs:snvs-powerkey as /devices/platform/soc/2000000.aips-bus/20cc000.snvs/20cc000.snvs:snvs-powerkey/input/input0
+[    2.282141] rtc-ds1307: probe of 0-0068 failed with error -5
+[    2.289839] snvs_rtc 20cc000.snvs:snvs-rtc-lp: rtc core: registered 20cc000.snvs:snvs-r as rtc0
+[    2.299269] i2c /dev entries driver
+[    2.305481] usbcore: registered new interface driver i2c-diolan-u2c
+[    2.312002] i2c-parport-light: adapter type unspecified
+[    2.317448] usbcore: registered new interface driver RobotFuzz Open Source InterFace, OSIF
+[    2.326184] usbcore: registered new interface driver i2c-tiny-usb
+[    2.332396] Driver for 1-wire Dallas network protocol.
+[    2.338970] 1-Wire driver for the DS2760 battery monitor chip - (c) 2004-2005, Szabolcs Gyurko
+[    2.349449] thermal thermal_zone0: failed to read out thermal zone (-61)
+[    2.356237] sbs-battery 1-000b: bq20z75: battery gas gauge device registered
+[    2.369507] lm75 1-0048: hwmon1: sensor 'tmp100'
+[    2.378840] imx2-wdt 20bc000.wdog: timeout 60 sec (nowayout=0)
+[    2.385121] Bluetooth: HCI UART driver ver 2.3
+[    2.389694] Bluetooth: HCI UART protocol H4 registered
+[    2.394866] Bluetooth: HCI UART protocol BCSP registered
+[    2.400241] Bluetooth: HCI UART protocol LL registered
+[    2.405630] usbcore: registered new interface driver btusb
+[    2.412887] sdhci: Secure Digital Host Controller Interface driver
+[    2.419201] sdhci: Copyright(c) Pierre Ossman
+[    2.423614] sdhci-pltfm: SDHCI platform and OF driver helper
+[    2.431731] /soc/aips-bus@02100000/usdhc@02190000: voltage-ranges unspecified
+[    2.440605] sdhci-esdhc-imx 2190000.usdhc: No vqmmc regulator found
+[    2.488319] mmc0: SDHCI controller on 2190000.usdhc [2190000.usdhc] using ADMA
+[    2.505159] /soc/aips-bus@02100000/usdhc@02194000: voltage-ranges unspecified
+[    2.522606] sdhci-esdhc-imx 2194000.usdhc: No vqmmc regulator found
+[    2.578134] usb 1-1: new high-speed USB device number 2 using ci_hdrc
+[    2.588145] mmc1: SDHCI controller on 2194000.usdhc [2194000.usdhc] using ADMA
+[    2.644771] usbcore: registered new interface driver usbhid
+[    2.650480] usbhid: USB HID core driver
+[    2.667010] fsl-asrc 2034000.asrc: driver registered
+[    2.696068] NET: Registered protocol family 26
+[    2.700874] Netfilter messages via NETLINK v0.30.
+[    2.707910] nfnl_acct: registering with nfnetlink.
+[    2.715069] nf_conntrack version 0.5.0 (3873 buckets, 15492 max)
+[    2.731660] ctnetlink v0.93: registering with nfnetlink.
+[    2.748270] hub 1-1:1.0: USB hub found
+[    2.752918] nf_tables: (c) 2007-2009 Patrick McHardy <kaber@trash.net>
+[    2.759617] hub 1-1:1.0: 4 ports detected
+[    2.763769] nf_tables_compat: (c) 2012 Pablo Neira Ayuso <pablo@netfilter.org>
+[    2.776653] xt_time: kernel timezone is -0000
+[    2.781271] IPVS: Registered protocols ()
+[    2.785405] IPVS: Connection hash table configured (size=4096, memory=32Kbytes)
+[    2.794262] IPVS: Creating netns size=872 id=0
+[    2.801058] IPVS: ipvs loaded.
+[    2.810529] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    2.816213] ipt_CLUSTERIP: ClusterIP Version 0.8 loaded successfully
+[    2.825992] arp_tables: (C) 2002 David S. Miller
+[    2.836576] NET: Registered protocol family 10
+[    2.850329] sit: IPv6 over IPv4 tunneling driver
+[    2.860987] NET: Registered protocol family 17
+[    2.867805] bridge: automatic filtering via arp/ip/ip6tables has been deprecated. Update your scripts to load br_netfilter if you need this.
+[    2.883869] can: controller area network core (rev 20120528 abi 9)
+[    2.896058] NET: Registered protocol family 29
+[    2.903908] can: raw protocol (rev 20120528)
+[    2.910572] can: broadcast manager protocol (rev 20120528 t)
+[    2.921749] can: netlink gateway (rev 20130117) max_hops=1
+[    2.935384] Bluetooth: RFCOMM TTY layer initialized
+[    2.942584] Bluetooth: RFCOMM socket layer initialized
+[    2.949940] Bluetooth: RFCOMM ver 1.11
+[    2.955857] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    2.963344] Bluetooth: BNEP filters: protocol multicast
+[    2.970756] Bluetooth: BNEP socket layer initialized
+[    2.977846] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    2.986983] Bluetooth: HIDP socket layer initialized
+[    2.995328] 8021q: 802.1Q VLAN Support v1.8
+[    3.002740] lib80211: common routines for IEEE802.11 drivers
+[    3.008855] Key type dns_resolver registered
+[    3.038718] input: gpio-keys as /devices/platform/gpio-keys/input/input1
+[    3.045552] mmc1: MAN_BKOPS_EN bit is not set
+[    3.050789] snvs_rtc 20cc000.snvs:snvs-rtc-lp: setting system clock to 1970-01-01 00:16:17 UTC (977)
+[    3.085183] usb_01_vbus: disabling
+[    3.088729] can-3v3: disabling
+[    3.094034] wlan-en-regulator: disabling
+[    3.099243] mmc1: new DDR MMC card at address 0001
+[    3.104621] mmcblk mmc1:0001: Card claimed for testing.
+[    3.110219] ALSA device list:
+[    3.113209]   No soundcards found.
+[    3.117383] mmcblk1: mmc1:0001 DG4032 29.1 GiB 
+[    3.122355] mmcblk1boot0: mmc1:0001 DG4032 partition 1 4.00 MiB
+[    3.128637] mmcblk1boot1: mmc1:0001 DG4032 partition 2 4.00 MiB
+[    3.134800] mmcblk1rpmb: mmc1:0001 DG4032 partition 3 4.00 MiB
+[    3.147187]  mmcblk1: p1 p2 p3 p4 < p5 p6 p7 >
+[    3.779616] VFS: Mounted root (jffs2 filesystem) on device 31:3.
+[    3.785890] devtmpfs: mounted
+[    3.789949] Freeing unused kernel memory: 416K (80a18000 - 80a80000)
+[    7.337657] EXT4-fs (mmcblk1p5): mounted filesystem without journal. Opts: noload
+[    7.653084] EXT4-fs (mmcblk1p6): mounted filesystem without journal. Opts: noload
+[    8.987708] Bits 55-60 of /proc/PID/pagemap entries are about to stop being page-shift some time soon. See the linux/Documentation/vm/pagemap.txt for details.
+/etc/init.d/rcS: line 278: /media/sda1/udisk/imx6ul_udisk: not found
+cat: can't open '/test/udisk_log/udisk_sign': No such file or directory
+sh: 1: unknown operand
+
+Please press Enter to activate this console. 
+root@imx6ul: # cat /tmp/ddr-boot.log
+Ready: /dev/mmcblk1p7 mounted on /mnt (vfat/rw)
+Started: PID=285; pulse=50ms; interval=10s; log=/mem/ddr-wtd-feed/feed.log
+Running: PID=285; log=/mem/ddr-wtd-feed/feed.log
+Autotest scheduled: rounds=6; startup log=/tmp/ddr-autotest-launch.log
+root@imx6ul: # cat /tmp/ddr-autotest-launch.log
+Previous data archived: /mnt/ddr_work/ddr_backup/previous.SPywZI
+Console log: /mnt/ddr_work/ddr_all_test/console.log; previous data: /mnt/ddr_work/ddr_backup/previous.SPywZI
+root@imx6ul: # ps | grep -E '[d]dr_test.sh|[s]tressapptest|[w]td_feed.sh'
+  285 root       0:00 sh /mnt/ddr_work/ddr_p5/wtd_feed.sh --worker
+  381 root       0:00 sh ./ddr_test.sh -c 6
+  453 root       0:00 sh ./ddr_test.sh -c 6
+  454 root       0:12 /mnt/ddr_work/full/ddr_p5/libexec/stressapptest -M 218 -m 8 -s 3600 -W -l /mnt/ddr_work/ddr_all_test/stressapptest_0.log
+root@imx6ul: # tail -n 15 /mnt/ddr_work/ddr_all_test/console.log
+1970/01/01-00:16:22(UTC) Log: Commandline - /mnt/ddr_work/full/ddr_p5/libexec/stressapptest -M 218 -m 8 -s 3600 -W -l /mnt/ddr_work/ddr_all_test/stressapptest_0.log
+1970/01/01-00:16:22(UTC) Stats: SAT revision 1.0.8_autoconf, 32 bit binary
+1970/01/01-00:16:22(UTC) Log: jihongxin @ ubuntu on Tue Oct 20 01:26:30 PDT 2026 from open source release
+1970/01/01-00:16:22(UTC) Log: 1 nodes, 1 cpus.
+1970/01/01-00:16:22(UTC) Log: Flooring memory allocation to multiple of 4: 216MB
+1970/01/01-00:16:22(UTC) Log: Prefer plain malloc memory allocation.
+1970/01/01-00:16:22(UTC) Log: Using mmap() allocation at 0x68d09000.
+1970/01/01-00:16:22(UTC) Stats: Starting SAT, 216M, 3600 seconds
+1970/01/01-00:16:23(UTC) Log: region number 4 exceeds region count 1
+1970/01/01-00:16:23(UTC) Log: Region mask: 0x1
+1970/01/01-00:16:33(UTC) Log: Seconds remaining: 3590
+root@imx6ul: # cat /proc/uptime
+41.28 1.02
+root@imx6ul: # cat /proc/mounts | grep ' /mnt '
+/dev/mmcblk1p7 /mnt vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+root@imx6ul: # dmesg | grep -iE 'FAT-fs|I/O error|mmc.*(error|timeout)'
+root@imx6ul: # tail -n 4 /mnt/ddr_work/ddr_all_test/console.log
+1970/01/01-00:16:23(UTC) Log: Region mask: 0x1
+1970/01/01-00:16:33(UTC) Log: Seconds remaining: 3590
+1970/01/01-00:16:43(UTC) Log: Seconds remaining: 3580
+1970/01/01-00:16:53(UTC) Log: Seconds remaining: 3570
+root@imx6ul: # sh /mnt/ddr_work/ddr_p5/wtd_feed.sh status
+Running: PID=285; log=/mem/ddr-wtd-feed/feed.log
+root@imx6ul: # sync
+root@imx6ul: # 

@@ -1,0 +1,1 @@
+Linux rk3576-buildroot 6.1.141 #25 SMP Tue Oct 13 20:45:19 PDT 2026 aarch64 GNU/Linux

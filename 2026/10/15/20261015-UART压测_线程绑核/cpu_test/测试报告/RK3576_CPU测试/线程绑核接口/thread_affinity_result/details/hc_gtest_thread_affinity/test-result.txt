@@ -1,0 +1,1 @@
+PASS: exit=0, gcda=28, nonempty_gcda=28, coverage=COMPLETE

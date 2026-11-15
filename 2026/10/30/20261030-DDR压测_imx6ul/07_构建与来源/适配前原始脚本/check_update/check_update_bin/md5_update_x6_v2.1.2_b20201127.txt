@@ -1,0 +1,3 @@
+e5900679b4ceea7df94d4337535cf7cb  update/app.bin
+cfab77eb97d37fca2c27d1c88bc66650  update/kernel.bin
+19056ee9b3a75e60b0aad179897862d9  update/rootfs.bin

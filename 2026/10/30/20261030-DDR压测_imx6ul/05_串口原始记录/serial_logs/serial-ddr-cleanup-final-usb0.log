@@ -1,0 +1,173 @@
+
+root@imx6ul: ~# printf '\nFINAL_CLEAN_INVENTORY_USB0_BEGIN\n'; cat /sys/fsl_otp/
+HW_OCOTP_CFG0 /sys/fsl_otp/HW_OCOTP_CFG1; cat /proc/uptime; ps | grep -E '[w]td_
+feed|[d]dr_test|[s]tressapptest|[m]emtester'; ls -la /mnt/ddr_work/ddr_backup; e
+cho OLD_BACKUPS; find /mnt/ddr_work -maxdepth 2 -type d; printf '\nFINAL_CLEAN_I
+NVENTORY_USB0_END\n'
+
+FINAL_CLEAN_INVENTORY_USB0_BEGIN
+0xe1998bf2
+0x483699d4
+1506.28 30.56
+  285 root       0:00 sh /mnt/ddr_work/ddr_p5/wtd_feed.sh --worker
+  382 root       0:00 sh ./ddr_test.sh -c 5
+  454 root       0:00 sh ./ddr_test.sh -c 5
+  455 root      24:06 /mnt/ddr_work/full/ddr_p5/libexec/stressapptest -M 218 -m 8 -s 3600 -W -l /mnt/ddr_work/ddr_all_test/stressapptest_0.log
+total 96
+drwxr-xr-x    6 root     root         16384 Jan  1 00:08 [1;34m.[0m
+drwxr-xr-x   12 root     root         16384 Jan  1 00:00 [1;34m..[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.ZymhTJ[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.rJ4wVI[0m
+drwxr-xr-x    3 root     root         16384 Jan  1  1980 [1;34mprevious.rti0QJ[0m
+drwxr-xr-x    5 root     root         16384 Jan  1  1980 [1;34mroom_temp[0m
+OLD_BACKUPS
+/mnt/ddr_work
+/mnt/ddr_work/ddr_p5
+/mnt/ddr_work/ddr_p5/check_update
+/mnt/ddr_work/ddr_p5/licenses
+/mnt/ddr_work/ddr_p5/lib
+/mnt/ddr_work/ddr_p5/libexec
+/mnt/ddr_work/ddr_p5/bin
+/mnt/ddr_work/full
+/mnt/ddr_work/full/ddr_p5
+/mnt/ddr_work/full/progress-before-change.e7DCW4
+/mnt/ddr_work/full/progress-before-change.voGjXF
+/mnt/ddr_work/ddr_all_test
+/mnt/ddr_work/boot_setup
+/mnt/ddr_work/checkupdate_diagnosis
+/mnt/ddr_work/x6_fixture_20201225
+/mnt/ddr_work/x6-integration.5hcZyc
+/mnt/ddr_work/x6-integration.5hcZyc/ddr_p5
+/mnt/ddr_work/x6-integration.5hcZyc/evidence
+/mnt/ddr_work/x6-before-change.x3JPPU
+/mnt/ddr_work/x6-before-change.x3JPPU/check_update_bin
+/mnt/ddr_work/progress_patch
+/mnt/ddr_work/progress_patch/ddr_p5
+/mnt/ddr_work/ddr_backup
+/mnt/ddr_work/ddr_backup/room_temp
+/mnt/ddr_work/ddr_backup/previous.rJ4wVI
+/mnt/ddr_work/ddr_backup/previous.ZymhTJ
+/mnt/ddr_work/ddr_backup/previous.rti0QJ
+
+FINAL_CLEAN_INVENTORY_USB0_END
+root@imx6ul: ~# printf '\nBOARD_MANIFEST_USB0_BEGIN\n'; cd /mnt/ddr_work/ddr_bac
+kup && find . -type f -exec /mnt/ddr_work/full/ddr_p5/bin/sha256sum {} \;; echo 
+MANIFEST_EXIT=$?; printf '\nBOARD_MANIFEST_USB0_END\n'; cd /root
+
+BOARD_MANIFEST_USB0_BEGIN
+83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9  ./room_temp/unpack_bin/check_result
+eea8254c7500ba3de996aa8ad6af399183f04e17d4a8102fde539dbc93a90012  ./room_temp/unpack_tar/check_result
+11a2b7051b15b6d126e6abf690d23fef3fb9c9b935245173cbf759e2d5d3be98  ./room_temp/kernel.log
+06a20fe66db555fc7f3cc3d0c6416c821f2642e94b3cc8edcfd1586ce5530f2d  ./room_temp/board.txt
+067fb678d754debf80f3213d0e4484ef54133bf1c861f96132c45b8d41231ab3  ./room_temp/ddr_all_test/ddr_log.log
+3ba900f19ab2b737c7786de9190a1ef1c82ad6ddad81ae5c1b22b321267d33a1  ./room_temp/ddr_all_test/stressapptest_0.log
+fec76a91ab6cd2ee15df2df0bea4a8fc9f8208499f541efea5bd9ec61e1596ae  ./room_temp/ddr_all_test/memtester_0.log
+19fa7a25872ecb7fa3552d5c0c4f57302edccc213b57da8bcd1f137498c63e14  ./room_temp/ddr_all_test/stressapptest_1.log
+26f2e08c77424f9de328430d66649293d97ca5ffb711e473de1fb4c22c69ec47  ./room_temp/ddr_all_test/memtester_1.log
+08e182f4a19a9bec08058c606ffe7d0bbcf1f13506c65e987b70eae3369e8b9a  ./room_temp/ddr_all_test/stressapptest_2.log
+a330790f8a6f50c8ff12c9ab13373bef8510eac705a14959af99e32fb287e1b3  ./room_temp/ddr_all_test/memtester_2.log
+6a674810b2e7c442ac1d4fa3265e9d534f1978043175cb7727cf12cc2700c98d  ./room_temp/ddr_all_test/stressapptest_3.log
+a330790f8a6f50c8ff12c9ab13373bef8510eac705a14959af99e32fb287e1b3  ./room_temp/ddr_all_test/memtester_3.log
+dabc0d9423c9e22e883153f5fb569c1e012deba5a940333b66c298664033eef8  ./room_temp/ddr_all_test/stressapptest_4.log
+a330790f8a6f50c8ff12c9ab13373bef8510eac705a14959af99e32fb287e1b3  ./room_temp/ddr_all_test/memtester_4.log
+ab0e248f9728a87f6a1bdacaf1fa63cdd873aa182bcb03502e90959e3c5785f2  ./room_temp/ddr_all_test/stressapptest_5.log
+a330790f8a6f50c8ff12c9ab13373bef8510eac705a14959af99e32fb287e1b3  ./room_temp/ddr_all_test/memtester_5.log
+041acad4bb51ad25a616fe018fae5f8a35732f2ffd954f779b8b93b176c165fb  ./previous.rJ4wVI/kernel.log
+117bf502b5b9c7358ee82d7b2cca43c768f64d164b0a4fe8c8dfbab6180b3dd9  ./previous.rJ4wVI/board.txt
+2262c680a5f21486cd956f0ae458cb546ee359be75dee62742be72baf69e88d8  ./previous.rJ4wVI/ddr_all_test/console.log
+94d31da551e80625b3a075992bd53f776b4775b3c1e2d334c6f3cb599f8b1582  ./previous.rJ4wVI/ddr_all_test/kernel-before.log
+f333570f5454a1e1434daa44c854651dc918d2b0a490f80bacc4ea09a293997e  ./previous.rJ4wVI/ddr_all_test/ddr_log.log
+7e6de90f061e322375cd068df7fdeb86f04a8ade11aebccbf08605bd82411f3a  ./previous.rJ4wVI/ddr_all_test/stressapptest_0.log
+c8b847fd0e5f1dac97545ce6e3815cd81e8a808ce3a3ea2bb5b0df7f64d8ebb7  ./previous.rJ4wVI/ddr_all_test/memtester_0.log
+41d5b67b95a089dac6a747bb7c576461a99d5e399dd8483e37a0e56459290b53  ./previous.rJ4wVI/ddr_all_test/stressapptest_1.log
+26f2e08c77424f9de328430d66649293d97ca5ffb711e473de1fb4c22c69ec47  ./previous.rJ4wVI/ddr_all_test/memtester_1.log
+02afa7427042b2ad06ce241dd3bae02a5b01930e2aaa1fd30484ec5d9f5e59b0  ./previous.rJ4wVI/ddr_all_test/stressapptest_2.log
+26f2e08c77424f9de328430d66649293d97ca5ffb711e473de1fb4c22c69ec47  ./previous.rJ4wVI/ddr_all_test/memtester_2.log
+ecaf69fc27bac0847215163c28295e7a91941303428c6cf778cf3e5f3710938c  ./previous.rJ4wVI/ddr_all_test/stressapptest_3.log
+a330790f8a6f50c8ff12c9ab13373bef8510eac705a14959af99e32fb287e1b3  ./previous.rJ4wVI/ddr_all_test/memtester_3.log
+8486b4cdd10e73a24ac3a114e85275fdf6b03e895b28ba8e622fb163f9426a15  ./previous.rJ4wVI/ddr_all_test/stressapptest_4.log
+a330790f8a6f50c8ff12c9ab13373bef8510eac705a14959af99e32fb287e1b3  ./previous.rJ4wVI/ddr_all_test/memtester_4.log
+9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa  ./previous.rJ4wVI/ddr_all_test/runner_exit_code
+83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9  ./previous.rJ4wVI/ddr_all_test/unpack_bin/check_result
+eea8254c7500ba3de996aa8ad6af399183f04e17d4a8102fde539dbc93a90012  ./previous.rJ4wVI/ddr_all_test/unpack_tar/check_result
+83d4884bc510596ed2793336d55aca4fe3762790e18bb62c175e71f1ba1a464b  ./previous.rJ4wVI/ddr_all_test/kernel-after.log
+9df3a1125b965d3982902d1f3faa7670758ff772320da150f07ec8d26929e8bf  ./previous.ZymhTJ/kernel.log
+0889e4b55706852466935a44fdf121b98753e408c091c5ad455ac20603c0e03f  ./previous.ZymhTJ/board.txt
+42d501d5a2c40dcfbfa2e66b3573566d4d6c8c4581e8767c5df4ca0961ac7f06  ./previous.ZymhTJ/ddr_all_test/console.log
+ee31aa8e5e87412c0b642b39da826da5b295842dfa1532caa9942180a51ee8f1  ./previous.ZymhTJ/ddr_all_test/kernel-before.log
+d5f6d5693dfcf978805258f255c464184e89a6b51e2790d547acc392e77d1c77  ./previous.ZymhTJ/ddr_all_test/ddr_log.log
+5ed1953cd25043d94def8d0416d5cd987b92ec7b156fc33f0e1bafe28f268371  ./previous.ZymhTJ/ddr_all_test/stressapptest_0.log
+82df05081b3ff8d89132c1e6ef639e5d06928c68939b0a211eacb58b9cb9d883  ./previous.ZymhTJ/ddr_all_test/memtester_0.log
+5f8aa0c062930912a8412317e1f8b95b11ef5b72c0c6b214e6c4e37ac32fb836  ./previous.ZymhTJ/ddr_all_test/stressapptest_1.log
+4e311c7a68a7389a01ab0b29485a066e9c761c0ec9ed0159525be2170a023337  ./previous.ZymhTJ/ddr_all_test/memtester_1.log
+77ecf204c4e41569ba0726bcbac37de1d2c5355cd27fee557656c508d44f481a  ./previous.ZymhTJ/ddr_all_test/stressapptest_2.log
+bbba59db76b3bdb56c1838c244265ec541995e7a051b809c77a35431869db3e6  ./previous.ZymhTJ/ddr_all_test/memtester_2.log
+5815f83035a3eba784d4014309052c128f0ae937db0fecbb9792ae7679dd3ac4  ./previous.ZymhTJ/ddr_all_test/stressapptest_3.log
+a91b6892275b98a866ffbcf30788455334772cfaa9de0f2807e0fa87e8b60824  ./previous.ZymhTJ/ddr_all_test/memtester_3.log
+fb32db5f51b44b305277c9162efd1610c3e4b9bc04f43b053bf4ba4748d1c636  ./previous.ZymhTJ/ddr_all_test/stressapptest_4.log
+a91b6892275b98a866ffbcf30788455334772cfaa9de0f2807e0fa87e8b60824  ./previous.ZymhTJ/ddr_all_test/memtester_4.log
+9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa  ./previous.ZymhTJ/ddr_all_test/runner_exit_code
+83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9  ./previous.ZymhTJ/ddr_all_test/unpack_bin/check_result
+eea8254c7500ba3de996aa8ad6af399183f04e17d4a8102fde539dbc93a90012  ./previous.ZymhTJ/ddr_all_test/unpack_tar/check_result
+c5cff143497ab16a3a3b515964db49390acbe95c62892162e97052a77d7cae05  ./previous.ZymhTJ/ddr_all_test/kernel-after.log
+424c408bc07d89016edbc08de7b8739657655cb0b947fb2ce14a68a87cc8d4c8  ./previous.rti0QJ/kernel.log
+b773589321cf37fd9e95036e9ff26cb1550aeeeb753da8e4e20c930735169176  ./previous.rti0QJ/board.txt
+c588b209ca3a5743bbaaddd4ed0be14def3445fc2cd0bc1979ee2467ef4055a6  ./previous.rti0QJ/ddr_all_test/console.log
+9df3a1125b965d3982902d1f3faa7670758ff772320da150f07ec8d26929e8bf  ./previous.rti0QJ/ddr_all_test/kernel-before.log
+dffa4ad93996e6d76d246de08a0764425478564b399a2fab19d0db721733285e  ./previous.rti0QJ/ddr_all_test/ddr_log.log
+4a7258c831518fdab67224bd482d63085b0eb289b8d09b20007cf77648169053  ./previous.rti0QJ/ddr_all_test/stressapptest_0.log
+82df05081b3ff8d89132c1e6ef639e5d06928c68939b0a211eacb58b9cb9d883  ./previous.rti0QJ/ddr_all_test/memtester_0.log
+f4a1fd8790ee5cbc5791a114eb7e4e1f10afb7670c3032d44197fdf0337d797f  ./previous.rti0QJ/ddr_all_test/stressapptest_1.log
+bbba59db76b3bdb56c1838c244265ec541995e7a051b809c77a35431869db3e6  ./previous.rti0QJ/ddr_all_test/memtester_1.log
+d0b82d0501ae1d4fb10d5cc6a1bbef005e87337ea8d2d667b9b504610663ca24  ./previous.rti0QJ/ddr_all_test/stressapptest_2.log
+a91b6892275b98a866ffbcf30788455334772cfaa9de0f2807e0fa87e8b60824  ./previous.rti0QJ/ddr_all_test/memtester_2.log
+eaf420920d67d58173f6e946e3923ee905ba9067e9c54313be6f02e1a9500a2c  ./previous.rti0QJ/ddr_all_test/stressapptest_3.log
+a91b6892275b98a866ffbcf30788455334772cfaa9de0f2807e0fa87e8b60824  ./previous.rti0QJ/ddr_all_test/memtester_3.log
+f56deaa5adc7768febf2f3170036f4e54bc6fc0aa9bc2fe2b02e840473b6a9a7  ./previous.rti0QJ/ddr_all_test/stressapptest_4.log
+4e67f6601192bf9ecb9a701db6a2be4815762eb12b6ed18c496b9c845f89abfd  ./previous.rti0QJ/ddr_all_test/memtester_4.log
+9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa  ./previous.rti0QJ/ddr_all_test/runner_exit_code
+83c02ac2d48c863dab2ccf6870455aadfc2cec073b8db269b517c879d76aa6d9  ./previous.rti0QJ/ddr_all_test/unpack_bin/check_result
+eea8254c7500ba3de996aa8ad6af399183f04e17d4a8102fde539dbc93a90012  ./previous.rti0QJ/ddr_all_test/unpack_tar/check_result
+4107670bb9bed9744d4a2261cbabacf974ec20aafbb588176fd2527521b84b63  ./previous.rti0QJ/ddr_all_test/kernel-after.log
+MANIFEST_EXIT=0
+
+BOARD_MANIFEST_USB0_END
+root@imx6ul: ~# printf '\nREMOVE_APPROVED_USB0_BEGIN\n'; cd /root; if [ -d /mnt/
+ddr_work/full/ddr_p5 ] && [ -f /mnt/ddr_work/ddr_p5/wtd_feed.sh ] && [ -d /mnt/d
+dr_work/ddr_all_test ]; then rm -rf /mnt/ddr_work/ddr_backup /mnt/ddr_work/x6-be
+fore-change.x3JPPU /mnt/ddr_work/full/progress-before-change.e7DCW4 /mnt/ddr_wor
+k/full/progress-before-change.voGjXF && sync; echo REMOVE_EXIT=$?; else echo REM
+OVE_EXIT=GUARD_FAILED; fi; printf '\nREMOVE_APPROVED_USB0_END\n'
+
+REMOVE_APPROVED_USB0_BEGIN
+REMOVE_EXIT=0
+
+REMOVE_APPROVED_USB0_END
+root@imx6ul: ~# printf '\nPOST_CLEAN_USB0_BEGIN\n'; for task_path in /mnt/ddr_wo
+rk/ddr_backup /mnt/ddr_work/x6-before-change.x3JPPU /mnt/ddr_work/full/progress-
+before-change.e7DCW4 /mnt/ddr_work/full/progress-before-change.voGjXF; do if [ -
+e "$task_path" ]; then echo "STILL_EXISTS=$task_path"; else echo "REMOVED=$task_
+path"; fi; done; ls -ld /mnt/ddr_work/ddr_all_test /mnt/ddr_work/full/ddr_p5 /mn
+t/ddr_work/ddr_p5; ps | grep -E '[w]td_feed|[d]dr_test|[s]tressapptest|[m]emtest
+er'; tail -n 2 /mnt/ddr_work/ddr_all_test/console.log; echo KERNEL_OOM_MATCHES; 
+dmesg | grep -iE 'invoked oom-killer|Out of memory|Killed process|page allocatio
+n failure'; printf '\nPOST_CLEAN_USB0_END\n'
+
+POST_CLEAN_USB0_BEGIN
+REMOVED=/mnt/ddr_work/ddr_backup
+REMOVED=/mnt/ddr_work/x6-before-change.x3JPPU
+REMOVED=/mnt/ddr_work/full/progress-before-change.e7DCW4
+REMOVED=/mnt/ddr_work/full/progress-before-change.voGjXF
+drwxr-xr-x    2 root     root         16384 Jan  1 00:00 [1;34m/mnt/ddr_work/ddr_all_test[0m
+drwxr-xr-x    7 root     root         16384 Jan  1  1980 [1;34m/mnt/ddr_work/ddr_p5[0m
+drwxr-xr-x    7 root     root         16384 Jan  1  1980 [1;34m/mnt/ddr_work/full/ddr_p5[0m
+  285 root       0:00 sh /mnt/ddr_work/ddr_p5/wtd_feed.sh --worker
+  382 root       0:00 sh ./ddr_test.sh -c 5
+  454 root       0:00 sh ./ddr_test.sh -c 5
+  455 root      25:59 /mnt/ddr_work/full/ddr_p5/libexec/stressapptest -M 218 -m 8 -s 3600 -W -l /mnt/ddr_work/ddr_all_test/stressapptest_0.log
+1970/01/01-00:26:46(UTC) Log: Seconds remaining: 2000
+1970/01/01-00:26:56(UTC) Log: Seconds remaining: 1990
+KERNEL_OOM_MATCHES
+
+POST_CLEAN_USB0_END
+root@imx6ul: ~# 

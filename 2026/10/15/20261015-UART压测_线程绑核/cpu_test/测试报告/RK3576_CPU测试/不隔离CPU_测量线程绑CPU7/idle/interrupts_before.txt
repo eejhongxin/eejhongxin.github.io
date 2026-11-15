@@ -1,0 +1,96 @@
+           CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+ 11:        628       1512        462        349        388        529        423        424     GICv2  30 Level     arch_timer
+ 14:        328        840       1107        231        618        486        273        108     GICv2  77 Level     rk_timer
+ 35:          4          0          0          0          0          0          0          0     GICv2 421 Edge      debug-signal
+ 36:          4          0          0          0          0          0          0          0     GICv2 108 Level     debug
+ 37:          0          0          0          0          0          0          0          0     GICv2 155 Level     rockchip_thermal
+ 38:          0          0          0          0          0          0          0          0     GICv2  32 Level     arm-pmu
+ 39:          0          0          0          0          0          0          0          0     GICv2  33 Level     arm-pmu
+ 40:          0          0          0          0          0          0          0          0     GICv2  34 Level     arm-pmu
+ 41:          0          0          0          0          0          0          0          0     GICv2  35 Level     arm-pmu
+ 42:          0          0          0          0          0          0          0          0     GICv2  36 Level     arm-pmu
+ 43:          0          0          0          0          0          0          0          0     GICv2  37 Level     arm-pmu
+ 44:          0          0          0          0          0          0          0          0     GICv2  38 Level     arm-pmu
+ 45:          0          0          0          0          0          0          0          0     GICv2  39 Level     arm-pmu
+ 46:          0          0          0          0          0          0          0          0     GICv2 384 Level     rockchip_usb2phy_ls
+ 47:          0          0          0          0          0          0          0          0     GICv2 382 Level     rockchip_usb2phy_bvalid
+ 48:          0          0          0          0          0          0          0          0     GICv2 383 Level     rockchip_usb2phy_id
+ 49:          0          0          0          0          0          0          0          0     GICv2 388 Level     rockchip_usb2phy_ls
+ 50:          0          0          0          0          0          0          0          0     GICv2 135 Level     rk_pwm_irq
+ 51:          0          0          0          0          0          0          0          0     GICv2 313 Level     pcie-sys
+ 54:          0          0          0          0          0          0          0          0     GICv2  64 Level     2ab90000.dma-controller
+ 55:          0          0          0          0          0          0          0          0     GICv2  65 Level     2ab90000.dma-controller
+ 56:          0          0          0          0          0          0          0          0     GICv2  66 Level     2abb0000.dma-controller
+ 57:          0          0          0          0          0          0          0          0     GICv2  67 Level     2abb0000.dma-controller
+ 58:          0          0          0          0          0          0          0          0     GICv2  68 Level     2abd0000.dma-controller
+ 59:          0          0          0          0          0          0          0          0     GICv2  69 Level     2abd0000.dma-controller
+ 61:          0          0          0          0          0          0          0          0     GICv2 279 Level     27702000.iommu, 27700000.npu
+ 62:          0          0          0          0          0          0          0          0     GICv2 280 Level     27702000.iommu, 27700000.npu
+ 63:          0          0          0          0          0          0          0          0     GICv2 364 Level     27910f00.iommu
+ 64:          0          0          0          0          0          0          0          0     GICv2 360 Level     27920f00.iommu, rga2
+ 65:          0          0          0          0          0          0          0          0     GICv2 361 Level     27930f00.iommu, rga2
+ 66:          0          0          0          0          0          0          0          0     GICv2 365 Level     27960800.iommu, 27960000.iep, 27961000.vdpp
+ 67:          0          0          0          0          0          0          0          0     GICv2 343 Level     27a0f000.iommu
+ 68:          0          0          0          0          0          0          0          0     GICv2 420 Level     27a1f000.iommu
+ 69:          0          0          0          0          0          0          0          0     GICv2 341 Level     27b00800.iommu
+ 70:          0          0          0          0          0          0          0          0     GICv2 356 Level     27c07f00.iommu
+ 71:          0          0          0          0          0          0          0          0     GICv2 351 Level     27c10800.iommu
+ 72:          0          0          0          0          0          0          0          0     GICv2 359 Level     27c33f00.iommu
+ 73:          0          0          0          0          0          0          0          0     GICv2 374 Level     27d07e00.iommu, 27d00000.vop
+ 74:          0          0          0          0          0          0          0          0     GICv2 369 Level     27e40000.dp
+ 75:         53          0          0          0          0          0          0          0     GICv2 325 Level     eth0
+ 76:          0          0          0          0          0          0          0          0     GICv2 330 Level     eth0
+ 80:          0          0          0          0          0          0          0          0   PCI-MSI   0 Edge      PCIe PME
+ 81:          0          0          0          0          0          0          0          0     GICv2 292 Level     xhci-hcd:usb1
+ 82:        281          0          0          0          0          0          0          0     GICv2 293 Level     dwc3
+ 83:          0          1          0          0          0          0          0          0     GICv2 132 Level     pwm_rc
+ 84:          0          0          0          0          0          0          0          0     GICv2 120 Level     27300000.i2c
+ 85:        252          0          0          0          0          0          0          0     GICv2 121 Level     2ac40000.i2c
+ 86:          0          0          0          0          0          0          0          0  rockchip_gpio_irq   6 Level     rk806
+ 87:          0          0          0          0          0          0          0          0     rk806   0 Edge      rk805_pwrkey_fall
+ 88:          0          0          0          0          0          0          0          0     rk806   1 Edge      rk805_pwrkey_rise
+ 89:        126          0          0          0          0          0          0          0     GICv2 122 Level     2ac50000.i2c
+ 90:          0          0          0          0          0          0          0          0  rockchip_gpio_irq   0 Level     hym8563
+ 91:          6          0          0          0          0          0          0          0  rockchip_gpio_irq   5 Level     husb311
+ 92:          0          0          0          0          0          0          0          0     GICv2 123 Level     2ac60000.i2c
+ 93:          0          0          0          0          0          0          0          0     GICv2 124 Level     2ac70000.i2c
+ 94:          0          0          0          0          0          0          0          0     GICv2 127 Level     2aca0000.i2c
+ 95:          0          0          0          0          0          0          0          0     GICv2 350 Level     rkcifhw
+ 96:          0          0          0          0          0          0          0          0     GICv2 344 Level     rockchip-mipi-csi2-hw
+ 97:          0          0          0          0          0          0          0          0     GICv2 345 Level     rockchip-mipi-csi2-hw
+ 98:          0          0          0          0          0          0          0          0     GICv2 346 Level     rockchip-mipi-csi2-hw
+ 99:          0          0          0          0          0          0          0          0     GICv2 347 Level     rockchip-mipi-csi2-hw
+100:          0          0          0          0          0          0          0          0     GICv2 348 Level     rockchip-mipi-csi2-hw
+101:          0          0          0          0          0          0          0          0     GICv2 349 Level     rockchip-mipi-csi2-hw
+102:          0          0          0          0          0          0          0          0     GICv2 415 Level     rockchip-mipi-csi2-hw
+103:          0          0          0          0          0          0          0          0     GICv2 416 Level     rockchip-mipi-csi2-hw
+104:          0          0          0          0          0          0          0          0     GICv2 417 Level     rockchip-mipi-csi2-hw
+105:          0          0          0          0          0          0          0          0     GICv2 418 Level     rockchip-mipi-csi2-hw
+106:          0          0          0          0          0          0          0          0     GICv2 355 Level     rkisp_hw
+107:          0          0          0          0          0          0          0          0     GICv2 354 Level     rkisp_hw
+108:          0          0          0          0          0          0          0          0     GICv2 353 Level     rkisp_hw
+109:          0          0          0          0          0          0          0          0     GICv2 358 Level     rkvpss_hw
+110:          0          0          0          0          0          0          0          0     GICv2 357 Level     rkvpss_hw
+111:          0          0          0          0          0          0          0          0     GICv2 283 Level     dw-mci
+112:         10          0          0          0          0          0          0          0     GICv2 285 Level     mmc0
+113:          0          0          0          0          0          0          0          0     GICv2 209 Level     rk-crypto
+114:        437          0          0          0          0          0          0          0     GICv2 156 Level     2ae00000.adc
+115:          0          0          0          0          0          0          0          0  rockchip_gpio_irq   9 Edge      bt_default_wake_host_irq
+116:          0          0          0          0          0          0          0          0     GICv2 363 Level     27910000.jpegd
+117:          0          0          0          0          0          0          0          0     GICv2 362 Level     27910800.jpege
+118:          0          0          0          0          0          0          0          0     GICv2 340 Level     27b00100.rkvdec
+119:          0          0          0          0          0          0          0          0     GICv2 342 Level     27a00000.rkvenc-core
+120:          0          0          0          0          0          0          0          0     GICv2 419 Level     27a10000.rkvenc-core
+121:          0          0          0          0          0          0          0          0     GICv2 411 Level     27d00000.vop
+122:          0          0          0          0          0          0          0          0     GICv2 412 Level     27d00000.vop
+123:          0          0          0          0          0          0          0          0     GICv2 413 Level     27d00000.vop
+124:       1432          0          0          0          0          0          0          0     GICv2 393 Level     ufshcd
+125:          7          0          0          0          0          0          0          0     GICv2 182 Level     dmc
+IPI0:       126         95         86         84        124         98        157        166       Rescheduling interrupts
+IPI1:       746       1307        548        627        698        852       1277       1208       Function call interrupts
+IPI2:         0          0          0          0          0          0          0          0       CPU stop interrupts
+IPI3:         0          0          0          0          0          0          0          0       CPU stop (for crash dump) interrupts
+IPI4:       133        196        303        315        439        460        334        314       Timer broadcast interrupts
+IPI5:         0          0          0          0          0          0          0          0       IRQ work interrupts
+IPI6:         0          0          0          0          0          0          0          0       CPU wake-up interrupts
+Err:          0

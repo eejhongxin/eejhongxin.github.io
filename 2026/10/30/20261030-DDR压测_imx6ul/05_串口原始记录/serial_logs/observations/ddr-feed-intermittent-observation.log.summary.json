@@ -1,0 +1,19 @@
+{
+  "started": "2026-10-20T11:42:56.296667+08:00",
+  "finished": "2026-10-20T11:45:10.037405+08:00",
+  "reset_count": 0,
+  "rounds": [
+    {
+      "number": 1,
+      "pid": 138,
+      "started": "2026-10-20T11:43:02.309983+08:00",
+      "console": "/mnt/ddr_work/intermittent_1792467781_round1.console.log",
+      "result": 1,
+      "finished": "2026-10-20T11:43:34.329706+08:00"
+    }
+  ],
+  "log": "/home/jihongxin/Documents/imx6ul/out/ddr-feed-intermittent-observation.log",
+  "feeding_requested": true,
+  "feeder_pid": 121,
+  "feeder_retained": false
+}

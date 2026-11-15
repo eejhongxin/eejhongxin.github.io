@@ -1,0 +1,3730 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-02T14:37:11.213708+08:00",
+  "root": "/home/jihongxin/Documents/imx6ul/out/ddr-saved-post-chamber-20261102",
+  "batches": [
+    {
+      "chip": "chip_0c3599d4",
+      "path": "chip_0c3599d4/hightemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 6,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.69,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.18,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.41,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.34,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 491.06,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.23,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 6,
+      "memtester_pass_count": 6,
+      "bin_success_count": 6,
+      "tar_success_count": 6,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        79.52,
+        78.95,
+        79.52,
+        78.95,
+        79.52,
+        78.95
+      ],
+      "cpu_temperature_range_C": [
+        78.95,
+        79.52
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 14:50:18---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    },
+    {
+      "chip": "chip_0c3599d4",
+      "path": "chip_0c3599d4/lowtemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 6,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.61,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.71,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.72,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.3,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.95,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.32,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 6,
+      "memtester_pass_count": 6,
+      "bin_success_count": 6,
+      "tar_success_count": 6,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        -30.28,
+        -30.28,
+        -30.28,
+        -30.28,
+        -29.72,
+        -30.28
+      ],
+      "cpu_temperature_range_C": [
+        -30.28,
+        -29.72
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 14:51:26---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    },
+    {
+      "chip": "chip_0c3599d4",
+      "path": "chip_0c3599d4/roomtemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 8,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.34,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.79,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.61,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.2,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.32,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 486.9,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 6,
+          "display_round": 7,
+          "stressapptest": {
+            "file": "stressapptest_6.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.32,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_6.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 138,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 7,
+          "display_round": 8,
+          "stressapptest": {
+            "file": "stressapptest_7.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 486.45,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_7.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 137,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 8,
+      "memtester_pass_count": 8,
+      "bin_success_count": 8,
+      "tar_success_count": 8,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        43.86,
+        42.73,
+        43.3,
+        43.3,
+        43.3,
+        42.73,
+        42.73,
+        42.73
+      ],
+      "cpu_temperature_range_C": [
+        42.73,
+        43.86
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 19:48:31---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "path": "chip_3c3699d4/hightemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 6,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.46,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.48,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.45,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.36,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.87,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.27,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 6,
+      "memtester_pass_count": 6,
+      "bin_success_count": 6,
+      "tar_success_count": 6,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        80.56,
+        80.56,
+        80.56,
+        80.56,
+        80.56,
+        80.56
+      ],
+      "cpu_temperature_range_C": [
+        80.56,
+        80.56
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 14:50:55---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "path": "chip_3c3699d4/lowtemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 6,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.24,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.66,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.85,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.24,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.59,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.44,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 6,
+      "memtester_pass_count": 6,
+      "bin_success_count": 6,
+      "tar_success_count": 6,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        -21.06,
+        -21.64,
+        -21.64,
+        -21.06,
+        -21.06,
+        -21.06
+      ],
+      "cpu_temperature_range_C": [
+        -21.64,
+        -21.06
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 14:51:20---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "path": "chip_3c3699d4/roomtemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 8,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.58,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.17,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.61,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.11,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.75,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.51,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 138,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 6,
+          "display_round": 7,
+          "stressapptest": {
+            "file": "stressapptest_6.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 486.79,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_6.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 138,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 7,
+          "display_round": 8,
+          "stressapptest": {
+            "file": "stressapptest_7.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.74,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_7.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 137,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 8,
+      "memtester_pass_count": 8,
+      "bin_success_count": 8,
+      "tar_success_count": 8,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        47.85,
+        46.68,
+        46.1,
+        46.68,
+        46.1,
+        46.1,
+        46.68,
+        46.1
+      ],
+      "cpu_temperature_range_C": [
+        46.1,
+        47.85
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 19:47:33---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    },
+    {
+      "chip": "chip_483699d4",
+      "path": "chip_483699d4/hightemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 6,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.72,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.72,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 491.05,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.6,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.22,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.33,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 6,
+      "memtester_pass_count": 6,
+      "bin_success_count": 6,
+      "tar_success_count": 6,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        83.49,
+        83.49,
+        83.49,
+        83.49,
+        83.49,
+        83.49
+      ],
+      "cpu_temperature_range_C": [
+        83.49,
+        83.49
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 14:51:41---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    },
+    {
+      "chip": "chip_483699d4",
+      "path": "chip_483699d4/lowtemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 6,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.0,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.87,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.99,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.29,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 490.76,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.97,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 6,
+      "memtester_pass_count": 6,
+      "bin_success_count": 6,
+      "tar_success_count": 6,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        -20.0,
+        -20.0,
+        -19.47,
+        -20.0,
+        -19.47,
+        -20.0
+      ],
+      "cpu_temperature_range_C": [
+        -20.0,
+        -19.47
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 14:50:51---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    },
+    {
+      "chip": "chip_483699d4",
+      "path": "chip_483699d4/roomtemp/ddr_all_test",
+      "kind": "archived",
+      "state": "complete",
+      "verdict": "software_checks_pass",
+      "has_end_marker": true,
+      "runner_exit_code": 0,
+      "started_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "expected_rounds_from_console": null,
+      "round_count": 8,
+      "rounds": [
+        {
+          "index": 0,
+          "display_round": 1,
+          "stressapptest": {
+            "file": "stressapptest_0.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 489.16,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_0.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 217,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 1,
+          "display_round": 2,
+          "stressapptest": {
+            "file": "stressapptest_1.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.17,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_1.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 141,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 2,
+          "display_round": 3,
+          "stressapptest": {
+            "file": "stressapptest_2.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 488.46,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_2.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 140,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 3,
+          "display_round": 4,
+          "stressapptest": {
+            "file": "stressapptest_3.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.95,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_3.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 4,
+          "display_round": 5,
+          "stressapptest": {
+            "file": "stressapptest_4.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.51,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_4.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 139,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 5,
+          "display_round": 6,
+          "stressapptest": {
+            "file": "stressapptest_5.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.2,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_5.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 138,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 6,
+          "display_round": 7,
+          "stressapptest": {
+            "file": "stressapptest_6.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.38,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_6.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 138,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        },
+        {
+          "index": 7,
+          "display_round": 8,
+          "stressapptest": {
+            "file": "stressapptest_7.log",
+            "present": true,
+            "statuses": [
+              "PASS"
+            ],
+            "hardware_incidents_errors": [
+              [
+                0,
+                0
+              ]
+            ],
+            "zero_errors": true,
+            "memory_copy_MBps": 487.64,
+            "pass": true
+          },
+          "memtester": {
+            "file": "memtester_7.log",
+            "present": true,
+            "ok_count": 18,
+            "ok_tests": [
+              "Stuck Address       : ok",
+              "Random Value        : ok",
+              "Compare XOR         : ok",
+              "Compare SUB         : ok",
+              "Compare MUL         : ok",
+              "Compare DIV         : ok",
+              "Compare OR          : ok",
+              "Compare AND         : ok",
+              "Sequential Increment: ok",
+              "Solid Bits          : ok",
+              "Block Sequential    : ok",
+              "Checkerboard        : ok",
+              "Bit Spread          : ok",
+              "Bit Flip            : ok",
+              "Walking Ones        : ok",
+              "Walking Zeroes      : ok",
+              "8-bit Writes        : ok",
+              "16-bit Writes       : ok"
+            ],
+            "done": true,
+            "mlock_locked": true,
+            "allocated_MiB": 137,
+            "errors": [],
+            "pass": true
+          },
+          "summary_sat_pass": true,
+          "bin_success": true,
+          "tar_success": true
+        }
+      ],
+      "sat_pass_count": 8,
+      "memtester_pass_count": 8,
+      "bin_success_count": 8,
+      "tar_success_count": 8,
+      "final_bin_count": 1000,
+      "final_tar_count": 100,
+      "cpu_temperatures_C": [
+        50.76,
+        49.7,
+        49.7,
+        50.23,
+        49.7,
+        49.17,
+        49.17,
+        49.7
+      ],
+      "cpu_temperature_range_C": [
+        49.17,
+        50.76
+      ],
+      "kernel_logs": [
+        {
+          "file": "kernel-after.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        },
+        {
+          "file": "kernel-before.log",
+          "oom_lines": [],
+          "storage_error_lines": []
+        }
+      ],
+      "has_kernel_oom": false,
+      "has_kernel_storage_error": false,
+      "issues": [],
+      "last_console_lines": [
+        "---------ddr test   end time: 1970-01-01 19:48:11---------",
+        "Runner exited with code 0; this is NOT an overall PASS verdict.",
+        "Inspect individual results and kernel logs for OOM/killed processes."
+      ]
+    }
+  ]
+}

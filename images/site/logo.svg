@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="title desc">
+  <title id="title">嵌入手记</title>
+  <desc id="desc">暖白底色上，以墨绿半圆、鼠尾草绿方块和四分之一圆组成的抽象几何标记。</desc>
+  <rect width="128" height="128" rx="24" fill="#f2f0e9"/>
+  <path d="M26 62a36 36 0 0 1 72 0Z" fill="#283e42"/>
+  <path d="M26 70h32v32H26Z" fill="#8ca59b"/>
+  <path d="M66 70h32v32a32 32 0 0 1-32-32Z" fill="#283e42"/>
+</svg>

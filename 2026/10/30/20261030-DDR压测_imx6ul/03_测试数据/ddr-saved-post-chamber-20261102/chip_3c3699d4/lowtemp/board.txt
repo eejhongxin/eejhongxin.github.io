@@ -1,0 +1,3 @@
+Thu Jan  1 00:00:04 UTC 1970
+7.02 1.01
+console=ttymxc0,115200 cma=0 root=/dev/mtdblock3 rootfstype=jffs2 mtdparts=21e0000.qspi:1M(uboot),6M(kernel),1M(dtb),-(rootfs) rootwait rw

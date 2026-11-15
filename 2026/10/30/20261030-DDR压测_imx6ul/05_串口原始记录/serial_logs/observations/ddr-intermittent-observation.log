@@ -1,0 +1,722 @@
+[2026-10-20T11:32:54.993624+08:00] START intermittent 16MiB tests, 60s stressapptest + 1 memtester loop, 300s idle between rounds.
+[2026-10-20T11:32:54.993749+08:00] Deadline: 2026-10-20T12:27:46+08:00
+[2026-10-20T11:32:54.993787+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:32:55.005067+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_1__:%s\n' "$?"
+
+[2026-10-20T11:32:55.021033+08:00] UART 1026.43 1021.08
+
+__DDR_RPC_1__:0
+root@imx6ul: # 
+[2026-10-20T11:32:55.496082+08:00] COMMAND cat /proc/mounts
+[2026-10-20T11:32:55.501228+08:00] UART cat
+[2026-10-20T11:32:55.516688+08:00] UART  /proc/mounts; printf '\n__DDR_RPC_2__:%s\n' "$?"
+
+[2026-10-20T11:32:55.560716+08:00] UART /dev/root / jffs2 rw,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=74808k,nr_inodes=18702,mode=755 0 0
+none /sys sysfs rw,relatime 0 0
+ramfs /mem ramfs rw,relatime 0 0
+none /dev ramfs rw,relatime 0 0
+proc /proc proc rw,relatime 0 0
+none /dev/pts devpts rw,relatime,mode=622 0 0
+tmpfs /tmp tmpfs rw,relatime 0 0
+
+__DDR_RPC_2__:0
+root@imx6ul: # 
+[2026-10-20T11:32:55.997786+08:00] COMMAND if awk '$2=="/mnt" {ok=1} END {exit !ok}' /proc/mounts; then :; else mount -t vfat -o rw /dev/mmcblk1p7 /mnt; fi
+[2026-10-20T11:32:56.009366+08:00] UART if awk '$2=="/mnt" {ok=1} END {exit !ok}
+[2026-10-20T11:32:56.029284+08:00] UART ' /proc/mounts; then :; e
+lse mount -t vfat -o rw /dev/mmcblk1p7 /mnt; fi; printf '\n__DDR_RPC_3__:%s\n' "
+$?"
+
+[2026-10-20T11:32:56.109012+08:00] UART [ 1027.515944] FAT-fs (mmcblk1p7): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+
+__DDR_RPC_3__:0
+root@imx6ul: # 
+[2026-10-20T11:32:56.498765+08:00] COMMAND cd /mnt/ddr_work/ddr_p5 && sha256sum -c SHA256SUMS && sh ddr_test.sh --check --memory 16 --seconds 60
+[2026-10-20T11:32:56.531861+08:00] UART cd /mnt/ddr_work/ddr_p5 && sha256sum -c SHA256SUMS && sh ddr_test
+.sh --check --memory 16 --seconds 60; printf '\n__DDR_RPC_4__:%s\n' "$?"
+
+[2026-10-20T11:32:56.563875+08:00] UART ./README.md: OK
+
+[2026-10-20T11:32:56.580067+08:00] UART ./bin/memtester: OK
+
+[2026-10-20T11:32:56.657029+08:00] UART ./bin/stressapptest: OK
+./ddr_mem_usage.sh: OK
+./ddr_test.sh: OK
+./licenses/memtester-COPYING: OK
+./licenses/stressapptest-COPYING: OK
+./licenses/stressapptest-NOTICE: OK
+./licenses/stressapptest-source.sha256: OK
+
+[2026-10-20T11:32:56.781546+08:00] UART Preflight OK: memory=16MiB copy_threads=1 seconds=60 rounds=1 unpack=0
+
+__DDR_RPC_4__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:32:58.000038+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:32:58.012569+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_5__:%s\n' "$?"
+
+[2026-10-20T11:32:58.028802+08:00] UART 1029.44 1023.68
+
+__DDR_RPC_5__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:32:58.502437+08:00] COMMAND sh -c 'child=
+trap '"'"'if [ -n "$child" ]; then kill -TERM "$child" 2>/dev/null; wait "$child" 2>/dev/null; fi; exit 143'"'"' INT TERM HUP
+sh "$1" -c 1 --memory 16 --seconds 60 &
+child=$!
+wait "$child"
+result=$?
+child=
+printf '"'"'\n__DDR_ROUND_RESULT__:%s:%s\n'"'"' "$2" "$result"
+sync
+exit "$result"
+' ddr-round /mnt/ddr_work/ddr_p5/ddr_test.sh 1 > /mnt/ddr_work/intermittent_1792467178_round1.console.log 2>&1 & DDR_JOB=$!; echo __DDR_JOB_PID__:$DDR_JOB
+[2026-10-20T11:32:58.510866+08:00] UART sh -c 'child=
+
+[2026-10-20T11:32:58.579436+08:00] UART ll; wait "$child" 2>/dev/nu> trap '"'"'if [ -n "$child" ]; then kill -TERM "$child" 2>/dev/null; wait "$chi
+ld" 2>/dev/null; fi; exit 143'"'"' INT TERM HUP
+8_round1.console.log 2>&1 & DDR> sh "$1" -c 1 --memory 16 --seconds 60 &
+> child=$!
+> wait "$child"
+> result=$?
+> child=
+> printf '"'"'\n__DDR_ROUND_RESULT__:%s:%s\n'"'"' "$2" "$result"
+> sync
+> exit "$result"
+> ' ddr-round /mnt/ddr_work/ddr_p5/ddr_test.sh 1 > /mnt/ddr_work/intermittent_17
+92467178_round1.console.log 2>&1 & D
+[2026-10-20T11:32:58.605222+08:00] UART DR_JOB=$!; echo __DDR_JOB_PID__:$DDR_JOB; pr
+intf '\n__DDR_RPC_6__:%s\n' "$?"
+__DDR_JOB_PID__:141
+
+__DDR_RPC_6__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:32:58.845144+08:00] UART [ 1030.276940] Bits 55-60 of /proc
+[2026-10-20T11:32:58.872015+08:00] UART /PID/pagemap entries are about to stop being page-shift some time soon. See the linux/Documentation/vm/pagemap.txt for details.
+
+[2026-10-20T11:32:59.004524+08:00] ROUND 1 STARTED
+[2026-10-20T11:33:29.019171+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:33:29.024535+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_7__:%s
+[2026-10-20T11:33:29.040693+08:00] UART \n' "$?"
+1060.46 1024.16
+
+__DDR_RPC_7
+[2026-10-20T11:33:29.056624+08:00] UART __:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:33:29.520112+08:00] COMMAND tail -n 10 /mnt/ddr_work/intermittent_1792467178_round1.console.log
+[2026-10-20T11:33:29.541871+08:00] UART tail -n 10 /mnt/ddr_work/intermittent_1792467178_round1.con
+sole.log; printf '\n__DDR_RPC_8__:%s\n' "$?"
+
+[2026-10-20T11:33:29.583093+08:00] UART Preflight OK: memory=16MiB copy_threads=1 seconds=60 rounds=1 unpack=0
+START 1970-01-01 00:35:28
+Logs: /mnt/ddr_work/run.HxZvbP
+memory=16MiB copy_threads=1 seconds=60 rounds=1 unpack=0
+awk: cmd. line:1: No data available
+Round 1/1: stressapptest starting
+
+__DDR_RPC_8__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:34:00.037390+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:34:00.039904+08:00] UART cat /proc/uptime
+[2026-10-20T11:34:00.056724+08:00] UART ; printf '\n__DDR_RPC_9__:%s\n' "$?"
+
+[2026-10-20T11:34:00.073872+08:00] UART 1091.48 1024.17
+
+__DDR_RPC_9__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:34:00.538406+08:00] COMMAND tail -n 10 /mnt/ddr_work/intermittent_1792467178_round1.console.log
+[2026-10-20T11:34:00.560662+08:00] UART tail -n 10 /mnt/ddr_work/intermittent_1792467178_round1.con
+sole.log; printf '\n__DDR_RPC_10__:%s\n' "$?"
+
+[2026-10-20T11:34:00.611520+08:00] UART Preflight OK: memory=16MiB copy_threads=1 seconds=60 rounds=1 unpack=0
+START 1970-01-01 00:35:28
+Logs: /mnt/ddr_work/run.HxZvbP
+memory=16MiB copy_threads=1 seconds=60 rounds=1 unpack=0
+awk: cmd. line:1: No data available
+Round 1/1: stressapptest starting
+PASS stressapptest
+Round 1/1: memtester starting
+
+__DDR_RPC_10__:0
+root@imx6ul: ddr_p5# 
+[2026-10-20T11:34:06.061965+08:00] UART 
+
+U-Boot 2015.04-g95dc76b-dirty (Oct 19 2026 - 04:15:26)
+
+I2C:   ready
+DRAM:  256 MiB
+
+[2026-10-20T11:34:06.063107+08:00] RESET OBSERVED; all further stress tests are paused.
+[2026-10-20T11:34:06.237578+08:00] UART force_idle_bus: sda=0 scl=1 sda.gp=0x45 scl.gp=0x46
+
+[2026-10-20T11:34:06.476535+08:00] UART force_idle_bus: failed to clear bus, sda=0 scl=1
+PMIC: PFUZE300 DEV_ID=0x30 REV_ID=0x11
+MMC:   FSL_SDHC: 0, FSL_SDHC: 1
+256 Bytes, erase size 64 KiB, total 32 MiB
+In:    serial
+Out:   serial
+Err:   serial
+Net:   
+[2026-10-20T11:34:06.587683+08:00] UART imx6 oled init....
+MMC: no card present
+
+[2026-10-20T11:34:06.731321+08:00] UART reading bootgrap/bootgrap
+
+[2026-10-20T11:34:06.763081+08:00] UART Invalid FAT entry
+** Unable to read file bootgrap/bootgrap **
+do run mmc rescan;fatload mmc 1:3 0x80800000 bootgrap/bootgrap error!
+FEC0
+256 Bytes, erase size 64 KiB, total 32 MiB
+
+[2026-10-20T11:34:06.778962+08:00] UART Erasing SPI flash...
+[2026-10-20T11:34:06.956717+08:00] UART Writing to SPI flash...
+[2026-10-20T11:34:07.003284+08:00] UART done
+Normal Boot
+### Hit cmd to stop autoboot: 3
+
+[2026-10-20T11:34:07.498610+08:00] UART 256 Bytes, erase size 64 KiB, total 32 MiB
+
+[2026-10-20T11:34:08.570953+08:00] UART SF: 6291456 bytes @ 0x100000 Read: OK
+Booting from qspi ...
+
+[2026-10-20T11:34:08.703603+08:00] UART SF: 1048576 bytes @ 0x700000 Read: OK
+Kerne
+[2026-10-20T11:34:08.726434+08:00] UART l image @ 0x80800000 [ 0x000000 - 0x5cafe0 ]
+
+Starting kernel ...
+
+
+[2026-10-20T11:34:09.492283+08:00] UART [    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.1.15-1.2.0 (shangjunwei@hcqrsjcsvr01) (gcc version 4.9.2 (GCC) ) #2 SMP PREEMPT Thu May 21 16:45:11 CST 2026
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c53c7d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] Machine model: Freescale i.MX6 UltraLite 14x14 EVK Board
+[    0.000000] cma: Reserved 96 MiB at 0x8a000000
+[    0.00000
+[2026-10-20T11:34:09.535720+08:00] UART 0] Memory policy: Data cache writealloc
+[    0.000000] PERCPU: Embedded 12 pages/cpu @89da0000 s17472 r8192 d23488 u49152
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 65024
+[    0.000000] Kernel command line: console=ttymxc0,115200 cma=96M root=/dev/mtdblock3 rootfstype=jffs2 mtdparts=21e0000.qspi:1M(uboot),6M(kernel),1M(dtb),-(rootfs) rootwait rw
+[    0.000000] PID hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.000000] Dentry cache hash ta
+[2026-10-20T11:34:09.579456+08:00] UART ble entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Inode-cache hash table entries: 16384 (order: 4, 65536 bytes)
+[    0.000000] Memory: 149616K/262144K available (7767K kernel code, 379K rwdata, 2532K rodata, 416K init, 442K bss, 14224K reserved, 98304K cma-reserved, 0K highmem)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc 
+[2026-10-20T11:34:09.624388+08:00] UART : 0x90800000 - 0xff000000   (1768 MB)
+[    0.000000]     lowmem  : 0x80000000 - 0x90000000   ( 256 MB)
+[    0.000000]     pkmap   : 0x7fe00000 - 0x80000000   (   2 MB)
+[    0.000000]     modules : 0x7f000000 - 0x7fe00000   (  14 MB)
+[    0.000000]       .text : 0x80008000 - 0x80a17014   (10301 kB)
+[    0.000000]       .init : 0x80a18000 - 0x80a80000   ( 416 kB)
+[    0.000000]       .data : 0x80a80000 - 0x80adeca0   ( 380 kB)
+[    0.000000]        .bss : 0x80adeca0 - 0x80b4d800   ( 443
+[2026-10-20T11:34:09.665440+08:00] UART  kB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] 	Additional per-CPU info printed with stalls.
+[    0.000000] 	RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=1.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=1
+[    0.000000] NR_IRQS:16 nr_irqs:16 16
+[    0.000000] mxc_clocksource_init 24000000
+[    0.000000] Switching to timer-based delay loop, resolu
+[2026-10-20T11:34:09.708696+08:00] UART tion 41ns
+[    0.000015] sched_clock: 32 bits at 24MHz, resolution 41ns, wraps every 89478484971ns
+[    0.000053] clocksource mxc_timer1: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 79635851949 ns
+[    0.002775] Console: colour dummy device 80x30
+[    0.002815] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=240000)
+[    0.002846] pid_max: default: 32768 minimum: 301
+[    0.003055] Mount-cache hash table entries: 1024 (order: 0, 
+[2026-10-20T11:34:09.752102+08:00] UART 4096 bytes)
+[    0.003081] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.004300] Initializing cgroup subsys net_cls
+[    0.004382] CPU: Testing write buffer coherency: ok
+[    0.004841] /cpus/cpu@0 missing clock-frequency property
+[    0.004878] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+[    0.004988] Setting up static identity map for 0x80008280 - 0x800082d8
+[    0.041119] Brought up 1 CPUs
+[    0.041157] SMP: Total of 1 processors activated (48.00 B
+[2026-10-20T11:34:09.795915+08:00] UART ogoMIPS).
+[    0.041173] CPU: All CPU(s) started in SVC mode.
+[    0.042196] devtmpfs: initialized
+[    0.063284] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 5
+[    0.064106] clocksource jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.071588] pinctrl core: initialized pinctrl subsystem
+[    0.074129] NET: Registered protocol family 16
+[    0.091413] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[   
+[2026-10-20T11:34:09.839679+08:00] UART  0.120806] cpuidle: using governor ladder
+[    0.150858] cpuidle: using governor menu
+[    0.198680] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.198713] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.203615] imx6ul-pinctrl 20e0000.iomuxc: initialized IMX pinctrl driver
+[    0.267991] mxs-dma 1804000.dma-apbh: initialized
+[    0.274640] SCSI subsystem initialized
+[    0.275376] usbcore: registered new interface driver usbfs
+[    0.2755
+[2026-10-20T11:34:09.882154+08:00] UART 34] usbcore: registered new interface driver hub
+[    0.275759] usbcore: registered new device driver usb
+[    0.279283] i2c i2c-0: IMX I2C adapter registered
+[    0.279326] i2c i2c-0: can't use DMA
+[    0.280737] i2c i2c-1: IMX I2C adapter registered
+[    0.280779] i2c i2c-1: can't use DMA
+[    0.281172] pps_core: LinuxPPS API ver. 1 registered
+[    0.281194] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.281270] PTP clock support reg
+[2026-10-20T11:34:09.926670+08:00] UART istered
+[    0.284436] MIPI CSI2 driver module loaded
+[    0.285081] Advanced Linux Sound Architecture Driver Initialized.
+[    0.287187] Bluetooth: Core ver 2.20
+[    0.287310] NET: Registered protocol family 31
+[    0.287327] Bluetooth: HCI device and connection manager initialized
+[    0.287364] Bluetooth: HCI socket layer initialized
+[    0.287391] Bluetooth: L2CAP socket layer initialized
+[    0.287461] Bluetooth: SCO socket layer initialized
+[    0.288044] Switched to clocksou
+[2026-10-20T11:34:09.969076+08:00] UART rce mxc_timer1
+[    0.311655] NET: Registered protocol family 2
+[    0.313312] TCP established hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.313400] TCP bind hash table entries: 2048 (order: 2, 16384 bytes)
+[    0.313492] TCP: Hash tables configured (established 2048 bind 2048)
+[    0.313624] UDP hash table entries: 256 (order: 1, 8192 bytes)
+[    0.313683] UDP-Lite hash table entries: 256 (order: 1, 8192 bytes)
+[    0.314085] NET: Registered protocol family 1
+[    0.314820]
+[2026-10-20T11:34:10.012884+08:00] UART  RPC: Registered named UNIX socket transport module.
+[    0.314852] RPC: Registered udp transport module.
+[    0.314870] RPC: Registered tcp transport module.
+[    0.314886] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.318426] imx rpmsg driver is registered.
+[    0.320503] Bus freq driver module loaded
+[    0.322521] futex hash table entries: 256 (order: 2, 16384 bytes)
+[    0.338923] VFS: Disk quotas dquot_6.6.0
+[    0.339396] VFS: Dquot-cache hash table entries:
+[2026-10-20T11:34:10.057347+08:00] UART  1024 (order 0, 4096 bytes)
+[    0.344448] NFS: Registering the id_resolver key type
+[    0.344546] Key type id_resolver registered
+[    0.344566] Key type id_legacy registered
+[    0.344753] jffs2: version 2.2. (NAND) © 2001-2006 Red Hat, Inc.
+[    0.346520] fuse init (API version 7.23)
+[    0.356440] io scheduler noop registered
+[    0.356488] io scheduler deadline registered
+[    0.356903] io scheduler cfq registered (default)
+[    0.358361] imx-weim 21b8000.weim: Driver registe
+[2026-10-20T11:34:10.099433+08:00] UART red.
+[    0.363758] backlight supply power not found, using dummy regulator
+[    0.366246] MIPI DSI driver module loaded
+[    0.366758] MIPI DSI driver module loaded
+[    0.377644] imx-sdma 20ec000.sdma: no event needs to be remapped
+[    0.377853] imx-sdma 20ec000.sdma: loaded firmware 3.3
+[    0.385248] imx-sdma 20ec000.sdma: initialized
+[    0.387822] pfuze100-regulator 0-0008: Full layer: 1, Metal layer: 1
+[    0.388583] pfuze100-regulator 0-0008: FAB: 0, FIN: 0
+[    0.388614] p
+[2026-10-20T11:34:10.149273+08:00] UART fuze100-regulator 0-0008: pfuze3000 found.
+[    0.406895] 2020000.serial: ttymxc0 at MMIO 0x2020000 (irq = 20, base_baud = 5000000) is a IMX
+[    1.070469] console [ttymxc0] enabled
+[    1.076062] 21e8000.serial: ttymxc1 at MMIO 0x21e8000 (irq = 231, base_baud = 5000000) is a IMX
+[    1.086242] 21ec000.serial: ttymxc2 at MMIO 0x21ec000 (irq = 232, base_baud = 5000000) is a IMX
+[    1.096296] 21f0000.serial: ttymxc3 at MMIO 0x21f0000 (irq = 233, base_baud = 5000000) is a IMX
+[    1.1063
+[2026-10-20T11:34:10.203072+08:00] UART 24] 21f4000.serial: ttymxc4 at MMIO 0x21f4000 (irq = 234, base_baud = 5000000) is a IMX
+[    1.116445] 21fc000.serial: ttymxc5 at MMIO 0x21fc000 (irq = 235, base_baud = 5000000) is a IMX
+[    1.130709] imx sema4 driver is registered.
+[    1.135094] [drm] Initialized drm 1.1.0 20060810
+[    1.140988] [drm] Initialized vivante 1.0.0 20120216 on minor 0
+
+[2026-10-20T11:34:10.215661+08:00] UART [    1.171550] brd: module 
+[2026-10-20T11:34:10.231256+08:00] UART loaded
+[    1.186956] loop: module loade
+[2026-10-20T11:34:10.286404+08:00] UART d
+[    1.191375] (hci_tty): inside hci_tty_init
+[    1.195964] (hci_tty): allocated 248, 0
+[    1.204415] ### winbond_quad_enable
+[    1.208228] fsl-quadspi 21e0000.qspi: w25q256 (32768 Kbytes)
+[    1.213953] 4 cmdlinepart partitions found on MTD device 21e0000.qspi
+[    1.220474] Creating 4 MTD partitions on "21e0000.qspi":
+[    1.225826] 0x000000000000-0x000000100000 : "uboot"
+[    1.233181] 0x000000100000-0x000000700000 : "kernel"
+[    1.240575] 0x000000700000-0x000000800000 : "d
+[2026-10-20T11:34:10.351226+08:00] UART tb"
+[    1.247639] 0x000000800000-0x000002000000 : "rootfs"
+[    1.261398] spi_master spi0: spi-tx-bus-width 8 not supported
+[    1.268171] spi_imx 2008000.ecspi: probed
+[    1.275117] tun: Universal TUN/TAP device driver, 1.6
+[    1.280301] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    1.287003] CAN device driver interface
+[    1.293983] flexcan 2090000.can: device registered (reg_base=90a00000, irq=26)
+[    1.303816] 20b4000.ethernet supply phy not found, using dummy 
+[2026-10-20T11:34:10.366308+08:00] UART regulator
+
+[2026-10-20T11:34:10.765919+08:00] UART [    1.719161] pps pps0: new PPS source ptp0
+[    1.72
+[2026-10-20T11:34:10.814066+08:00] UART 3669] fec 20b4000.ethernet (unnamed net_device) (uninitialized): Invalid MAC address: 00:00:00:00:00:00
+[    1.733773] fec 20b4000.ethernet (unnamed net_device) (uninitialized): Using random MAC address: 82:33:e4:fd:01:c1
+[    1.744991] libphy: fec_enet_mii_bus: probed
+[    1.749545] ### get_phy_device phy id = 0xffffffff, addr = 0
+[    1.755480] ### get_phy_device phy id = 0xffffffff, addr = 1
+[    1.762767] fec 20b4000.ethernet eth0: registered PHC device 0
+[    1.770492] 2188000.e
+[2026-10-20T11:34:10.829840+08:00] UART thernet supply phy not found, using dummy regulator
+
+[2026-10-20T11:34:11.172446+08:00] UART [    2.079058] pps pps1: new PPS source ptp1
+[    2.085503] fec 2188000.ethernet eth1: registered PHC device 1
+[    2.093352] PPP generic driver version 2.4.2
+[    2.098326] PPP BSD Compression module registered
+[    2.103090] PPP Deflate Compression module registered
+[    2.108295] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    2.114871] ehci-platform: EHCI generic platform driver
+[    2.121018] ehci-mxc: Freescale On-Chip EHCI Host driver
+[    2.127356] usbcore: re
+[2026-10-20T11:34:11.215942+08:00] UART gistered new interface driver cdc_acm
+[    2.133133] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    2.141480] usbcore: registered new interface driver usb-storage
+[    2.147846] usbcore: registered new interface driver usbserial
+[    2.153902] usbcore: registered new interface driver usbserial_generic
+[    2.160639] usbserial: USB Serial support registered for generic
+[    2.166805] usbcore: registered new interface driver option
+[    2.172565] usbser
+[2026-10-20T11:34:11.279626+08:00] UART ial: USB Serial support registered for GSM modem (1-port)
+[    2.179758] usbcore: registered new interface driver usb_ehset_test
+[    2.189040] 2184800.usbmisc supply vbus-wakeup not found, using dummy regulator
+[    2.204501] 2184200.usb supply vbus not found, using dummy regulator
+[    2.214901] ci_hdrc ci_hdrc.1: EHCI Host Controller
+[    2.219952] ci_hdrc ci_hdrc.1: new USB bus registered, assigned bus number 1
+
+[2026-10-20T11:34:11.334043+08:00] UART [    2.238135] ci_hdrc ci_hdrc.1: USB 2.0 started, EHCI 1.00
+[    2.245585] hub 1-0:1.0: USB hub found
+[    2.249612] hub 1-0:1.0: 1 port detected
+[    2.257252] input: 20cc000.snvs:snvs-powerkey as /devices/platform/soc/2000000.aips-bus/20cc000.snvs/20cc000.snvs:snvs-powerkey/input/input0
+[    2.272147] rtc-ds1307: probe of 0-0068 failed with error -5
+[    2.279837] snvs_rtc 20cc000.snvs:snvs-rtc-lp: rtc core: registered 20cc000.snvs:snvs-r as rtc0
+[    2.289250] i2c /dev entries driv
+[2026-10-20T11:34:11.384333+08:00] UART er
+[    2.295417] usbcore: registered new interface driver i2c-diolan-u2c
+[    2.301935] i2c-parport-light: adapter type unspecified
+[    2.307375] usbcore: registered new interface driver RobotFuzz Open Source InterFace, OSIF
+[    2.316112] usbcore: registered new interface driver i2c-tiny-usb
+[    2.322313] Driver for 1-wire Dallas network protocol.
+[    2.328884] 1-Wire driver for the DS2760 battery monitor chip - (c) 2004-2005, Szabolcs Gyurko
+[    2.339380] thermal thermal_zone0:
+[2026-10-20T11:34:11.439348+08:00] UART  failed to read out thermal zone (-61)
+[    2.346166] sbs-battery 1-000b: bq20z75: battery gas gauge device registered
+[    2.359390] lm75 1-0048: hwmon1: sensor 'tmp100'
+[    2.368730] imx2-wdt 20bc000.wdog: timeout 60 sec (nowayout=0)
+[    2.375012] Bluetooth: HCI UART driver ver 2.3
+[    2.379581] Bluetooth: HCI UART protocol H4 registered
+[    2.384747] Bluetooth: HCI UART protocol BCSP registered
+[    2.390118] Bluetooth: HCI UART protocol LL registered
+[    2.395502] usbcore: r
+[2026-10-20T11:34:11.493450+08:00] UART egistered new interface driver btusb
+[    2.402727] sdhci: Secure Digital Host Controller Interface driver
+[    2.409042] sdhci: Copyright(c) Pierre Ossman
+[    2.413453] sdhci-pltfm: SDHCI platform and OF driver helper
+[    2.421553] /soc/aips-bus@02100000/usdhc@02190000: voltage-ranges unspecified
+[    2.430422] sdhci-esdhc-imx 2190000.usdhc: No vqmmc regulator found
+
+[2026-10-20T11:34:11.569407+08:00] UART [    2.478282] mmc0: SDHCI controller on 2190000.usdhc [2190000.usdhc] using ADMA
+[    2.495122] /soc/aips-bus@02100000/usdhc@02194000: voltage-ranges unspecified
+[    2.510489] sdhci-esdhc-imx 2194000.usdhc: No vqmmc regulator found
+
+[2026-10-20T11:34:11.658178+08:00] UART [    2.568096] usb 1-1: new high-speed USB device number 2 using ci_hdrc
+[    2.574719] mmc1: SDHCI controller on 2194000.usdhc [2194000.usdhc] using ADMA
+
+[2026-10-20T11:34:11.695401+08:00] UART [    2.631300] usbcore: registered new interface driver usbhid
+[    2.637027] usbhid: USB HID core driver
+
+[2026-10-20T11:34:11.709257+08:00] UART [    2.653959] fsl-asrc 2034000.asrc: driver registered
+
+[2026-10-20T11:34:11.756311+08:00] UART [    2.672278] NET: Registered protocol family 26
+[    2.682110] Netfilter messages via NETLINK v0.30.
+[    2.690094] nfnl_acct: registering with nfnetlink.
+[    2.697144] nf_conntrack version 0.5.0 (3873 buckets, 15492 max)
+[    2.713351] 
+[2026-10-20T11:34:11.795244+08:00] UART ctnetlink v0.93: registering with nfnetlink.
+[    2.723706] nf_tables: (c) 2007-2009 Patrick McHardy <kaber@trash.net>
+[    2.732583] nf_tables_compat: (c) 2012 Pablo Neira Ayuso <pablo@netfilter.org>
+[    2.750362] xt_time: kernel timezon
+[2026-10-20T11:34:11.855578+08:00] UART e is -0000
+[    2.755375] hub 1-1:1.0: USB hub found
+[    2.759432] IPVS: Registered protocols ()
+[    2.763602] hub 1-1:1.0: 4 ports detected
+[    2.767813] IPVS: Connection hash table configured (size=4096, memory=32Kbytes)
+[    2.779126] IPVS: Creating netns size=872 id=0
+[    2.783805] IPVS: ipvs loaded.
+[    2.789760] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    2.797617] ipt_CLUSTERIP: ClusterIP Version 0.8 loaded successfully
+[    2.809538] arp_tables: (C) 2002 David S. 
+[2026-10-20T11:34:11.870941+08:00] UART Miller
+[    2.821212] NET: Registered protocol family 10
+
+[2026-10-20T11:34:11.886796+08:00] UART [    2.834837] sit: IPv6 over IPv4 tunneling driver
+
+[2026-10-20T11:34:11.958622+08:00] UART [    2.845419] NET: Registered protocol family 17
+[    2.852376] bridge: automatic filtering via arp/ip/ip6tables has been deprecated. Update your scripts to load br_netfilter if you need this.
+[    2.867275] can: controller area network core (rev 20120528 abi 9)
+[    2.876874] NET: Registered protocol family 29
+[    2.886791] can: raw protocol (rev 20120528)
+[    2.891420] can: broadcast manager protocol (rev 20120528 t)
+[    2.900424] can: netlink gateway (rev 20130117) max_hops=1
+
+[2026-10-20T11:34:12.020902+08:00] UART [    2.917261] Bluetooth: RFCOMM TTY layer initialized
+[    2.924551] Bluetooth: RFCOMM socket layer initialized
+[    2.932142] Bluetooth: RFCOMM ver 1.11
+[    2.938193] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    2.945619] Bluetooth: BNEP filters: protocol multicast
+[    2.953045] Bluetooth: BNEP socket layer initialized
+[    2.960202] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    2.968302] Bluetooth: HIDP socket layer initialized
+[    2.975504] 8021q: 802.1Q VLAN S
+[2026-10-20T11:34:12.053408+08:00] UART upport v1.8
+[    2.982968] lib80211: common routines for IEEE802.11 drivers
+[    2.992185] Key type dns_resolver registered
+
+[2026-10-20T11:34:12.105488+08:00] UART [    3.028694] input: gpio-keys as /devices/platform/gpio-keys/input/input1
+[    3.035525] mmc1: MAN_BKOPS_EN bit is not set
+[    3.040725] snvs_rtc 20cc000.snvs:snvs-rtc-lp: setting system clock to 1970-01-01 00:36:41 UTC (2201)
+
+[2026-10-20T11:34:12.119627+08:00] UART [    3.075363] usb_01_vb
+[2026-10-20T11:34:12.170942+08:00] UART us: disabling
+[    3.081149] can-3v3: disabling
+[    3.084235] wlan-en-regulator: disabling
+[    3.089407] mmc1: new DDR MMC card at address 0001
+[    3.094784] mmcblk mmc1:0001: Card claimed for testing.
+[    3.100430] ALSA device list:
+[    3.103420]   No soundcards found.
+[    3.107615] mmcblk1: mmc1:0001 DG4032 29.1 GiB 
+[    3.112585] mmcblk1boot0: mmc1:0001 DG4032 partition 1 4.00 MiB
+[    3.118871] mmcblk1boot1: mmc1:0001 DG4032 partition 2 4.00 MiB
+[    3.125033] mmcblk1rpm
+[2026-10-20T11:34:12.192833+08:00] UART b: mmc1:0001 DG4032 partition 3 4.00 MiB
+[    3.134544]  mmcblk1: p1 p2 p3 p4 < p5 p6 p7 >
+
+[2026-10-20T11:34:12.865302+08:00] UART [    3.796773] VFS: Mounted root (jffs2 filesystem) on device 31:3.
+[    3.803233] devtmpfs: mounted
+[    3.807055] Freeing unused kernel memory: 416K (80a18000 - 80a80000)
+
+[2026-10-20T11:34:19.788503+08:00] UART /et
+[2026-10-20T11:34:19.808962+08:00] UART c/init.d/rcS: line 277: /media/sda1/udisk/imx6ul_udisk: not found
+
+[2026-10-20T11:34:19.838837+08:00] UART cat: can't open '/test/udisk_log/udisk_sign': No such file or directory
+sh: 1: unknown operand
+
+Please press Enter to activate this console. 
+[2026-10-20T11:34:19.854913+08:00] UART 
+
+[2026-10-20T11:34:19.952667+08:00] UART root@imx6ul: # 
+[2026-10-20T11:34:19.953173+08:00] Linux console is available again.
+[2026-10-20T11:34:20.049776+08:00] COMMAND devmem 0x020D8008 32
+[2026-10-20T11:34:20.064093+08:00] UART devmem 0x020D8008 32; printf '\n__DDR_RPC_11__:%s\n' "$?"
+
+[2026-10-20T11:34:20.078649+08:00] UART 0x00000001
+
+__DDR_
+[2026-10-20T11:34:20.094662+08:00] UART RPC_11__:0
+root@imx6ul: # 
+[2026-10-20T11:34:20.553029+08:00] COMMAND devmem 0x020BC000 16
+[2026-10-20T11:34:20.558364+08:00] UART devmem 0x020BC000 16
+[2026-10-20T11:34:20.574331+08:00] UART ; printf '\n__DDR_RPC_12__:%s\n' "$?"
+
+[2026-10-20T11:34:20.590668+08:00] UART 0x0039
+
+__DDR_RPC_12__:0
+root@imx6ul: # 
+[2026-10-20T11:34:21.055383+08:00] COMMAND devmem 0x020BC004 16
+[2026-10-20T11:34:21.070067+08:00] UART devmem 0x020BC004 16; printf '\n__DDR_RPC_13__:%s\n' "$?"
+
+[2026-10-20T11:34:21.086015+08:00] UART 0x0010
+
+__DDR_RPC_13__:0
+root@imx6ul: # 
+[2026-10-20T11:34:21.556269+08:00] COMMAND ps
+[2026-10-20T11:34:21.565747+08:00] UART ps; printf '\n__DDR_RPC_14__:%s\n' "$?"
+
+[2026-10-20T11:34:21.628270+08:00] UART PID   USER     TIME   COMMAND
+    1 root       0:02 init
+    2 root       0:00 [kthreadd]
+    3 root       0:00 [ksoftirqd/0]
+    4 root       0:00 [kworker/0:0]
+    5 root       0:00 [kworker/0:0H]
+    6 root       0:00 [kworker/u2:0]
+    7 root       0:00 [rcu_preempt]
+    8 root       0:00 [rcu_sched]
+    9 root       0:00 [rcu_bh]
+   10 root       0:00 [migration/0]
+   11 root       0:00 [khelper]
+   12 root       0:00 [kdevtmpfs]
+   13 root       0:00 [perf]
+   14 root    
+[2026-10-20T11:34:21.671667+08:00] UART    0:00 [writeback]
+   15 root       0:00 [crypto]
+   16 root       0:00 [bioset]
+   17 root       0:00 [kblockd]
+   18 root       0:00 [kworker/0:1]
+   19 root       0:00 [rpciod]
+   20 root       0:00 [kswapd0]
+   21 root       0:00 [fsnotify_mark]
+   22 root       0:00 [nfsiod]
+   59 root       0:00 [pxp_dispatch]
+   60 root       0:00 [spi0]
+   61 root       0:00 [ci_otg]
+   62 root       0:00 [kworker/0:2]
+   63 root       0:00 [cfinteractive]
+   64 root       0:00 [irq/22
+[2026-10-20T11:34:21.714350+08:00] UART 3-mmc0]
+   65 root       0:00 [kworker/u2:1]
+   66 root       0:00 [irq/224-mmc1]
+   67 root       0:00 [ipv6_addrconf]
+   68 root       0:00 [krfcommd]
+   69 root       0:00 [deferwq]
+   70 root       0:00 [kworker/u2:2]
+   71 root       0:00 [irq/203-imx_the]
+   72 root       0:00 [mmcqd/1]
+   73 root       0:00 [mmcqd/1boot0]
+   74 root       0:00 [mmcqd/1boot1]
+   75 root       0:00 [mmcqd/1rpmb]
+   76 root       0:00 [jffs2_gcd_mtd3]
+   95 root       0:00 -/bin/sh
+  101 ro
+[2026-10-20T11:34:21.729443+08:00] UART ot       0:00 ps
+
+__DDR_RPC_14__:0
+root@imx6ul: # 
+[2026-10-20T11:34:31.062080+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:34:31.066907+08:00] UART cat /proc/uptime; p
+[2026-10-20T11:34:31.082601+08:00] UART rintf '\n__DDR_RPC_15__:%s\n' "$?"
+
+[2026-10-20T11:34:31.098622+08:00] UART 22.04 17.43
+
+__DDR_RPC_15__:0
+root@imx6ul: # 
+[2026-10-20T11:35:01.579389+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:35:01.587548+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_16__:%s\n' "$?"
+
+[2026-10-20T11:35:01.604107+08:00] UART 52.54 47.75
+
+__DDR_RPC_16__:0
+root@im
+[2026-10-20T11:35:01.620266+08:00] UART x6ul: # 
+[2026-10-20T11:35:32.094411+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:35:32.108681+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_17__:%s\n' "$?"
+
+[2026-10-20T11:35:32.124644+08:00] UART 83.06 78.24
+
+__DDR_RPC_17__:0
+root@imx6ul: # 
+[2026-10-20T11:36:02.612773+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:36:02.629910+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_18__:%s\n' "$?"
+
+[2026-10-20T11:36:02.646629+08:00] UART 113.58 108.74
+
+__DDR_RPC_18__:0
+root@imx6ul: # 
+[2026-10-20T11:36:18.074218+08:00] UART [  129.018175] random: nonblocking pool is initialized
+
+[2026-10-20T11:36:33.128667+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:36:33.136182+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_19__:%s\n' "$?
+[2026-10-20T11:36:33.152502+08:00] UART "
+144.09 139.23
+
+__DDR_RPC_19_
+[2026-10-20T11:36:33.167345+08:00] UART _:0
+root@imx6ul: # 
+[2026-10-20T11:37:03.643147+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:37:03.656351+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_20__:%s\n' "$?"
+
+[2026-10-20T11:37:03.672241+08:00] UART 174.61 169.73
+
+__DDR_RPC_20__:0
+root@imx6ul: # 
+[2026-10-20T11:37:34.158120+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:37:34.161696+08:00] UART cat /proc/uptime; pr
+[2026-10-20T11:37:34.177792+08:00] UART intf '\n__DDR_RPC_21__:%s\n' "$?"
+
+[2026-10-20T11:37:34.194090+08:00] UART 205.12 200.22
+
+__DDR_RPC_21__:0
+root@imx6ul: # 
+[2026-10-20T11:38:04.675787+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:38:04.683796+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_22__:%s\n' "$?"
+
+[2026-10-20T11:38:04.702153+08:00] UART 235.64 230.72
+
+__DDR_RPC_22__:0
+
+[2026-10-20T11:38:04.716953+08:00] UART root@imx6ul: # 
+[2026-10-20T11:38:35.191874+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:38:35.204659+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_23__:%s\n' "$?"
+
+[2026-10-20T11:38:35.220679+08:00] UART 266.15 261.21
+
+__DDR_RPC_23__:0
+root@imx6ul: # 
+[2026-10-20T11:39:05.708816+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:39:05.725762+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_24__:%s\n' "$?"
+
+[2026-10-20T11:39:05.741744+08:00] UART 296.67 291.71
+
+__DDR_RPC_24__:0
+root@imx6ul: # 
+[2026-10-20T11:39:36.224073+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:39:36.230701+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_25__:%s\n' "
+[2026-10-20T11:39:36.246786+08:00] UART $?"
+327.18 322.20
+
+__DDR_RP
+[2026-10-20T11:39:36.262791+08:00] UART C_25__:0
+root@imx6ul: # 
+[2026-10-20T11:40:06.737069+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:40:06.751927+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_26__:%s\n' "$?"
+
+[2026-10-20T11:40:06.767912+08:00] UART 357.69 352.69
+
+__DDR_RPC_26__:0
+root@imx6ul: # 
+[2026-10-20T11:40:37.252964+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:40:37.257943+08:00] UART cat /proc/uptime; print
+[2026-10-20T11:40:37.273516+08:00] UART f '\n__DDR_RPC_27__:%s\n' "$?"
+
+[2026-10-20T11:40:37.289795+08:00] UART 388.21 383.18
+
+__DDR_RPC_27__:0
+root@imx6ul: # 
+[2026-10-20T11:41:07.770631+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:41:07.779363+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_28__:%s\n' "$?"
+
+[2026-10-20T11:41:07.795314+08:00] UART 418.73 413.68
+
+__DDR_RPC_28__:0
+root@imx6u
+[2026-10-20T11:41:07.811314+08:00] UART l: # 
+[2026-10-20T11:41:38.289913+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:41:38.300707+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_29__:%s\n' "$?"
+
+[2026-10-20T11:41:38.317170+08:00] UART 449.25 444.18
+
+__DDR_RPC_29__:0
+root@imx6ul: # 
+[2026-10-20T11:42:08.803333+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:42:08.806186+08:00] UART cat /proc/up
+[2026-10-20T11:42:08.822013+08:00] UART time; printf '\n__DDR_RPC_30__:%s\n' "$?"
+
+[2026-10-20T11:42:08.838102+08:00] UART 479.76 474.67
+
+__DDR_RPC_30__:0
+root@imx6ul: # 
+[2026-10-20T11:42:39.317232+08:00] COMMAND cat /proc/uptime
+[2026-10-20T11:42:39.327290+08:00] UART cat /proc/uptime; printf '\n__DDR_RPC_31__:%s\n' "$?"
+
+[2026-10-20T11:42:39.343429+08:00] UART 510.27 505.16
+
+__DDR_RPC_31__:0
+root@imx6ul: # 
+[2026-10-20T11:42:55.634063+08:00] MONITOR ERROR KeyboardInterrupt()
+[2026-10-20T11:42:55.634173+08:00] COMMAND sync
+[2026-10-20T11:42:55.651311+08:00] UART sync; printf '\n__DDR_RPC_32__:%s\n' "$?"
+
+[2026-10-20T11:42:55.667216+08:00] UART 
+__DDR_RPC_32__:0
+root@imx6ul: # 
+[2026-10-20T11:42:56.135488+08:00] SUMMARY {"started": "2026-10-20T11:32:54.993570+08:00", "finished": "2026-10-20T11:42:56.134990+08:00", "reset_count": 1, "rounds": [{"number": 1, "pid": 141, "started": "2026-10-20T11:32:59.004498+08:00", "console": "/mnt/ddr_work/intermittent_1792467178_round1.console.log", "result": "interrupted_by_reset"}], "log": "/home/jihongxin/Documents/imx6ul/out/ddr-intermittent-observation.log"}

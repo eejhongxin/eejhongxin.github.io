@@ -1,0 +1,10 @@
+stress-ng: info:  [15301] setting to a 7390 second (2 hours, 3 mins, 10.00 secs) run per stressor
+stress-ng: info:  [15301] dispatching hogs: 7 cpu
+stress-ng: info:  [15304] cpu: CPU affinity probably set, this can affect CPU loading
+stress-ng: metrc: [15301] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s
+stress-ng: metrc: [15301]                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
+stress-ng: metrc: [15301] cpu             4229989   7210.23  40362.55      4.17       586.66         104.79
+stress-ng: info:  [15301] passed: 7: cpu (7)
+stress-ng: info:  [15301] failed: 0
+stress-ng: info:  [15301] skipped: 0
+stress-ng: info:  [15301] successful run completed in 7210.40s (2 hours, 10.40 secs)

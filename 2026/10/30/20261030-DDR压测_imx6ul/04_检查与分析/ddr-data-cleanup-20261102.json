@@ -1,0 +1,119 @@
+{
+  "date": "2026-11-02 Asia/Shanghai",
+  "scope": "local and Windows DDR test datasets only; board unchanged",
+  "kept_batches": [
+    {
+      "chip": "chip_0c3599d4",
+      "condition": "roomtemp",
+      "rounds": 8,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.9xVApI",
+      "path": "chip_0c3599d4/roomtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_0c3599d4",
+      "condition": "hightemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.pObVAK",
+      "path": "chip_0c3599d4/hightemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_0c3599d4",
+      "condition": "lowtemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.1fozbK",
+      "path": "chip_0c3599d4/lowtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "condition": "roomtemp",
+      "rounds": 8,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.nBn65H",
+      "path": "chip_3c3699d4/roomtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "condition": "hightemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.5f5VnI",
+      "path": "chip_3c3699d4/hightemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_3c3699d4",
+      "condition": "lowtemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.JOqVbI",
+      "path": "chip_3c3699d4/lowtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_483699d4",
+      "condition": "roomtemp",
+      "rounds": 8,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.XNsEnJ",
+      "path": "chip_483699d4/roomtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_483699d4",
+      "condition": "hightemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.3GlTVI",
+      "path": "chip_483699d4/hightemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    },
+    {
+      "chip": "chip_483699d4",
+      "condition": "lowtemp",
+      "rounds": 6,
+      "board_source": "/mnt/ddr_work/ddr_backup/previous.ZaOTYH",
+      "path": "chip_483699d4/lowtemp/ddr_all_test",
+      "original_source_sha256_manifest_verified": true
+    }
+  ],
+  "removed": [
+    {
+      "path": "/home/jihongxin/Documents/imx6ul/out/ddr-saved-post-chamber-20261102.before-cleanup",
+      "files": 346,
+      "bytes": 29144662
+    },
+    {
+      "path": "/mnt/hgfs/任务文档记录/20261030-DDR压测_imx6ul/03_测试数据/ddr-saved-post-chamber-20261102.before-cleanup",
+      "files": 346,
+      "bytes": 29144662
+    },
+    {
+      "path": "/home/jihongxin/Documents/imx6ul/out/ddr-saved-8round-cma0",
+      "files": 86,
+      "bytes": 10437090
+    },
+    {
+      "path": "/home/jihongxin/Documents/imx6ul/out/ddr-saved-temperature",
+      "files": 556,
+      "bytes": 40088968
+    },
+    {
+      "path": "/mnt/hgfs/任务文档记录/20261030-DDR压测_imx6ul/03_测试数据/ddr-saved-8round-cma0",
+      "files": 86,
+      "bytes": 10437090
+    },
+    {
+      "path": "/mnt/hgfs/任务文档记录/20261030-DDR压测_imx6ul/03_测试数据/ddr-saved-temperature",
+      "files": 556,
+      "bytes": 40088968
+    }
+  ],
+  "selected_raw_files_verified": 201,
+  "kept_bytes_each_copy": 25969956,
+  "deleted_categories": [
+    "12 interrupted archives",
+    "3 active snapshots",
+    "mixed export archives and transfer streams",
+    "duplicate old 8-round directories",
+    "earlier 5-round temperature datasets"
+  ]
+}

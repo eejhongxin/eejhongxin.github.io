@@ -1,57 +1,485 @@
-
-<!doctype html>
-<html lang="zh-CN">
-<head>
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head>
+  
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1a1440">
-  <meta name="description" content="使用 DHT11、51 单片机与 ESP8266 完成温湿度采集、阈值控制、云端同步和可视化展示。">
-  <meta property="og:title" content="单点采集温湿度显示及云端可视化数据同步 · 嵌入小屋">
-  <meta property="og:description" content="使用 DHT11、51 单片机与 ESP8266 完成温湿度采集、阈值控制、云端同步和可视化展示。">
-  <link rel="canonical" href="https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/">
-  <title>单点采集温湿度显示及云端可视化数据同步 · 嵌入小屋</title>
-  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
-  <link rel="stylesheet" href="/css/main.css">
-  <script defer src="/js/main.js"></script>
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/2.0.0" theme-name="Stellar" theme-version="2.0.0">
   
-<meta name="generator" content="Hexo 7.1.1"></head>
-<body>
-  <div class="aurora" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
-  <a class="skip-link" href="#main">跳到主要内容</a>
-  <header class="site-header shell">
-    <div class="glass header-inner">
-      <a class="brand" href="/" aria-label="嵌入小屋首页">嵌入小屋<span class="dot">.</span></a>
-      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false">菜单 <span aria-hidden="true">☰</span></button>
-      <nav class="nav" id="main-nav" aria-label="主导航">
-        
-          <a href="/">文章</a>
-        
-          <a href="/categories/">分类</a>
-        
-          <a href="/tags/">标签</a>
-        
-          <a href="/archives/">归档</a>
-        
-          <a href="/about/">关于</a>
-        
-      </nav>
-    </div>
+  
+  <meta name="generator" content="Hexo 8.1.2">
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title data-stellar-page-meta="">单点采集温湿度显示及云端可视化数据同步 - 嵌入手记</title>
+  <script data-stellar-script="core">
+    (function () {
+      var key = 'stellar:v2:leftbar-state';
+      var fallback = "expanded";
+      try {
+        var value = localStorage.getItem(key);
+        document.documentElement.dataset.leftbarState = value === 'collapsed' || value === 'expanded' ? value : fallback;
+      } catch (error) {
+        document.documentElement.dataset.leftbarState = fallback;
+      }
+    })();
+  </script>
+
+  <meta name="description" content="使用 DHT11、51 单片机与 ESP8266 完成温湿度采集、阈值控制、云端同步和可视化展示。" data-stellar-page-meta="">
+<meta property="og:type" content="article" data-stellar-page-meta="">
+<meta property="og:title" content="单点采集温湿度显示及云端可视化数据同步" data-stellar-page-meta="">
+<meta property="og:url" content="https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/" data-stellar-page-meta="">
+<meta property="og:site_name" content="嵌入手记" data-stellar-page-meta="">
+<meta property="og:description" content="使用 DHT11、51 单片机与 ESP8266 完成温湿度采集、阈值控制、云端同步和可视化展示。" data-stellar-page-meta="">
+<meta property="og:locale" content="zh_CN" data-stellar-page-meta="">
+<meta property="og:image" content="https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/01-system-overview.png" data-stellar-page-meta="">
+<meta property="article:author" content="eejhx" data-stellar-page-meta="">
+<meta property="article:published_time" content="2024-03-26T02:04:25.000Z" data-stellar-page-meta="">
+<meta property="article:modified_time" content="2024-03-26T02:04:25.000Z" data-stellar-page-meta="">
+<meta property="article:tag" content="esp8266" data-stellar-page-meta="">
+<meta property="article:tag" content="onenet云平台" data-stellar-page-meta="">
+<meta property="article:tag" content="wifi" data-stellar-page-meta="">
+<meta name="twitter:card" content="summary" data-stellar-page-meta="">
+<meta name="twitter:image" content="https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/01-system-overview.png" data-stellar-page-meta=""><meta name="twitter:title" content="单点采集温湿度显示及云端可视化数据同步" data-stellar-page-meta="">
+  
+  
+  <meta name="keywords" content="esp8266,onenet云平台,wifi" data-stellar-page-meta="">
+
+  <!-- feed -->
+  
+
+  <link rel="preload" href="/css/main.css?v=2.0.0" as="style">
+  <link rel="stylesheet" href="/css/main.css?v=2.0.0">
+  <style>:root{--text-loading:"正在加载";--text-loading-error:"加载失败，请稍后重试。"}</style>
+
+
+  
+    <link rel="shortcut icon" href="/images/site/logo.svg">
+  
+
+  
+
+  <script type="application/ld+json" data-stellar-page-meta="">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"eejhx","sameAs":[]},"dateCreated":"2024-03-26T10:04:25+08:00","dateModified":"2024-03-26T10:04:25+08:00","datePublished":"2024-03-26T10:04:25+08:00","description":"\n\n系统功能\n原理框图及说明\n主要电路说明、元件选择及参数计算\n\n复位与振荡电路\n显示电路\n按键电路\n温度湿度检测电路\nESP8266WIFI模块\nEEPROM电路\n\n总电路设计\n软件设计思路及框图\n\n软件设计思路及主流程图\n延时模块\nLCD12864显示模块\n按键扫描模块\nDHT11传感器数据获取模块\n显示温度界面\nESP8266WIFI发送模块\nEEPROM断电不丢失模块\n\n结果及测试分...","headline":"单点采集温湿度显示及云端可视化数据同步","mainEntityOfPage":{"@type":"WebPage","@id":"https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/"},"publisher":{"@type":"Organization","name":"eejhx","sameAs":[]},"url":"https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/","image":["/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/01-system-overview.png"],"keywords":"esp8266, onenet云平台, wifi","thumbnailUrl":"/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/01-system-overview.png"}</script>
+  <link rel="stylesheet" href="/fonts/noto-sans-sc/index.css"><link rel="stylesheet" href="/fonts/jetbrains-mono/index.css"><link rel="stylesheet" href="/css/learning.css">
+
+  <link rel="stylesheet" href="/css/stellar-icons.css?v=7c185ad1a9a79674">
+  <link rel="preload" as="script" href="/js/stellar-icons.js?v=39c6ac17e854ffe2">
+  
+  
+</head>
+<body data-page-type="content" data-page-layout="post" data-article-style="tech"><div data-stellar-runtime-region="" id="site-cover" class="site-cover"></div><div class="site-shell" id="start" data-regions="leftbar rightbar"><div class="site-workspace">
+<aside data-stellar-runtime-region="" id="leftbar-region" class="site-region site-region--leftbar" data-region="leftbar" aria-label="Leftbar"><div class="site-region__surface ui-surface"><div class="site-region__decoration" aria-hidden="true"></div><div class="site-region__viewport"><header class="site-region__header site-region__zone site-region__zone--top">
+    <div class="widget-instance widget-instance--brand" data-widget-id="leftbar:fixed:brand" data-presentation="leftbar" data-leftbar-rail="">
+<header class="brand-header brand-header--regular brand-header--site"><div class="brand-wrap"><a class="brand-image brand-image--plain" href="/"><img no-lazy="" src="/images/site/logo.svg" alt="" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></a><a class="brand-title" href="/"><div class="brand-name">嵌入手记</div><div class="brand-tagline cap">Linux · 嵌入式 · 系统实践</div></a></div><div class="brand-search">
+
+<div class="ui-collection" data-layout="list" data-variant="nav" data-density="auto">
+  
+    
+<button class="ui-collection__item ui-interactive card-hover card-hover--spotlight search-trigger has-hover-surface" type="button" title="搜索" aria-label="搜索" data-shell-action="open-search" data-search-instance="leftbar-brand-search" data-search-domain="blog" data-search-domain-label="博客" data-search-domain-blog="true">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Adapted from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3M3 13h3M3 18h8M16.83 13.83l3.76 3.76"></path><circle cx="14" cy="11" r="4"></circle></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">搜索</span>
+      
+      
+    </span>
+  
+  <kbd class="search-shortcut" aria-hidden="true">⌘K</kbd>
+
+  
+</button>
+
+  
+</div>
+
+
+</div></header>
+</div>
   </header>
+  <div class="site-region__body site-region__zone site-region__zone--body">
+    <div class="widget-instance widget-instance--menu" data-widget-id="leftbar:fixed:menu" data-presentation="leftbar" data-leftbar-rail="">
+
+
+<nav class="menu dis-select">
+<div class="ui-collection" data-layout="list" data-variant="nav" data-density="auto">
   
-<div class="layout shell interior-layout reading-layout">
-  <main id="main">
-    <article class="glass article">
-      <header class="article-header"><a class="breadcrumb" href="/">← 返回文章</a><nav class="article-categories" aria-label="文章分类"><a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/">51单片机</a></nav><h1 class="article-title">单点采集温湿度显示及云端可视化数据同步</h1><div class="article-meta"><time datetime="2024-03-26">2024 年 03 月 26 日</time><span class="meta-divider">·</span><span>eejhx</span></div></header>
-      <details class="mobile-toc"><summary>本篇目录 <span aria-hidden="true">＋</span></summary><nav class="article-toc" aria-label="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD"><span class="toc-text">系统功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%E6%A1%86%E5%9B%BE%E5%8F%8A%E8%AF%B4%E6%98%8E"><span class="toc-text">原理框图及说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%94%B5%E8%B7%AF%E8%AF%B4%E6%98%8E-%E5%85%83%E4%BB%B6%E9%80%89%E6%8B%A9%E5%8F%8A%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="toc-text">主要电路说明、元件选择及参数计算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E4%BD%8D%E4%B8%8E%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF"><span class="toc-text">复位与振荡电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E7%94%B5%E8%B7%AF"><span class="toc-text">显示电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E9%94%AE%E7%94%B5%E8%B7%AF"><span class="toc-text">按键电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%A9%E5%BA%A6%E6%B9%BF%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%94%B5%E8%B7%AF"><span class="toc-text">温度湿度检测电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#esp8266wifi%E6%A8%A1%E5%9D%97"><span class="toc-text">ESP8266WIFI模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eeprom%E7%94%B5%E8%B7%AF"><span class="toc-text">EEPROM电路</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="toc-text">总电路设计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF%E5%8F%8A%E6%A1%86%E5%9B%BE"><span class="toc-text">软件设计思路及框图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF%E5%8F%8A%E4%B8%BB%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-text">软件设计思路及主流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E6%97%B6%E6%A8%A1%E5%9D%97"><span class="toc-text">延时模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lcd12864%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%9D%97"><span class="toc-text">LCD12864显示模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E9%94%AE%E6%89%AB%E6%8F%8F%E6%A8%A1%E5%9D%97"><span class="toc-text">按键扫描模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dht11%E4%BC%A0%E6%84%9F%E5%99%A8%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E6%A8%A1%E5%9D%97"><span class="toc-text">DHT11传感器数据获取模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E6%B8%A9%E5%BA%A6%E7%95%8C%E9%9D%A2"><span class="toc-text">显示温度界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#esp8266wifi%E5%8F%91%E9%80%81%E6%A8%A1%E5%9D%97"><span class="toc-text">ESP8266WIFI发送模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eeprom%E6%96%AD%E7%94%B5%E4%B8%8D%E4%B8%A2%E5%A4%B1%E6%A8%A1%E5%9D%97"><span class="toc-text">EEPROM断电不丢失模块</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E5%8F%8A%E6%B5%8B%E8%AF%95%E5%88%86%E6%9E%90"><span class="toc-text">结果及测试分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF"><span class="toc-text">硬件电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%AE%B0%E5%BD%95%E5%8F%8A%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="toc-text">测试记录及结果分析</span></a></li></ol></li></ol></nav></details>
-      <div class="article-body">
-<h1 id="系统功能"><span>系统功能</span></h1>
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight is-active" href="/" title="文章" aria-current="page">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"></path><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"></path></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">文章</span>
+      
+      
+    </span>
+  
+  
+  <span class="ui-collection__indicator"></span>
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/learning/" title="学习">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="m12 16.068l-3.771 3.905c-.54.559-.81.839-1.04.935c-.52.22-1.099.032-1.373-.448c-.12-.21-.158-.59-.232-1.35c-.043-.43-.064-.644-.128-.824a1.43 1.43 0 0 0-.835-.864c-.173-.067-.38-.089-.795-.133c-.734-.077-1.101-.116-1.305-.24c-.463-.284-.646-.883-.433-1.422c.094-.237.364-.517.904-1.076L5.456 12l1.238-1.238zl5.306-5.306L18.544 12l2.464 2.55c.54.56.81.84.904 1.076c.213.54.03 1.139-.433 1.423c-.204.124-.57.163-1.305.24c-.414.044-.622.066-.795.133c-.389.149-.69.462-.835.864c-.064.18-.085.394-.128.823c-.075.76-.112 1.14-.232 1.351c-.274.48-.853.669-1.374.448c-.228-.096-.498-.376-1.038-.935z" opacity=".5"></path><path fill="currentColor" fill-rule="evenodd" d="M12 16a7 7 0 1 0 0-14a7 7 0 0 0 0 14m0-10c-.284 0-.474.34-.854 1.023l-.098.176c-.108.194-.162.29-.246.354c-.085.064-.19.088-.4.135l-.19.044c-.738.167-1.107.25-1.195.532s.164.577.667 1.165l.13.152c.143.167.215.25.247.354s.021.215 0 .438l-.02.203c-.076.785-.114 1.178.115 1.352c.23.174.576.015 1.267-.303l.178-.082c.197-.09.295-.135.399-.135s.202.045.399.135l.178.082c.691.319 1.037.477 1.267.303s.191-.567.115-1.352l-.02-.203c-.021-.223-.032-.334 0-.438s.104-.187.247-.354l.13-.152c.503-.588.755-.882.667-1.165c-.088-.282-.457-.365-1.195-.532l-.19-.044c-.21-.047-.315-.07-.4-.135c-.084-.064-.138-.16-.246-.354l-.098-.176C12.474 6.34 12.284 6 12 6" clip-rule="evenodd"></path></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">学习</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/resources/" title="资料">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path d="M2 6.94975C2 6.06722 2 5.62595 2.06935 5.25839C2.37464 3.64031 3.64031 2.37464 5.25839 2.06935C5.62595 2 6.06722 2 6.94975 2C7.33642 2 7.52976 2 7.71557 2.01738C8.51665 2.09229 9.27652 2.40704 9.89594 2.92051C10.0396 3.03961 10.1763 3.17633 10.4497 3.44975L11 4C11.8158 4.81578 12.2237 5.22367 12.7121 5.49543C12.9804 5.64471 13.2651 5.7626 13.5604 5.84678C14.0979 6 14.6747 6 15.8284 6H16.2021C18.8345 6 20.1506 6 21.0062 6.76946C21.0849 6.84024 21.1598 6.91514 21.2305 6.99383C22 7.84935 22 9.16554 22 11.7979V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V6.94975Z" opacity=".5"></path><path d="M20 6.23751C19.9992 5.94016 19.9949 5.76263 19.9746 5.60842C19.7974 4.26222 18.7381 3.2029 17.3919 3.02567C17.1969 3 16.9647 3 16.5003 3H9.98828C10.1042 3.10392 10.2347 3.23445 10.45 3.44975L11.0003 4C11.8161 4.81578 12.2239 5.22367 12.7124 5.49543C12.9807 5.64471 13.2653 5.7626 13.5606 5.84678C14.0982 6 14.675 6 15.8287 6H16.2024C17.9814 6 19.1593 6 20 6.23751Z"></path><path fill-rule="evenodd" d="M12.25 10C12.25 9.58579 12.5858 9.25 13 9.25H18C18.4142 9.25 18.75 9.58579 18.75 10C18.75 10.4142 18.4142 10.75 18 10.75H13C12.5858 10.75 12.25 10.4142 12.25 10Z" clip-rule="evenodd"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">资料</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/archives/" title="归档">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path d="M6.94028 2C7.35614 2 7.69326 2.32421 7.69326 2.72414V4.18487C8.36117 4.17241 9.10983 4.17241 9.95219 4.17241H13.9681C14.8104 4.17241 15.5591 4.17241 16.227 4.18487V2.72414C16.227 2.32421 16.5641 2 16.98 2C17.3958 2 17.733 2.32421 17.733 2.72414V4.24894C19.178 4.36022 20.1267 4.63333 20.8236 5.30359C21.5206 5.97385 21.8046 6.88616 21.9203 8.27586L22 9H2.92456H2V8.27586C2.11571 6.88616 2.3997 5.97385 3.09665 5.30359C3.79361 4.63333 4.74226 4.36022 6.1873 4.24894V2.72414C6.1873 2.32421 6.52442 2 6.94028 2Z"></path><path d="M21.9995 14.0001V12.0001C21.9995 11.161 21.9963 9.66527 21.9834 9H2.00917C1.99626 9.66527 1.99953 11.161 1.99953 12.0001V14.0001C1.99953 17.7713 1.99953 19.6569 3.1711 20.8285C4.34267 22.0001 6.22829 22.0001 9.99953 22.0001H13.9995C17.7708 22.0001 19.6564 22.0001 20.828 20.8285C21.9995 19.6569 21.9995 17.7713 21.9995 14.0001Z" opacity=".5"></path><path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z"></path><path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z"></path><path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z"></path><path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z"></path><path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z"></path><path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">归档</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/about/" title="关于">
+  
+  <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20" opacity=".5"></path><path d="M12 6a3 3 0 1 0 0 6a3 3 0 0 0 0-6m0 7.5c-3.04 0-5.5 1.57-5.5 3.5c0 .65.28 1.26.77 1.77A7.96 7.96 0 0 0 12 20.5a7.96 7.96 0 0 0 4.73-1.73c.49-.51.77-1.12.77-1.77c0-1.93-2.46-3.5-5.5-3.5"></path></g></svg></span>
+  
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">关于</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+</div>
+
+</nav>
+
+</div>
+    <div class="widgets widget-stack widget-stack--leftbar widget-stack--body"><div class="widget-instance widget-instance--recent" data-widget-id="leftbar:1:recent" data-presentation="leftbar">
+
+<widget class="widget-wrapper recent-widget">
+  
+    <div class="widget-header dis-select">
+      <span class="name">最近更新</span>
+      
+    </div>
+  
+  <div class="widget-body"><div class="ui-collection" data-layout="list" data-variant="nav" data-density="compact">
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/11/12/docker%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/" title="docker部署教程">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">D</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">docker部署教程</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/11/12/quic-5G%E8%81%9A%E5%90%88%E5%AD%A6%E4%B9%A0/" title="quic-5G聚合学习">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">Q</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">quic-5G聚合学习</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/11/12/i-MX6ULL%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" title="i.MX6ULL启动流程">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">I</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">i.MX6ULL启动流程</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/11/04/20261104-xenomai%E5%AE%9E%E6%97%B6%E6%80%A7%E6%B5%8B%E8%AF%95_PWM_IMU/" title="Xenomai 实时性测试与 PWM IMU 验证">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">X</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">Xenomai 实时性测试与 PWM IMU 验证</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/11/02/%E4%BC%A0%E8%BE%93%E6%96%B9%E5%BC%8F%E8%AE%B0%E5%BD%95/" title="Linux 串口文件传输方式记录">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">L</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">Linux 串口文件传输方式记录</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/10/30/20261030-DDR%E5%8E%8B%E6%B5%8B_imx6ul/" title="i.MX6UL P5 DDR 压测与数据归档">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">I</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">i.MX6UL P5 DDR 压测与数据归档</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/10/15/20261015-MTP%E5%BC%80%E5%90%AF%E6%8F%90%E9%80%9F/" title="RK3576 USB Gadget 与 MTP 启动提速">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">R</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">RK3576 USB Gadget 与 MTP 启动提速</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/10/15/20261015-UART%E5%8E%8B%E6%B5%8B_%E7%BA%BF%E7%A8%8B%E7%BB%91%E6%A0%B8/" title="RK3576 UART 压测与 CPU 线程绑核记录">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">R</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">RK3576 UART 压测与 CPU 线程绑核记录</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/10/09/20261009-MTP%E9%A9%B1%E5%8A%A8%E6%8F%90%E9%80%9F/" title="RK3576 MTP 传输提速与 uMTPrd 升级">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">R</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">RK3576 MTP 传输提速与 uMTPrd 升级</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+    
+<a class="ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/2026/09/20/20260920-USB%E5%BF%AB%E5%85%85%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3/" title="X16 USB Type-C 与 PD 快充开发记录">
+  
+  
+  <span class="ui-collection__initial" aria-hidden="true">X</span>
+  
+    <span class="ui-collection__content">
+      
+      <span class="ui-collection__title">X16 USB Type-C 与 PD 快充开发记录</span>
+      
+      
+    </span>
+  
+  
+  
+</a>
+
+  
+</div></div>
+  
+</widget>
+
+
+</div></div>
+  </div>
+  <footer class="site-region__footer">
+    
+    <div class="site-region__system ui-collection" data-layout="inline" data-variant="nav" data-density="compact">
+      <div class="site-region__settings"><div class="widget-instance widget-instance--settings" data-widget-id="leftbar:fixed:settings" data-presentation="leftbar" data-leftbar-rail="">
+<a class="settings-widget ui-collection__item ui-interactive card-hover card-hover--spotlight" href="/settings/" data-profile-provider="" data-profile-identity-enabled="false" data-profile-fallback-avatar="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg" data-settings-placement="leftbar" data-settings-label="设置" aria-label="设置" title="设置">
+  <span class="settings-widget__avatar" aria-hidden="true">
+    <span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><path fill-rule="evenodd" d="M12.4277 2C11.3139 2 10.2995 2.6007 8.27081 3.80211L7.58466 4.20846C5.55594 5.40987 4.54158 6.01057 3.98466 7C3.42773 7.98943 3.42773 9.19084 3.42773 11.5937V12.4063C3.42773 14.8092 3.42773 16.0106 3.98466 17C4.54158 17.9894 5.55594 18.5901 7.58466 19.7915L8.27081 20.1979C10.2995 21.3993 11.3139 22 12.4277 22C13.5416 22 14.5559 21.3993 16.5847 20.1979L17.2708 19.7915C19.2995 18.5901 20.3139 17.9894 20.8708 17C21.4277 16.0106 21.4277 14.8092 21.4277 12.4063V11.5937C21.4277 9.19084 21.4277 7.98943 20.8708 7C20.3139 6.01057 19.2995 5.40987 17.2708 4.20846L16.5847 3.80211C14.5559 2.6007 13.5416 2 12.4277 2Z" clip-rule="evenodd" opacity=".5"></path><path d="M12.4277 8.25C10.3567 8.25 8.67773 9.92893 8.67773 12C8.67773 14.0711 10.3567 15.75 12.4277 15.75C14.4988 15.75 16.1777 14.0711 16.1777 12C16.1777 9.92893 14.4988 8.25 12.4277 8.25Z"></path></g></svg></span>
+  </span>
+  <span class="settings-widget__name ui-collection__title">设置</span>
+</a>
+</div></div>
+      <button type="button" class="leftbar-state-toggle ui-collection__item ui-interactive card-hover card-hover--spotlight is-icon-only" aria-label="Collapse leftbar" aria-expanded="true" data-shell-action="toggle-leftbar"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M3.172 4.172C2 5.343 2 7.229 2 11v2c0 3.771 0 5.657 1.172 6.828S6.229 21 10 21h5V3h-5C6.229 3 4.343 3 3.172 4.172" clip-rule="evenodd" opacity=".5"></path><path fill="currentColor" d="M5.5 9.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm1 4a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5zM22 13v-2c0-3.771 0-5.657-1.172-6.828c-.974-.975-3.192-1.139-5.828-1.166v17.988c2.636-.027 4.854-.191 5.828-1.166C22 18.657 22 16.771 22 13"></path></svg></span></button>
+    </div>
+  </footer></div></div></aside>
+<main data-stellar-runtime-region="" class="site-main" id="main">
+
+
+<div class="article-banner-wrap"><div class="article banner top">
+  <div class="content">
+    
+    <div class="top bread-nav footnote"><div class="top-row"><div class="left" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/">51单片机</a>
+</div></div><div class="meta-row">
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-03-26T02:04:25.000Z">2024-03-26</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-03-26T02:04:25.000Z">2024-03-26</time></span></div>
+</div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>单点采集温湿度显示及云端可视化数据同步</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div></div>
+<article class="md-text content"><!-- toc -->
+<ul>
+<li><a href="#系统功能">系统功能</a></li>
+<li><a href="#原理框图及说明">原理框图及说明</a></li>
+<li><a href="#主要电路说明-元件选择及参数计算">主要电路说明、元件选择及参数计算</a>
+<ul>
+<li><a href="#复位与振荡电路">复位与振荡电路</a></li>
+<li><a href="#显示电路">显示电路</a></li>
+<li><a href="#按键电路">按键电路</a></li>
+<li><a href="#温度湿度检测电路">温度湿度检测电路</a></li>
+<li><a href="#esp8266wifi模块">ESP8266WIFI模块</a></li>
+<li><a href="#eeprom电路">EEPROM电路</a></li>
+</ul></li>
+<li><a href="#总电路设计">总电路设计</a></li>
+<li><a href="#软件设计思路及框图">软件设计思路及框图</a>
+<ul>
+<li><a href="#软件设计思路及主流程图">软件设计思路及主流程图</a></li>
+<li><a href="#延时模块">延时模块</a></li>
+<li><a href="#lcd12864显示模块"><code>LCD12864</code>显示模块</a></li>
+<li><a href="#按键扫描模块">按键扫描模块</a></li>
+<li><a href="#dht11传感器数据获取模块">DHT11传感器数据获取模块</a></li>
+<li><a href="#显示温度界面">显示温度界面</a></li>
+<li><a href="#esp8266wifi发送模块">ESP8266WIFI发送模块</a></li>
+<li><a href="#eeprom断电不丢失模块">EEPROM断电不丢失模块</a></li>
+</ul></li>
+<li><a href="#结果及测试分析">结果及测试分析</a>
+<ul>
+<li><a href="#硬件电路">硬件电路</a></li>
+<li><a href="#测试记录及结果分析">测试记录及结果分析</a></li>
+<li><a href="#相关资料">相关资料</a></li>
+</ul></li>
+</ul>
+<!-- tocstop -->
+<h1><span id="系统功能">系统功能</span></h1>
 <p>通过温湿度传感器DHT11采集温、湿度，能够通过显示单元显示出温、湿度，并控制继电器。<br>
 1. 开机液晶屏上显示姓名、学号3秒。<br> 2.
 显示当前温、湿度和设定的温度、湿度上下限。<br>  
 温度测量范围：<code>0℃~50℃</code><br>  
 温度测量误差：<code>±2℃</code><br>  
 湿度测量范围：<code>20%~95%</code><br>  
-湿度测量误差： <code>±5%</code><br>  
+湿度测量误差：&nbsp;<code>±5%</code><br>  
 测量精度：<code>±1℃，±1%</code><br>   测量数值均为整数<br> 3.
 当温度或者湿度超过上下限时启动继电器带动风扇。<br> 4.
 可以通过矩阵键盘调节温度、湿度上下限。<br>  
@@ -63,13 +491,13 @@
 单片机与上位机进行通信，通过单片机上位机实时显示获取到的温湿度数据。<br>
 8. 通过微信小程序在后台对温度、湿度信息进行监测。<br></p>
 <hr>
-<h1 id="原理框图及说明"><span>原理框图及说明</span></h1>
+<h1><span id="原理框图及说明">原理框图及说明</span></h1>
 <p><strong>测量原理</strong></p>
 根据设计任务，设计如下框图：<br>
 <!-- 原图床失效后，插图恢复自原项目报告“图1、原理框图”（word/media/image7.png）：https://github.com/qqaz1234/Collect-temperature-and-humidity-display-and-cloud-data-storage/blob/a4aed8dc7e1a77b7a07d336e1120a56f8fcb0b15/单片机设计报告.docx -->
 <center>
-<img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="/images/posts/temperature-humidity/01-system-overview.png" alt="原理框图（原项目设计报告插图）">
+<img class="lazy" style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/01-system-overview.png" alt="原理框图（原项目设计报告插图）" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <br>
 <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -100,8 +528,8 @@
 <li>当整个系统断电后，再次打开单片机系统会自动保存之前设置的温度和湿度上下限。<br></li>
 </ol>
 <hr>
-<h1 id="主要电路说明-元件选择及参数计算"><span>主要电路说明、元件选择及参数计算</span></h1>
-<table>
+<h1><span id="主要电路说明-元件选择及参数计算">主要电路说明、元件选择及参数计算</span></h1>
+<div class="md-table-scroll"><table>
 <thead>
 <tr class="header">
 <th style="text-align: center;">内部模块</th>
@@ -146,8 +574,8 @@
 <td style="text-align: center;">1</td>
 </tr>
 </tbody>
-</table>
-<table>
+</table></div>
+<div class="md-table-scroll"><table>
 <thead>
 <tr class="header">
 <th style="text-align: center;">外部资料</th>
@@ -172,11 +600,11 @@
 <td style="text-align: center;">1</td>
 </tr>
 </tbody>
-</table>
-<h2 id="复位与振荡电路"><span>复位与振荡电路</span></h2>
+</table></div>
+<h2><span id="复位与振荡电路">复位与振荡电路</span></h2>
 <p>复位电路如下图所示，由C14和R9构成。由于51单片机为低电平复位，图示电路利用电容的特性，在刚刚外加5V电源时RST脚的电压为低。时间常数=RC=1000mS，满足芯片复位要求。由于电压为5V，可选择耐压6.3V的电解电容即可。<br></p>
 <figure>
-<img src="/images/posts/temperature-humidity/02-reset-circuit.png" alt="image-20240327143812219">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/02-reset-circuit.png" alt="image-20240327143812219" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240327143812219</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -184,18 +612,18 @@
 </center>
 <p>振荡电路按照说明书的推荐，选择12MHz晶体，C7、C8选择33pF瓷片电容。</p>
 <figure>
-<img src="/images/posts/temperature-humidity/03-oscillator-circuit.png" alt="image-20240327143825064">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/03-oscillator-circuit.png" alt="image-20240327143825064" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240327143825064</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 振荡电路
 </center>
-<h2 id="显示电路"><span>显示电路</span></h2>
+<h2><span id="显示电路">显示电路</span></h2>
 <p>经过大量的测试和调研，最终我的显示元件选择20引脚的12864液晶显示屏（128X64显示分辨率为128×64，内置8192个16<em>16点汉字，和128个16</em>8点ASCII字符集。利用该模块灵活的接口方式和简单、方便的操作指令。可以显示8×4行16×16点阵的汉字。也可完成图形显示），这里把各个引脚的功能以及连接方式做成了一个表格，以便直观地显示，通过51单片机上自带的可调电阻来调节12864的背光。</p>
 <center style="color:#C0C0C0;text-decoration:underline">
 LCD12864引脚功能及接法
 </center>
-<table>
+<div class="md-table-scroll"><table>
 <colgroup>
 <col style="width: 10%">
 <col style="width: 11%">
@@ -248,8 +676,8 @@ LCD12864引脚功能及接法
 <td style="text-align: center;">P0^3</td>
 </tr>
 </tbody>
-</table>
-<table style="width:100%;">
+</table></div>
+<div class="md-table-scroll"><table style="width:100%;">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 6%">
@@ -302,12 +730,12 @@ LCD12864引脚功能及接法
 <td style="text-align: center;">GND</td>
 </tr>
 </tbody>
-</table>
-<p><img src="/images/posts/temperature-humidity/04-lcd-circuit.jpg"></p>
+</table></div>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/04-lcd-circuit.jpg" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></p>
 <center style="color:#C0C0C0;text-decoration:underline">
 显示电路
 </center>
-<h2 id="按键电路"><span>按键电路</span></h2>
+<h2><span id="按键电路">按键电路</span></h2>
 <p>由于89C52的P3口内部有上拉电阻，为简化电路，即当K1没有按下时，P3.1=1，当K1按下时，P3.1=0。<br></p>
 <p>矩阵键盘本质是使用8个io口来进行16个按键的控制读取，可以减小io口的使用，用4条I/O线作为行线，4条I/O线作为列线组成的键盘。在行线和列线的每个交叉点上，设置一个按键。而这样的按键中按键的个数是4
 X
@@ -315,7 +743,7 @@ X
 <center style="color:#C0C0C0;text-decoration:underline">
 独立按键接口
 </center>
-<table>
+<div class="md-table-scroll"><table>
 <thead>
 <tr class="header">
 <th>K1</th>
@@ -332,21 +760,21 @@ X
 <td>P3.3</td>
 </tr>
 </tbody>
-</table>
-<p><img src="/images/posts/temperature-humidity/05-independent-keys.jpg"></p>
+</table></div>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/05-independent-keys.jpg" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></p>
 <center style="color:#C0C0C0;text-decoration:underline">
 独立按键电路
 </center>
 <figure>
-<img src="/images/posts/temperature-humidity/06-matrix-keys.png" alt="image-20240327143902820">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/06-matrix-keys.png" alt="image-20240327143902820" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240327143902820</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 矩阵按键电路
 </center>
-<h2 id="温度湿度检测电路"><span>温度湿度检测电路</span></h2>
+<h2><span id="温度湿度检测电路">温度湿度检测电路</span></h2>
 <figure>
-<img src="/images/posts/temperature-humidity/07-dht11-circuit.png" alt="image-20240327144442514">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/07-dht11-circuit.png" alt="image-20240327144442514" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240327144442514</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -361,7 +789,7 @@ X
 <p>单片机发送开始信号结束后,延时等待20-40us后,切换为输入状态，等待DHT11的80us低电平信号结束，然后判断DHT11是否是否发出
 80us 的高电平；如果是，即可开始采集数据。</p>
 <figure>
-<img src="/images/posts/temperature-humidity/08-dht11-acquisition-timing.png" alt="image-20240327144815458">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/08-dht11-acquisition-timing.png" alt="image-20240327144815458" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240327144815458</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -372,14 +800,14 @@ X
 us的高电平。当DHT11输出数字1时， 单片机读取到的信号为50
 us的低电平，之后为70 us的高电平。</p>
 <figure>
-<img src="/images/posts/temperature-humidity/09-dht11-bit-zero-timing.png" alt="image-20240329171427862">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/09-dht11-bit-zero-timing.png" alt="image-20240329171427862" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240329171427862</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 数字0的时序图
 </center>
 <figure>
-<img src="/images/posts/temperature-humidity/10-dht11-bit-one-timing.png" alt="image-20240329171440210">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/10-dht11-bit-one-timing.png" alt="image-20240329171440210" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240329171440210</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -389,15 +817,15 @@ us的低电平，之后为70 us的高电平。</p>
 <p>用户MCU发送一次开始信号后,DHT11从低功耗模式转换到高速模式,等待主机开始信号结束后,DHT11发送响应信号,送出40bit的数据,并触发一次信号采集,用户可选择读取部分数据。</p>
 <p>从模式下,DHT11接收到开始信号触发一次温湿度采集,如果没有接收到主机发送开始信号,DHT11不会主动进行温湿度采集。当一次完整的采集数据后，DHT11会转换到低速模式。</p>
 <figure>
-<img src="/images/posts/temperature-humidity/11-dht11-overall-timing.png" alt="image-20240329171538449">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/11-dht11-overall-timing.png" alt="image-20240329171538449" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240329171538449</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 总时序图
 </center>
-<h2 id="esp8266wifi模块"><span>ESP8266WIFI模块</span></h2>
-<p>ESP8266是一款高性能的WIFI串口模块，内部集成<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=MCU&amp;spm=1001.2101.3001.7020">MCU</a>能实现单片机之间串口通信，是目前使用最广泛的一种WIFI模块之一。接线时只需要将RXD、TXD、GND、VCC这4个引脚，分别和USB转TTL模块的TXD、RXD、GND、VCC相连接。</p>
-<p><img src="/images/posts/temperature-humidity/12-esp8266-circuit.png"></p>
+<h2><span id="esp8266wifi模块">ESP8266WIFI模块</span></h2>
+<p>ESP8266是一款高性能的WIFI串口模块，内部集成<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=MCU&amp;spm=1001.2101.3001.7020" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>MCU</a>能实现单片机之间串口通信，是目前使用最广泛的一种WIFI模块之一。接线时只需要将RXD、TXD、GND、VCC这4个引脚，分别和USB转TTL模块的TXD、RXD、GND、VCC相连接。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/12-esp8266-circuit.png" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></p>
 <center style="color:#C0C0C0;text-decoration:underline">
 ESP8266原理图
 </center>
@@ -418,16 +846,16 @@ ESP8266原理图
 <p>Content-Length:21 ——传输的数据长度</p>
 <p>{"temp":temp,"humi":humi} ——传输的数据</p>
 <figure>
-<img src="/images/posts/temperature-humidity/13-esp8266-at-commands.png" alt="image-20240329173732911">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/13-esp8266-at-commands.png" alt="image-20240329173732911" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240329173732911</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 ESP8266常用指令集
 </center>
-<h2 id="eeprom电路"><span>EEPROM电路</span></h2>
+<h2><span id="eeprom电路">EEPROM电路</span></h2>
 <p>EEPROM电路的主要部分为AT24C02，原理图如下所示。</p>
 <figure>
-<img src="/images/posts/temperature-humidity/14-eeprom-circuit.png" alt="image-20240329172256085">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/14-eeprom-circuit.png" alt="image-20240329172256085" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240329172256085</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -443,31 +871,31 @@ GND，所以器件地址为1010000，即
 1，此时读器件地址为 0XA1。开发板上我们也将 WP 引脚直接接在 GND
 上，此时芯片允许数据正常读写。</p>
 <figure>
-<img src="/images/posts/temperature-humidity/15-at24c02-format.png" alt="image-20240329172539074">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/15-at24c02-format.png" alt="image-20240329172539074" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240329172539074</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 AT24C02的芯片格式
 </center>
 <hr>
-<h1 id="总电路设计"><span>总电路设计</span></h1>
+<h1><span id="总电路设计">总电路设计</span></h1>
 <figure>
-<img src="/images/posts/temperature-humidity/16-overall-schematic.png" alt="image-20240329172640045">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/16-overall-schematic.png" alt="image-20240329172640045" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240329172640045</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 总电路硬件连接图
 </center>
 <figure>
-<img src="/images/posts/temperature-humidity/17-assembled-hardware.png" alt="image-20240329172701440">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/17-assembled-hardware.png" alt="image-20240329172701440" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240329172701440</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 总电路硬件实物图
 </center>
 <hr>
-<h1 id="软件设计思路及框图"><span>软件设计思路及框图</span></h1>
-<h2 id="软件设计思路及主流程图"><span>软件设计思路及主流程图</span></h2>
+<h1><span id="软件设计思路及框图">软件设计思路及框图</span></h1>
+<h2><span id="软件设计思路及主流程图">软件设计思路及主流程图</span></h2>
 <p>根据题目的设计要求以及我自己附加的功能，我采用定时器0和定时器1作为时钟数据源，定时器0每用来完成功能1姓名学号显示3s，定时器1用来对ESP8266和II2C进行初始化并实现发送数据、存储数据以及初始化数据线的功能。设置温湿度、显示温湿度信息和上下限、继电器以及直流电机的工作、矩阵键盘扫描、比较当前数据和设定阈值的差别、发送温湿度数据等全部放在主程序中实现。</p>
 <p>温湿度获取部分设置数据缓冲区，DHT11传感器获取的温湿度信息直接送入缓冲区，由程序完成动态扫描。</p>
 <p><strong>设计的全局变量</strong></p>
@@ -484,21 +912,21 @@ AT24C02的芯片格式
 <ol type="1">
 <li>LCD端口</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sbit LCD_RS  =  P2^<span class="number">6</span>;       <span class="comment">//寄存器选择输入</span></span><br><span class="line">sbit LCD_RW  =  P2^<span class="number">5</span>;       <span class="comment">//液晶读/写控制</span></span><br><span class="line">sbit LCD_EN  =  P2^<span class="number">7</span>;       <span class="comment">//液晶使能控制</span></span><br><span class="line">sbit LCD_PSB =  P3^<span class="number">2</span>;       <span class="comment">//串/并方式控制</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sbit LCD_RS  =  P2^<span class="number">6</span>;       <span class="comment">//寄存器选择输入</span></span><br><span class="line">sbit LCD_RW  =  P2^<span class="number">5</span>;       <span class="comment">//液晶读/写控制</span></span><br><span class="line">sbit LCD_EN  =  P2^<span class="number">7</span>;       <span class="comment">//液晶使能控制</span></span><br><span class="line">sbit LCD_PSB =  P3^<span class="number">2</span>;       <span class="comment">//串/并方式控制</span></span><br></pre></td></tr></tbody></table></figure>
 <ol start="2" type="1">
 <li>DHT11端口</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit Data=P3^<span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit Data=P3^<span class="number">6</span>;</span><br></pre></td></tr></tbody></table></figure>
 <ol start="3" type="1">
 <li>继电器端口</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit wind=P2^<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit wind=P2^<span class="number">1</span>;</span><br></pre></td></tr></tbody></table></figure>
 <ol start="4" type="1">
 <li>蜂鸣器端口</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>;</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>定义的端口</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LCD_data  P0   ——LCD数据口</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard  P1   ——定义矩阵键盘</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UART_REC_LEN  10  ——定义ESP8266最大接收字节数</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LCD_data  P0   ——LCD数据口</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard  P1   ——定义矩阵键盘</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UART_REC_LEN  10  ——定义ESP8266最大接收字节数</span></span><br></pre></td></tr></tbody></table></figure>
 <p><strong>函数设计</strong></p>
 <ol type="1">
 <li>主函数main()</li>
@@ -520,13 +948,13 @@ AT24C02的芯片格式
 <p>功能：通过设置count计数变量，每1mS中断一次，记录中断次数到3000次则初始化页面跳转至设置温度界面，并调整为合法的时间格式。</p>
 <p>入口：无，出口：无。</p>
 <figure>
-<img src="/images/posts/temperature-humidity/18-main-flowchart.png" alt="image-20240401172731304">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/18-main-flowchart.png" alt="image-20240401172731304" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240401172731304</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 主程序框图
 </center>
-<h2 id="延时模块"><span>延时模块</span></h2>
+<h2><span id="延时模块">延时模块</span></h2>
 <p><strong>函数设计</strong></p>
 <ol type="1">
 <li>void delay_ms(uint ms)</li>
@@ -544,21 +972,21 @@ AT24C02的芯片格式
 <p>功能：设置延迟的us的函数</p>
 <p>入口：延迟us的函数 出口：无</p>
 <figure>
-<img src="/images/posts/temperature-humidity/19-delay-flowchart.png" alt="image-20240401173024832">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/19-delay-flowchart.png" alt="image-20240401173024832" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240401173024832</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 延时实现
 </center>
-<h2 id="lcd12864显示模块"><span><code>LCD12864</code>显示模块</span></h2>
+<h2><span id="lcd12864显示模块"><code>LCD12864</code>显示模块</span></h2>
 <ol type="1">
 <li>设计的端口值</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit LCD_RS  =  P2^<span class="number">6</span>;       <span class="comment">//寄存器选择输入</span></span><br><span class="line">sbit LCD_RW  =  P2^<span class="number">5</span>;       <span class="comment">//液晶读/写控制</span></span><br><span class="line">sbit LCD_EN  =  P2^<span class="number">7</span>;       <span class="comment">//液晶使能控制</span></span><br><span class="line">sbit LCD_PSB =  P3^<span class="number">2</span>;       <span class="comment">//串/并方式控制</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit LCD_RS  =  P2^<span class="number">6</span>;       <span class="comment">//寄存器选择输入</span></span><br><span class="line">sbit LCD_RW  =  P2^<span class="number">5</span>;       <span class="comment">//液晶读/写控制</span></span><br><span class="line">sbit LCD_EN  =  P2^<span class="number">7</span>;       <span class="comment">//液晶使能控制</span></span><br><span class="line">sbit LCD_PSB =  P3^<span class="number">2</span>;       <span class="comment">//串/并方式控制</span></span><br></pre></td></tr></tbody></table></figure>
 <ol start="2" type="1">
 <li>定义的端口值</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LCD_data  P0       <span class="comment">//数据口</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LCD_data  P0       <span class="comment">//数据口</span></span></span><br></pre></td></tr></tbody></table></figure>
 <ol start="3" type="1">
 <li>设计的函数如下</li>
 </ol>
@@ -589,24 +1017,24 @@ AT24C02的芯片格式
 <p>入口：设置的x轴和y轴，显示的字符串 出口：无
 调用的函数：lcd_wdat(uchar dat)</p>
 <figure>
-<img src="/images/posts/temperature-humidity/20-lcd12864-flowchart.png" alt="image-20240401174447136">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/20-lcd12864-flowchart.png" alt="image-20240401174447136" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240401174447136</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 lcd12864模块流程图
 </center>
-<h2 id="按键扫描模块"><span>按键扫描模块</span></h2>
+<h2><span id="按键扫描模块">按键扫描模块</span></h2>
 <p><strong>定义的端口值</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard P1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> keyboard P1</span></span><br></pre></td></tr></tbody></table></figure>
 <p><strong>函数设计</strong></p>
 <p>uchar Keypress()</p>
 <p>功能：扫描哪个按键按下了</p>
 <p>入口：无，出口：按下的按键</p>
-<h2 id="dht11传感器数据获取模块"><span>DHT11传感器数据获取模块</span></h2>
+<h2><span id="dht11传感器数据获取模块">DHT11传感器数据获取模块</span></h2>
 <p><strong>设计的全局变量</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uchar rec_dat[<span class="number">9</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uchar rec_dat[<span class="number">9</span>];</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>定义的端口</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit Data=P3^<span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbit Data=P3^<span class="number">6</span>;</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>函数设计</strong></p>
 <ol type="1">
 <li>DHT11_start()</li>
@@ -629,17 +1057,17 @@ lcd12864模块流程图
 <p>功能：把转换过的数据存进湿度和温度数组中去</p>
 <p>入口：无 出口：无 调用函数：lcd_wcmd,lcd_busy()</p>
 <figure>
-<img src="/images/posts/temperature-humidity/21-dht11-acquisition-flowchart.png" alt="image-20240401184513924">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/21-dht11-acquisition-flowchart.png" alt="image-20240401184513924" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240401184513924</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 DHT11温湿度传感器获取温度湿度
 </center>
-<h2 id="显示温度界面"><span>显示温度界面</span></h2>
+<h2><span id="显示温度界面">显示温度界面</span></h2>
 <p><strong>设计的全局变量</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uchar number[]=<span class="string">&quot;123456789&quot;</span>;  ——矩阵键盘的按下值</span><br><span class="line">uchar temtop[<span class="number">4</span>];  ——设置的温度上限值</span><br><span class="line">uchar temlow[<span class="number">4</span>];  ——设置的温度下限值</span><br><span class="line">uchar humtop[<span class="number">4</span>];  ——设置的湿度上限值</span><br><span class="line">uchar humlow[<span class="number">4</span>];  ——设置的湿度下限值</span><br><span class="line">uchar wendu[<span class="number">4</span>];  ——温度数据缓存值</span><br><span class="line">uchar shidu[<span class="number">4</span>];   ——湿度数据缓存值</span><br><span class="line">uint ttop,tlow,htop,hlow,tnow,hnow; ——把温度湿度上下限数组缓存值转化为十进制数</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uchar number[]=<span class="string">"123456789"</span>;  ——矩阵键盘的按下值</span><br><span class="line">uchar temtop[<span class="number">4</span>];  ——设置的温度上限值</span><br><span class="line">uchar temlow[<span class="number">4</span>];  ——设置的温度下限值</span><br><span class="line">uchar humtop[<span class="number">4</span>];  ——设置的湿度上限值</span><br><span class="line">uchar humlow[<span class="number">4</span>];  ——设置的湿度下限值</span><br><span class="line">uchar wendu[<span class="number">4</span>];  ——温度数据缓存值</span><br><span class="line">uchar shidu[<span class="number">4</span>];   ——湿度数据缓存值</span><br><span class="line">uint ttop,tlow,htop,hlow,tnow,hnow; ——把温度湿度上下限数组缓存值转化为十进制数</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>定义的端口</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>; ——蜂鸣器引脚</span><br><span class="line">sbit wind=P2^<span class="number">2</span>; ——继电器引脚</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit beep=P2^<span class="number">5</span>; ——蜂鸣器引脚</span><br><span class="line">sbit wind=P2^<span class="number">2</span>; ——继电器引脚</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>函数设计</strong></p>
 <ol type="1">
 <li>showtem()</li>
@@ -651,7 +1079,7 @@ DHT11温湿度传感器获取温度湿度
 </ol>
 <p>功能：设置温湿度上下限</p>
 <p>入口：无 出口：无</p>
-<h2 id="esp8266wifi发送模块"><span>ESP8266WIFI发送模块</span></h2>
+<h2><span id="esp8266wifi发送模块">ESP8266WIFI发送模块</span></h2>
 <p><strong>函数设计</strong></p>
 <ol type="1">
 <li>UART_Init(void)</li>
@@ -691,9 +1119,9 @@ DHT11温湿度传感器获取温度湿度
 </ol>
 <p>功能：WIFI控制的初始化</p>
 <p>入口：无 出口：无</p>
-<h2 id="eeprom断电不丢失模块"><span>EEPROM断电不丢失模块</span></h2>
+<h2><span id="eeprom断电不丢失模块">EEPROM断电不丢失模块</span></h2>
 <p><strong>定义的端口</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit sda = P2 ^ <span class="number">0</span>; <span class="comment">//I2C总线数据线</span></span><br><span class="line">sbit scl = P2 ^ <span class="number">1</span>; <span class="comment">//I2C总线时钟线</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbit sda = P2 ^ <span class="number">0</span>; <span class="comment">//I2C总线数据线</span></span><br><span class="line">sbit scl = P2 ^ <span class="number">1</span>; <span class="comment">//I2C总线时钟线</span></span><br></pre></td></tr></tbody></table></figure>
 <p><strong>函数设计</strong></p>
 <ol type="1">
 <li><p>c02_init()</p>
@@ -739,10 +1167,10 @@ DHT11温湿度传感器获取温度湿度
 <p>功能：读取保存的温度和湿度数据</p>
 <p>入口：无 出口：无</p>
 <hr>
-<h1 id="结果及测试分析"><span>结果及测试分析</span></h1>
-<h2 id="硬件电路"><span>硬件电路</span></h2>
+<h1><span id="结果及测试分析">结果及测试分析</span></h1>
+<h2><span id="硬件电路">硬件电路</span></h2>
 <figure>
-<img src="/images/posts/temperature-humidity/22-final-hardware.png" alt="image-20240401190005994">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/22-final-hardware.png" alt="image-20240401190005994" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240401190005994</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -752,14 +1180,14 @@ DHT11温湿度传感器获取温度湿度
 <p>硬件部分的连接过程在原理图中都有具体列出。</p>
 <p>对于电源模块，由于51单片机自带的电源输出端口只有一个5V和3.3V不能够满足我们众多外加模块的供电需求，所以我这里采用面包板模拟拓展5V电源和3.3V电源。</p>
 <p>在连接实物图时由于51单片机自带的12864端口会遮挡住引脚的连接，所以在这里我采用杜邦线把51单片机端口与12864端口相连接。DHT11温湿度传感器直接连接我们配置好的引脚并连接电源即可。继电器模块由于我们采用的是电平触发模式，所以需要把继电器模块的IN端口连接至配置好的端口并接上电源即可，COM端口接地、NC端口接电源，NO端口悬空，直流电机分别于GND和NC端口相连从而达到继电器控制直流电机的效果。ESP8266WIFI模块的RX和TX分别于单片机的TX和RX相连并且连接上3.3V电源和GND就可以达到上传数据至上位机和云平台的效果。</p>
-<h2 id="测试记录及结果分析"><span>测试记录及结果分析</span></h2>
+<h2><span id="测试记录及结果分析">测试记录及结果分析</span></h2>
 <p><strong>测试记录</strong></p>
 <ol type="1">
 <li><p>首先通过usb线把单片机和电脑相连烧录程序，烧录完程序将自动进入初始界面，初始界面如下图所示。</p></li>
 <li><p>当显示初始界面3s过后将会自动跳转至设置温度和湿度阈值的界面，然后通过独立键盘K1<sub>K4分别设置温度上限、温度下限、湿度上限、湿度下限，通过矩阵键盘K1</sub>K9设置温湿度阈值的具体数值</p></li>
 </ol>
 <figure>
-<img src="/images/posts/temperature-humidity/23-threshold-settings.png" alt="image-20240402142651498">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/23-threshold-settings.png" alt="image-20240402142651498" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240402142651498</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -769,7 +1197,7 @@ DHT11温湿度传感器获取温度湿度
 <li>当设置好温湿度阈值时，点击矩阵键盘的K13即可进入温湿度显示页面，该页面可以显示温湿度的当前值和温湿度上下限值，显示界面如下图所示。</li>
 </ol>
 <figure>
-<img src="/images/posts/temperature-humidity/24-temperature-humidity-display.png" alt="image-20240402142717976">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/24-temperature-humidity-display.png" alt="image-20240402142717976" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240402142717976</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -780,14 +1208,14 @@ DHT11温湿度传感器获取温度湿度
 <li><p>当按下矩阵键盘的K14键即可把单片机获取的温湿度数据发送至onenet云平台进行存储，我还绘制了一个可视化平台用来实时展示单片机获取的数据。数据存储以及可视化展示如下图所示。</p></li>
 </ol>
 <figure>
-<img src="/images/posts/temperature-humidity/25-cloud-data.png" alt="image-20240402142820087">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/25-cloud-data.png" alt="image-20240402142820087" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240402142820087</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
 云平台数据存储
 </center>
 <figure>
-<img src="/images/posts/temperature-humidity/26-dashboard.png" alt="image-20240402142910194">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/26-dashboard.png" alt="image-20240402142910194" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240402142910194</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -797,7 +1225,7 @@ DHT11温湿度传感器获取温度湿度
 <li>我还制作了配套的微信小程序方便客户在手机端实时对温湿度的情况进行掌控和调配，小程序的页面如下图所示。</li>
 </ol>
 <figure>
-<img src="/images/posts/temperature-humidity/27-wechat-mini-app.png" alt="image-20240402142943992">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/27-wechat-mini-app.png" alt="image-20240402142943992" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240402142943992</figcaption>
 </figure>
 <center style="color:#C0C0C0;text-decoration:underline">
@@ -807,55 +1235,137 @@ DHT11温湿度传感器获取温度湿度
 <li>单片机与上位机通信，能够通过单片机实时把数据发送给电脑，电脑显示的数据如下图所示。</li>
 </ol>
 <figure>
-<img src="/images/posts/temperature-humidity/28-desktop-monitor.png" alt="image-20240402143022570">
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/image/28-desktop-monitor.png" alt="image-20240402143022570" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;">
 <figcaption aria-hidden="true">image-20240402143022570</figcaption>
 </figure>
 <ol start="8" type="1">
 <li>当断开单片机电源再接通单片机电源时我们设置的单片机上下限值会被保。</li>
 </ol>
-<p><a target="_blank" rel="noopener" href="https://github.com/qqaz1234/Collect-temperature-and-humidity-display-and-cloud-data-storage">完整的项目地址</a></p>
-</div>
-      <footer class="article-tags tag-list"><a href="/tags/esp8266/">#esp8266</a><a href="/tags/onenet%E4%BA%91%E5%B9%B3%E5%8F%B0/">#onenet云平台</a><a href="/tags/wifi/">#wifi</a></footer>
-      <p class="article-license">本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> 许可协议，转载时请注明出处。</p>
-    </article>
-    <nav class="post-navigation" aria-label="相邻文章"><a class="glass" href="/2024/04/02/%E5%9F%BA%E4%BA%8ETCP%E7%9A%84%E6%B5%81%E5%AA%92%E4%BD%93%E8%A7%86%E9%A2%91%E9%9F%B3%E9%A2%91%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93/"><span>← 上一篇</span><strong>基于TCP的流媒体视频音频加密传输</strong></a><a class="glass" href="/2024/03/25/%E5%BC%80%E7%AF%87/"><span>下一篇 →</span><strong>开篇</strong></a></nav>
-  </main>
-  <aside class="sidebar" aria-label="博客导航">
-  
-  <section class="glass widget toc-widget"><h2 class="widget-title">ON THIS PAGE <span>文章目录</span></h2><nav class="article-toc" aria-label="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD"><span class="toc-text">系统功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%E6%A1%86%E5%9B%BE%E5%8F%8A%E8%AF%B4%E6%98%8E"><span class="toc-text">原理框图及说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%94%B5%E8%B7%AF%E8%AF%B4%E6%98%8E-%E5%85%83%E4%BB%B6%E9%80%89%E6%8B%A9%E5%8F%8A%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="toc-text">主要电路说明、元件选择及参数计算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E4%BD%8D%E4%B8%8E%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF"><span class="toc-text">复位与振荡电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E7%94%B5%E8%B7%AF"><span class="toc-text">显示电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E9%94%AE%E7%94%B5%E8%B7%AF"><span class="toc-text">按键电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%A9%E5%BA%A6%E6%B9%BF%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%94%B5%E8%B7%AF"><span class="toc-text">温度湿度检测电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#esp8266wifi%E6%A8%A1%E5%9D%97"><span class="toc-text">ESP8266WIFI模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eeprom%E7%94%B5%E8%B7%AF"><span class="toc-text">EEPROM电路</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="toc-text">总电路设计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF%E5%8F%8A%E6%A1%86%E5%9B%BE"><span class="toc-text">软件设计思路及框图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF%E5%8F%8A%E4%B8%BB%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-text">软件设计思路及主流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E6%97%B6%E6%A8%A1%E5%9D%97"><span class="toc-text">延时模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lcd12864%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%9D%97"><span class="toc-text">LCD12864显示模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E9%94%AE%E6%89%AB%E6%8F%8F%E6%A8%A1%E5%9D%97"><span class="toc-text">按键扫描模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dht11%E4%BC%A0%E6%84%9F%E5%99%A8%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E6%A8%A1%E5%9D%97"><span class="toc-text">DHT11传感器数据获取模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E6%B8%A9%E5%BA%A6%E7%95%8C%E9%9D%A2"><span class="toc-text">显示温度界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#esp8266wifi%E5%8F%91%E9%80%81%E6%A8%A1%E5%9D%97"><span class="toc-text">ESP8266WIFI发送模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eeprom%E6%96%AD%E7%94%B5%E4%B8%8D%E4%B8%A2%E5%A4%B1%E6%A8%A1%E5%9D%97"><span class="toc-text">EEPROM断电不丢失模块</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E5%8F%8A%E6%B5%8B%E8%AF%95%E5%88%86%E6%9E%90"><span class="toc-text">结果及测试分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF"><span class="toc-text">硬件电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%AE%B0%E5%BD%95%E5%8F%8A%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="toc-text">测试记录及结果分析</span></a></li></ol></li></ol></nav></section>
-  
-  <section class="glass widget author-widget">
-    <h2 class="widget-title">ABOUT THE AUTHOR</h2>
-    <div class="author-line"><span class="author-mark" aria-hidden="true">jx<span>.</span></span><div><h3>eejhx</h3><span>嵌入式开发 · 持续学习</span></div></div>
-    <p>在电路与代码之间探索，把遇到的问题、调试的过程和学到的东西慢慢写下来。</p>
-    <a class="widget-link" href="/about/">关于这个小屋 <span aria-hidden="true">↗</span></a>
-  </section>
-  <section class="glass widget learning-widget">
-    <h2 class="widget-title"><span class="status-dot" aria-hidden="true"></span> NEXT CHAPTER</h2>
-    <a class="learning-title" href="/categories/linux-kernel/">Linux 内核设计与实现<span aria-hidden="true">↗</span></a>
-    <p>从基础原理出发，结合不同芯片平台的源码与实验，理解 Linux 内核。</p>
-    <a class="widget-link" href="/categories/linux-kernel/">进入学习专栏 <span aria-hidden="true">→</span></a>
-  </section>
-  <section class="glass widget">
-    <h2 class="widget-title">CATEGORIES <span>内容分类</span></h2>
-    <ul class="cat-list"><li><a href="/categories/linux-kernel/"><span>Linux 内核设计与实现</span><span class="category-count">0</span></a><ul class="cat-list"><li><a href="/categories/linux-kernel/basics/"><span>基础知识</span><span class="category-count">0</span></a></li><li><a href="/categories/linux-kernel/platforms/"><span>平台实现</span><span class="category-count">0</span></a><ul class="cat-list"><li><a href="/categories/linux-kernel/platforms/imx6ul/"><span>i.MX6UL / i.MX6ULL</span><span class="category-count">0</span></a></li><li><a href="/categories/linux-kernel/platforms/rk3576/"><span>RK3576</span><span class="category-count">0</span></a></li></ul>
-</li></ul>
-</li><li><a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/"><span>51单片机</span><span class="category-count">1</span></a></li><li><a href="/categories/ESP32/"><span>ESP32</span><span class="category-count">2</span></a></li><li><a href="/categories/linux/"><span>linux</span><span class="category-count">2</span></a></li><li><a href="/categories/python%E9%A1%B9%E7%9B%AE/"><span>python项目</span><span class="category-count">1</span></a></li><li><a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/"><span>硬件设计</span><span class="category-count">1</span></a></li></ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/qqaz1234/Collect-temperature-and-humidity-display-and-cloud-data-storage" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>完整的项目地址</a></p>
+<h2><span id="相关资料">相关资料</span></h2>
+<ul>
+<li><a href="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/documents/" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>文档与附件目录</a></li>
+<li><a href="/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/gallery/" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>图片索引</a></li>
+<li><a href="/resources/tasks/" data-md-link=""><span class="md-link-icon ui-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor"><g opacity=".5"><path d="M19.7388 4.26118C17.0572 1.57961 12.7095 1.57961 10.0279 4.26118L9.30707 4.98203C9.01418 5.27492 9.01418 5.7498 9.30707 6.04269C9.59997 6.33558 10.0748 6.33558 10.3677 6.04269L11.0886 5.32184C13.1844 3.22605 16.5823 3.22605 18.6781 5.32184C20.7739 7.41763 20.7739 10.8156 18.6781 12.9114L17.9573 13.6322C17.6644 13.9251 17.6644 14.4 17.9573 14.6929C18.2502 14.9858 18.725 14.9858 19.0179 14.6929L19.7388 13.972C22.4203 11.2905 22.4203 6.94276 19.7388 4.26118Z"></path><path d="M6.04269 9.30707C6.33558 9.59997 6.33558 10.0748 6.04269 10.3677L5.32184 11.0886C3.22605 13.1844 3.22605 16.5823 5.32184 18.6781C7.41763 20.7739 10.8156 20.7739 12.9114 18.6781L13.6322 17.9573C13.9251 17.6644 14.4 17.6644 14.6929 17.9573C14.9858 18.2501 14.9858 18.725 14.6929 19.0179L13.972 19.7388C11.2905 22.4203 6.94276 22.4203 4.26118 19.7388C1.57961 17.0572 1.57961 12.7095 4.26118 10.0279L4.98203 9.30707C5.27492 9.01418 5.7498 9.01418 6.04269 9.30707Z"></path></g><path d="M14.6933 9.30707C14.9862 9.59997 14.9862 10.0748 14.6933 10.3677L10.3682 14.6928C10.0753 14.9857 9.60045 14.9857 9.30756 14.6928C9.01467 14.3999 9.01467 13.9251 9.30756 13.6322L13.6327 9.30707C13.9255 9.01418 14.4004 9.01418 14.6933 9.30707Z"></path></g></svg></span>全部文章资料</a></li>
+</ul>
+</article>
+<div class="article-tags"><a class="tag" href="/tags/esp8266/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>esp8266</a><a class="tag" href="/tags/onenet%E4%BA%91%E5%B9%B3%E5%8F%B0/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>onenet云平台</a><a class="tag" href="/tags/wifi/"><svg class="icon" viewBox="0 0 1 1" data-icon="default:hashtag" aria-hidden="true"></svg>wifi</a></div>
 
-  </section>
-  
-  <section class="glass widget"><h2 class="widget-title">TAGS <span>关键词</span></h2><ul class="tag-list"><li><a href="/tags/linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">#linux基本操作</a></li><li><a href="/tags/ADC%E9%87%87%E6%A0%B7/">#ADC采样</a></li><li><a href="/tags/I2S/">#I2S</a></li><li><a href="/tags/%E9%9F%B3%E9%A2%91%E6%B5%81%E9%87%87%E9%9B%86/">#音频流采集</a></li><li><a href="/tags/DEBUG/">#DEBUG</a></li><li><a href="/tags/%E7%94%B5%E8%B7%AF%E5%9B%BE/">#电路图</a></li><li><a href="/tags/TCP-UDP%E5%8D%8F%E8%AE%AE/">#TCP/UDP协议</a></li><li><a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8A%A0%E5%AF%86/">#音视频加密</a></li><li><a href="/tags/esp8266/">#esp8266</a></li><li><a href="/tags/onenet%E4%BA%91%E5%B9%B3%E5%8F%B0/">#onenet云平台</a></li><li><a href="/tags/wifi/">#wifi</a></li><li><a href="/tags/DC-DC%E6%8B%93%E6%89%91/">#DC-DC拓扑</a></li></ul></section>
-  
-</aside>
 
-</div>
-
-  <footer class="site-footer shell">
-    <div class="glass footer-inner">
-      <a class="footer-brand" href="/">嵌入小屋<span class="dot">.</span></a>
-      <p>© 2024–2026 eejhx<span class="footer-divider"> / </span>记录 · 理解 · 实践</p>
-      <a class="footer-link" href="https://github.com/eejhongxin" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  <div class="article-share" id="share">
+    <div class="body">
+      <div class="social-wrap dis-select"><a class="social share-item qrcode ui-interactive is-icon-only" onclick="util.toggle(&quot;share-qrcode&quot;)" aria-label="分享文章: QR Code" title="分享文章: QR Code"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="M10.553 13.447c-.424-.424-.95-.596-1.535-.675c-.553-.074-1.25-.074-2.086-.074H5.827c-.58 0-1.065 0-1.459.037c-.411.04-.795.124-1.146.34c-.345.21-.634.5-.845.844c-.216.352-.3.735-.34 1.147C2 15.459 2 15.944 2 16.525v.068c0 .884 0 1.597.055 2.17c.056.592.175 1.108.459 1.571c.288.47.682.864 1.152 1.152c.463.284.979.403 1.57.46C5.81 22 6.524 22 7.407 22h.07c.58 0 1.064 0 1.458-.037c.412-.04.795-.124 1.147-.34c.344-.21.633-.5.844-.844c.216-.352.3-.736.34-1.147c.037-.394.037-.879.037-1.46v-1.104c0-.836 0-1.533-.074-2.086c-.079-.584-.251-1.111-.675-1.535m-1.62-11.41c.412.04.795.124 1.147.34c.344.21.633.5.844.845c.216.351.3.735.34 1.146c.037.394.037.879.037 1.46v1.104c0 .836 0 1.533-.074 2.086c-.079.584-.251 1.111-.675 1.535s-.95.596-1.535.675c-.553.074-1.25.074-2.086.074H5.827c-.58 0-1.065 0-1.459-.037c-.411-.04-.795-.124-1.146-.34a2.56 2.56 0 0 1-.845-.844c-.216-.352-.3-.735-.34-1.147C2 8.54 2 8.056 2 7.475v-.068c0-.884 0-1.597.055-2.17c.056-.592.175-1.108.459-1.571c.288-.47.682-.864 1.152-1.152c.463-.284.979-.403 1.57-.46C5.81 2 6.524 2 7.407 2h.07c.58 0 1.064 0 1.458.037M16.593 2h-.068c-.58 0-1.065 0-1.46.037c-.41.04-.794.124-1.146.34c-.344.21-.633.5-.844.845c-.216.351-.3.735-.34 1.146c-.037.394-.037.879-.037 1.46v1.104c0 .836 0 1.533.074 2.086c.079.584.251 1.111.675 1.535s.95.596 1.535.675c.553.074 1.25.074 2.086.074h1.105c.58 0 1.065 0 1.459-.037c.411-.04.795-.124 1.146-.34c.345-.21.634-.5.845-.844c.216-.352.3-.735.34-1.147C22 8.54 22 8.056 22 7.475v-.068c0-.884 0-1.597-.055-2.17c-.056-.592-.175-1.108-.459-1.571a3.5 3.5 0 0 0-1.152-1.152c-.463-.284-.979-.403-1.57-.46C18.19 2 17.477 2 16.594 2" opacity=".5"></path><path fill="currentColor" d="M14.093 21.302a.698.698 0 1 1-1.396 0v-2.79h1.396z" opacity=".4"></path><path fill="currentColor" d="M21.302 12.698a.7.7 0 0 0-.697.697v3.256H22v-3.256a.7.7 0 0 0-.698-.697" opacity=".5"></path><path fill="currentColor" d="M16.076 16.617c-.076.184-.076.417-.076.883s0 .699.076.883a1 1 0 0 0 .541.54c.184.077.417.077.883.077s.699 0 .883-.076a1 1 0 0 0 .54-.541c.077-.184.077-.417.077-.883s0-.699-.076-.883a1 1 0 0 0-.541-.54C18.199 16 17.966 16 17.5 16s-.699 0-.883.076a1 1 0 0 0-.54.541"></path><path fill="currentColor" d="M22 18.535v-.023h-1.396c0 .443 0 .74-.016.97c-.015.224-.043.333-.073.405a1.16 1.16 0 0 1-.629.63c-.072.029-.18.056-.405.072c-.23.015-.527.016-.97.016h-1.86V22h1.883c.414 0 .759 0 1.042-.02a2.6 2.6 0 0 0 .844-.175a2.56 2.56 0 0 0 1.384-1.384c.112-.27.156-.549.176-.844c.02-.283.02-.628.02-1.042" opacity=".7"></path><path fill="currentColor" d="M12.697 16.616v.035h1.396c0-.668 0-1.116.035-1.458c.034-.33.093-.482.16-.583a1.2 1.2 0 0 1 .321-.32c.101-.068.254-.128.584-.161c.342-.035.79-.036 1.458-.036h1.86v-1.395h-1.896c-.623 0-1.142 0-1.563.043c-.44.044-.85.142-1.218.388c-.28.187-.519.426-.706.706c-.246.368-.343.777-.388 1.217c-.043.421-.043.94-.043 1.564" opacity=".6"></path><path fill="currentColor" d="M5.508 18.69c.219.155.528.155 1.146.155c.619 0 .928 0 1.146-.155a.8.8 0 0 0 .2-.199c.154-.218.154-.527.154-1.146s0-.927-.155-1.146A.8.8 0 0 0 7.8 16c-.218-.155-.527-.155-1.146-.155s-.927 0-1.146.155a.8.8 0 0 0-.199.2c-.155.218-.155.527-.155 1.145c0 .619 0 .928.155 1.146a.8.8 0 0 0 .2.2M6.654 8.155c-.618 0-.927 0-1.146-.155a.8.8 0 0 1-.199-.2c-.155-.217-.155-.527-.155-1.145c0-.619 0-.928.155-1.146a.8.8 0 0 1 .2-.2c.218-.154.527-.154 1.145-.154c.619 0 .928 0 1.146.155a.8.8 0 0 1 .2.199c.154.218.154.527.154 1.146s0 .928-.155 1.146A.8.8 0 0 1 7.8 8c-.218.155-.527.155-1.146.155M16.2 8c.218.155.527.155 1.146.155s.927 0 1.146-.155a.8.8 0 0 0 .199-.199c.155-.218.155-.528.155-1.146c0-.619 0-.928-.155-1.146a.8.8 0 0 0-.2-.2c-.218-.154-.527-.154-1.145-.154c-.619 0-.928 0-1.146.155a.8.8 0 0 0-.2.199c-.154.218-.154.527-.154 1.146s0 .928.155 1.146A.8.8 0 0 0 16.2 8"></path></svg></span></a><a class="social share-item weibo ui-interactive is-icon-only" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Feejhongxin.github.io%2F2024%2F03%2F26%2F%25E5%258D%2595%25E7%2582%25B9%25E9%2587%2587%25E9%259B%2586%25E6%25B8%25A9%25E6%25B9%25BF%25E5%25BA%25A6%25E6%2598%25BE%25E7%25A4%25BA%25E5%258F%258A%25E4%25BA%2591%25E7%25AB%25AF%25E5%258F%25AF%25E8%25A7%2586%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2590%258C%25E6%25AD%25A5%2F&amp;title=%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%20-%20%E5%B5%8C%E5%85%A5%E6%89%8B%E8%AE%B0&amp;summary=%E4%BD%BF%E7%94%A8%20DHT11%E3%80%8151%20%E5%8D%95%E7%89%87%E6%9C%BA%E4%B8%8E%20ESP8266%20%E5%AE%8C%E6%88%90%E6%B8%A9%E6%B9%BF%E5%BA%A6%E9%87%87%E9%9B%86%E3%80%81%E9%98%88%E5%80%BC%E6%8E%A7%E5%88%B6%E3%80%81%E4%BA%91%E7%AB%AF%E5%90%8C%E6%AD%A5%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B1%95%E7%A4%BA%E3%80%82" target="_blank" rel="external nofollow noopener noreferrer" aria-label="分享文章: Weibo" title="分享文章: Weibo"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"></path></svg></span></a><a class="social share-item x ui-interactive is-icon-only" href="https://x.com/intent/tweet?text=%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%20-%20%E5%B5%8C%E5%85%A5%E6%89%8B%E8%AE%B0&amp;url=https%3A%2F%2Feejhongxin.github.io%2F2024%2F03%2F26%2F%25E5%258D%2595%25E7%2582%25B9%25E9%2587%2587%25E9%259B%2586%25E6%25B8%25A9%25E6%25B9%25BF%25E5%25BA%25A6%25E6%2598%25BE%25E7%25A4%25BA%25E5%258F%258A%25E4%25BA%2591%25E7%25AB%25AF%25E5%258F%25AF%25E8%25A7%2586%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2590%258C%25E6%25AD%25A5%2F" target="_blank" rel="external nofollow noopener noreferrer" aria-label="分享文章: X" title="分享文章: X"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M14.234 10.162L22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299l-.929-1.329L3.076 1.56h3.182l5.965 8.532l.929 1.329l7.754 11.09h-3.182z"></path></svg></span></a><a class="social share-item telegram ui-interactive is-icon-only" href="https://t.me/share/url?url=https%3A%2F%2Feejhongxin.github.io%2F2024%2F03%2F26%2F%25E5%258D%2595%25E7%2582%25B9%25E9%2587%2587%25E9%259B%2586%25E6%25B8%25A9%25E6%25B9%25BF%25E5%25BA%25A6%25E6%2598%25BE%25E7%25A4%25BA%25E5%258F%258A%25E4%25BA%2591%25E7%25AB%25AF%25E5%258F%25AF%25E8%25A7%2586%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2590%258C%25E6%25AD%25A5%2F&amp;text=%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%20-%20%E5%B5%8C%E5%85%A5%E6%89%8B%E8%AE%B0" target="_blank" rel="external nofollow noopener noreferrer" aria-label="分享文章: Telegram" title="分享文章: Telegram"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12a12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.5.5 0 0 1 .171.325c.016.093.036.306.02.472c-.18 1.898-.962 6.502-1.36 8.627c-.168.9-.499 1.201-.82 1.23c-.696.065-1.225-.46-1.9-.902c-1.056-.693-1.653-1.124-2.678-1.8c-1.185-.78-.417-1.21.258-1.91c.177-.184 3.247-2.977 3.307-3.23c.007-.032.014-.15-.056-.212s-.174-.041-.249-.024q-.159.037-5.061 3.345q-.72.495-1.302.48c-.428-.008-1.252-.241-1.865-.44c-.752-.245-1.349-.374-1.297-.789q.04-.324.893-.663q5.247-2.286 6.998-3.014c3.332-1.386 4.025-1.627 4.476-1.635"></path></svg></span></a><a class="social share-item whatsapp ui-interactive is-icon-only" href="https://wa.me/?text=%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%20-%20%E5%B5%8C%E5%85%A5%E6%89%8B%E8%AE%B0%0Ahttps%3A%2F%2Feejhongxin.github.io%2F2024%2F03%2F26%2F%25E5%258D%2595%25E7%2582%25B9%25E9%2587%2587%25E9%259B%2586%25E6%25B8%25A9%25E6%25B9%25BF%25E5%25BA%25A6%25E6%2598%25BE%25E7%25A4%25BA%25E5%258F%258A%25E4%25BA%2591%25E7%25AB%25AF%25E5%258F%25AF%25E8%25A7%2586%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2590%258C%25E6%25AD%25A5%2F" target="_blank" rel="external nofollow noopener noreferrer" aria-label="分享文章: WhatsApp" title="分享文章: WhatsApp"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Simple Icons - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967c-.273-.099-.471-.148-.67.15c-.197.297-.767.966-.94 1.164c-.173.199-.347.223-.644.075c-.297-.15-1.255-.463-2.39-1.475c-.883-.788-1.48-1.761-1.653-2.059c-.173-.297-.018-.458.13-.606c.134-.133.298-.347.446-.52s.198-.298.298-.497c.099-.198.05-.371-.025-.52s-.669-1.612-.916-2.207c-.242-.579-.487-.5-.669-.51a13 13 0 0 0-.57-.01c-.198 0-.52.074-.792.372c-.272.297-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074s2.096 3.2 5.077 4.487c.709.306 1.262.489 1.694.625c.712.227 1.36.195 1.871.118c.571-.085 1.758-.719 2.006-1.413s.248-1.289.173-1.413c-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214l-3.741.982l.998-3.648l-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884c2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.9 11.9 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413"></path></svg></span></a><a class="social share-item email ui-interactive is-icon-only" href="mailto:?subject=%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%20-%20%E5%B5%8C%E5%85%A5%E6%89%8B%E8%AE%B0&amp;body=https%3A%2F%2Feejhongxin.github.io%2F2024%2F03%2F26%2F%25E5%258D%2595%25E7%2582%25B9%25E9%2587%2587%25E9%259B%2586%25E6%25B8%25A9%25E6%25B9%25BF%25E5%25BA%25A6%25E6%2598%25BE%25E7%25A4%25BA%25E5%258F%258A%25E4%25BA%2591%25E7%25AB%25AF%25E5%258F%25AF%25E8%25A7%2586%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2590%258C%25E6%25AD%25A5%2F" aria-label="分享文章: Email" title="分享文章: Email"><span class="share-item__icon ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" fill-rule="evenodd" d="M3.172 5.172C2 6.343 2 8.229 2 12s0 5.657 1.172 6.828C4.343 20 6.229 20 10 20h4c3.771 0 5.657 0 6.828-1.172C22 17.657 22 15.771 22 12s0-5.657-1.172-6.828C19.657 4 17.771 4 14 4h-4C6.229 4 4.343 4 3.172 5.172m15.404 2.348a.75.75 0 0 1-.096 1.056l-2.196 1.83c-.887.739-1.605 1.338-2.24 1.746-.66.424-1.303.693-2.044.693s-1.384-.269-2.045-.693c-.634-.408-1.352-1.007-2.239-1.745L5.52 8.576a.75.75 0 1 1 .96-1.152l2.159 1.799c.933.777 1.58 1.315 2.128 1.667.529.34.888.455 1.233.455s.704-.115 1.233-.455c.547-.352 1.195-.89 2.128-1.667l2.159-1.8a.75.75 0 0 1 1.056.097" clip-rule="evenodd"></path></svg></span></a></div>
+      <div class="share-qrcode" id="share-qrcode" style="opacity:0;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&amp;data=https%3A%2F%2Feejhongxin.github.io%2F2024%2F03%2F26%2F%25E5%258D%2595%25E7%2582%25B9%25E9%2587%2587%25E9%259B%2586%25E6%25B8%25A9%25E6%25B9%25BF%25E5%25BA%25A6%25E6%2598%25BE%25E7%25A4%25BA%25E5%258F%258A%25E4%25BA%2591%25E7%25AB%25AF%25E5%258F%25AF%25E8%25A7%2586%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2590%258C%25E6%25AD%25A5%2F" onerror="this.onerror=null;this.src=&quot;/images/stellar-error.491ee870f4940739.svg&quot;"></div>
     </div>
-  </footer>
-</body>
-</html>
+  </div>
+
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享
+4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section></div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note"><svg class="icon" viewBox="0 0 1 1" data-icon="default:arrow-left" aria-hidden="true"></svg> 较新文章</div><a href="/2024/04/02/%E5%9F%BA%E4%BA%8ETCP%E7%9A%84%E6%B5%81%E5%AA%92%E4%BD%93%E8%A7%86%E9%A2%91%E9%9F%B3%E9%A2%91%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93/">基于TCP的流媒体视频音频加密传输</a></div><div class="item" id="next"><div class="note">较早文章 <svg class="icon" viewBox="0 0 1 1" data-icon="default:arrow-right" aria-hidden="true"></svg></div><a href="/2024/03/25/%E5%BC%80%E7%AF%87/">开篇</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">eejhx</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/2.0.0">Stellar
+2.0.0</a> 主题创建。 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA
+4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+</main>
+<aside data-stellar-runtime-region="" id="rightbar-region" class="site-region site-region--rightbar" data-region="rightbar" aria-label="Rightbar"><div class="site-region__surface ui-drawer-surface"><div class="site-region__viewport"><div class="widgets widget-stack widget-stack--rightbar widget-stack--rightbar"><div class="widget-instance widget-instance--toc" data-widget-id="rightbar:0:toc" data-presentation="rightbar">
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false">
+  
+    <div class="widget-header dis-select">
+      <span class="name">本文目录</span>
+      <button type="button" class="cap-action ui-interactive card-hover card-hover--spotlight" data-shell-action="toggle-toc" aria-label="Toggle table of contents" aria-pressed="false"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg></span></button>
+    </div>
+  
+  <div class="widget-body"><ol class="toc ui-collection-adapter"><li class="toc-item toc-level-1"><a class="toc-link ui-interactive"><span class="toc-text">系统功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link ui-interactive"><span class="toc-text">原理框图及说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link ui-interactive"><span class="toc-text">主要电路说明、元件选择及参数计算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">复位与振荡电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">显示电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">按键电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">温度湿度检测电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">ESP8266WIFI模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">EEPROM电路</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link ui-interactive"><span class="toc-text">总电路设计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link ui-interactive"><span class="toc-text">软件设计思路及框图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">软件设计思路及主流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">延时模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">LCD12864显示模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">按键扫描模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">DHT11传感器数据获取模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">显示温度界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">ESP8266WIFI发送模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">EEPROM断电不丢失模块</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link ui-interactive"><span class="toc-text">结果及测试分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">硬件电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">测试记录及结果分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link ui-interactive"><span class="toc-text">相关资料</span></a></li></ol></li></ol></div>
+  <div class="widget-footer"><a class="top ui-interactive" onclick="util.scrollTop()"><span class="ui-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="currentColor" d="M20.536 3.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464" opacity=".5"></path><path fill="currentColor" d="M9.53 12.03a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 1.06 0l3 3a.75.75 0 1 1-1.06 1.06L12 9.56z"></path><path fill="currentColor" d="M9.53 16.03a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 1.06 0l3 3a.75.75 0 1 1-1.06 1.06L12 13.56z"></path></svg></span><span>回到顶部</span></a></div>
+</widget>
+
+
+</div></div></div></div></aside>
+</div><button type="button" class="site-scrim" data-shell-action="dismiss-drawer" aria-label="Close navigation" tabindex="-1"></button><div data-stellar-runtime-region="" class="site-dock" role="group" aria-label="Layout panels">
+  <button type="button" class="site-dock__button site-dock__button--rightbar ui-interactive" aria-label="Open rightbar" aria-controls="rightbar-region" aria-expanded="false" data-shell-action="toggle-rightbar-drawer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+  </button>
+  <button type="button" class="site-dock__button site-dock__button--leftbar ui-interactive" aria-label="Open leftbar" aria-controls="leftbar-region" aria-expanded="false" data-shell-action="toggle-leftbar-drawer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"></path><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"></path></g></svg>
+  </button>
+</div>
+
+<dialog data-stellar-runtime-region="" class="search-dialog" id="site-search-dialog" aria-labelledby="site-search-title">
+  <div class="search-dialog__panel search-wrapper" id="site-search-wrapper" searching="false">
+    <div class="search-dialog__header">
+      <div class="search-form" role="search">
+        <span class="search-button" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Adapted from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3M3 13h3M3 18h8M16.83 13.83l3.76 3.76"></path><circle cx="14" cy="11" r="4"></circle></g></svg></span>
+        <input type="search" class="search-input" id="site-search-input" aria-labelledby="site-search-title" placeholder="搜索">
+      </div>
+      <button type="button" class="search-dialog__close" data-shell-action="close-search" aria-label="关闭搜索">×</button>
+    </div>
+    
+      <div class="search-dialog__scope" role="radiogroup" aria-labelledby="site-search-title" hidden="">
+        <label class="search-dialog__scope-option" data-search-scope-option="all">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="all">
+          <span>全站</span>
+        </label>
+        <label class="search-dialog__scope-option" data-search-scope-option="blog" hidden="">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="blog">
+          <span>博客</span>
+        </label>
+        <label class="search-dialog__scope-option" data-search-scope-option="current" hidden="">
+          <input class="ui-radio" type="radio" name="site-search-scope" value="current">
+          <span data-search-scope-current-label=""></span>
+        </label>
+      </div>
+    
+    <h2 class="search-dialog__title" id="site-search-title">站内搜索</h2>
+    <div class="search-result" id="site-search-result"></div>
+    <div class="search-no-result">没有找到内容！</div>
+  </div>
+</dialog>
+</div><div class="site-scripts">
+<script data-stellar-script="core" src="/js/stellar-icons.js?v=39c6ac17e854ffe2"></script>
+
+<script data-stellar-script="defines">
+  window.canonical = window.stellarClientData.canonical;
+  const ctx = window.stellarClientData.ctx;
+  window.canonical.param = {permalink: "https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/", checklink: ctx.services.video.js};
+  ctx.date_suffix = {"just":"刚刚","min":"分钟前","hour":"小时前","day":"天前"};
+  if (ctx.search) Object.assign(ctx.search, {"more":"更多","no_more":"没有更多了"});
+  const def = window.stellarClientData.def;
+  window.ctx = ctx;
+  window.def = def;
+</script>
+
+
+<!-- core: 迁移期 DOM/资源兼容工具；Extension 注册与生命周期由 ESM runtime 所有 -->
+<script data-stellar-script="core" src="/js/utils.js?v=2.0.0"></script>
+<script data-stellar-script="core" src="/js/main.js?v=2.0.0" defer=""></script>
+<script data-stellar-script="core" defer="" src="/js/profile.js?v=2.0.0"></script>
+
+
+
+
+
+<script data-stellar-script="core" type="application/json" id="stellar-runtime-config">{"version":1,"root":"/","policy":{"cache":{"enabled":true,"defaultTtl":3600,"ttl":{"giscus":600,"waline":600,"artalk":600,"memos":600,"memos-user":86400,"sites":86400,"friends":86400,"friends_and_posts":86400,"siteinfo":86400},"maxEntries":200},"request":{"retries":2,"timeoutMs":5000,"idleTimeoutMs":3000,"maxCacheEntryBytes":204800},"features":{"codeCopyToastMs":2500},"providers":{"linkPrefetch":"flying_pages","lightbox":"fancybox","diagrams":"mermaid"}},"extensions":[{"id":"pin-slider","module":"/js/runtime/extensions/pin-slider.js","scope":"region","when":{"selector":".pin-slider"},"config":{}},{"id":"page-controls","module":"/js/runtime/extensions/page-controls.js","scope":"region","when":{"always":true},"config":{"highlight":"/js/search/highlight.js","tagtree":"/js/tagtree.js"}},{"id":"partial-navigation","module":"/js/runtime/extensions/partial-navigation.js","scope":"document","when":{"always":true},"config":{}},{"id":"color-scheme-switch","module":"/js/runtime/extensions/color-scheme-switch.js","scope":"document","when":{"always":true},"config":{"messages":{"light":"切换到浅色模式","dark":"切换到深色模式","auto":"切换到跟随系统配色"}}},{"id":"search","module":"/js/runtime/extensions/search.js","scope":"document","when":{"selector":".search-input"},"config":{"provider":"local","options":{"scope":"all","includeContent":true,"cacheTtlSeconds":86400},"assets":{"client":null,"provider":"/js/search/local-search.js","shortcut":"/js/search/shortcut.js"}}},{"id":"hero-parallax","module":"/js/runtime/extensions/hero-parallax.js","scope":"region","when":{"selector":".wiki-hero"},"config":{}},{"id":"hero-effect","module":"/js/runtime/extensions/hero-effect.js","scope":"region","when":{"selector":"canvas[data-hero-effect]"},"config":{}},{"id":"lazy-loading","module":"/js/runtime/extensions/lazy-loading.js","scope":"document","when":{"always":true},"config":{"asset":"/vendor/lazyload.min.js"}},{"id":"deferred-icons","module":"/js/runtime/extensions/deferred-icons.js","scope":"region","when":{"selector":"svg.icon[data-icon]"},"config":{}},{"id":"dropdown","module":"/js/runtime/extensions/dropdown.js","scope":"region","when":{"selector":"details.dropdown"},"config":{}},{"id":"services","module":"/js/runtime/extensions/services.js","scope":"region","when":{"selector":"#artalk_container, #twikoo_container, #waline_container, .data-service, [class*='ds-'], a[cardlink], a[data-md-link][data-siteinfo-api], .site-card [data-siteinfo-api], .voice\u003eaudio, .video\u003evideo, .chat-file"},"config":{"marked":"https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js"}},{"id":"settings","module":"/js/runtime/extensions/settings.js","scope":"region","when":{"selector":".settings-page"},"config":{}},{"id":"lightbox","module":"/js/runtime/extensions/lightbox.js","scope":"region","when":{"selector":"[data-fancybox]:not(.error), .with-fancybox, .ds-memos, article.md-text.content img:not(a img), .timenode p\u003eimg"},"config":{"enabled":true,"selector":"article.md-text.content img:not(a img), .timenode p\u003eimg","assets":{"localCss":"/css/plugins/fancybox.css","js":"/vendor/fancybox.umd.js","css":"/vendor/fancybox.css"}}},{"id":"code-copy","module":"/js/runtime/extensions/code-copy.js","scope":"region","when":{"selector":".code"},"config":{"assets":{"js":"/js/plugins/copycode.js"},"messages":{"label":"复制","copied":"复制成功","denied":"未获得剪贴板权限","unsupported":"当前浏览器不支持剪贴板或页面不是 HTTPS"}}},{"id":"adaptive-text","module":"/js/runtime/extensions/adaptive-text.js","scope":"region","when":{"selector":"[data-text-adaptive]"},"config":{"assets":{"colorJs":"/js/color.js","js":"/js/plugins/adaptive-text.js"}}},{"id":"swiper","module":"/js/runtime/extensions/swiper.js","scope":"region","when":{"selector":"#swiper-api"},"config":{"assets":{"localCss":"/css/plugins/swiper.css","js":"https://unpkg.com/swiper@10.3/swiper-bundle.min.js","css":"https://unpkg.com/swiper@10.3/swiper-bundle.min.css"}}}]}</script>
+<script data-stellar-script="core" type="module" src="/js/runtime/index.js?v=2.0.0&amp;runtime=1"></script>
+
+
+<!-- inject -->
+
+
+<script data-stellar-script="core" defer="" src="/js/navigation-init.js?v=2.0.0"></script>
+</div>
+
+<script type="application/json" id="stellar-navigation-config">{"collection":"[\"post\",\"post\"]","url":"https://eejhongxin.github.io/2024/03/26/%E5%8D%95%E7%82%B9%E9%87%87%E9%9B%86%E6%B8%A9%E6%B9%BF%E5%BA%A6%E6%98%BE%E7%A4%BA%E5%8F%8A%E4%BA%91%E7%AB%AF%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/","signature":"9a1f5ea867e6e95301e716243c1217972d79f08f1bedcae757011ba305cc40f6"}</script></body></html>
